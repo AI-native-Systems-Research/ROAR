@@ -2,7 +2,6 @@
 
 **A community repository for unifying and analyzing runs from AI-driven research systems.**
 
-🔗 **Live instance:** [roar.roar.vpc.res.ibm.com](https://roar.roar.vpc.res.ibm.com/)
 
 ## What is ROAR?
 
