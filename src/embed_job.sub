@@ -1,0 +1,114 @@
+#!/bin/bash
+#==============================================================================
+# SLURM Job Submission Script for GPU Embedding
+#==============================================================================
+#
+# Submit with: sbatch embed_job.sub
+# Check status: squeue -u $USER
+# View output:  cat embed_<JOBID>.out
+#
+#==============================================================================
+
+#------------------------------------------------------------------------------
+# QUEUE / PARTITION SETTINGS
+#------------------------------------------------------------------------------
+#SBATCH --partition=normal
+
+#------------------------------------------------------------------------------
+# GPU RESOURCES
+#------------------------------------------------------------------------------
+#SBATCH --gres=gpu:1
+#SBATCH --mem-per-gpu=70G
+
+#------------------------------------------------------------------------------
+# CPU/MEMORY RESOURCES
+#------------------------------------------------------------------------------
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=64G
+
+#------------------------------------------------------------------------------
+# TIME LIMIT
+#------------------------------------------------------------------------------
+#SBATCH --time=01:00:00
+
+#------------------------------------------------------------------------------
+# JOB IDENTIFICATION
+#------------------------------------------------------------------------------
+#SBATCH --job-name=embed_direct
+#SBATCH --output=embed_%j.out
+
+#------------------------------------------------------------------------------
+# NOTIFICATIONS (optional - uncomment and set your email)
+#------------------------------------------------------------------------------
+# #SBATCH --mail-user=your.email@example.com
+# #SBATCH --mail-type=END
+
+#==============================================================================
+# ENVIRONMENT SETUP
+#==============================================================================
+
+echo "=========================================="
+echo "Job ID: $SLURM_JOB_ID"
+echo "Host: $(hostname)"
+echo "Date: $(date)"
+echo "Working dir: $(pwd)"
+echo "=========================================="
+
+#------------------------------------------------------------------------------
+# CUDA / cuDNN SETUP
+#------------------------------------------------------------------------------
+export CUDA_HOME=/opt/share/cuda-12.4
+
+export CUDNN_HOME=/opt/share/cudnn-linux-x86_64-9.8.0.87_cuda12-archive
+
+export PATH="$CUDA_HOME/bin:$PATH"
+export LD_LIBRARY_PATH="$CUDA_HOME/lib64:$CUDNN_HOME/lib:$LD_LIBRARY_PATH"
+
+echo "CUDA_HOME: $CUDA_HOME"
+nvcc --version || echo "nvcc not found - check CUDA_HOME path"
+
+nvidia-smi || echo "nvidia-smi not available"
+
+cd ~/adrs_data/src
+
+export FASTEMBED_GPU=1
+
+#==============================================================================
+# INPUT/OUTPUT FILES
+#==============================================================================
+
+INPUT_FILE="direct_code_to_embed.jsonl"
+OUTPUT_FILE="direct_code_embeddings.jsonl"
+
+#==============================================================================
+# RUN EMBEDDING
+#==============================================================================
+
+echo "Starting embedding..."
+echo "Input: $INPUT_FILE"
+echo "Output: $OUTPUT_FILE"
+echo "Model: code (jina-embeddings-v2-base-code, 768-dim)"
+echo ""
+
+uv run python embed_batch.py \
+    --input "$INPUT_FILE" \
+    --output "$OUTPUT_FILE" \
+    --model code \
+    --chunk-size 2048 \
+    --chunk-overlap 256 \
+    --max-tokens 32768 \
+    --resume
+
+EXIT_CODE=$?
+
+echo ""
+echo "=========================================="
+echo "Finished at: $(date)"
+echo "Exit code: $EXIT_CODE"
+if [ -f "$OUTPUT_FILE" ]; then
+    echo "Output lines: $(wc -l < "$OUTPUT_FILE")"
+    echo "Output size: $(du -h "$OUTPUT_FILE" | cut -f1)"
+fi
+echo "=========================================="
+
+exit $EXIT_CODE

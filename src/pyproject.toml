@@ -1,0 +1,38 @@
+[project]
+name = "postgresql-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "psycopg[binary]>=3.3.4",
+    "pyyaml>=6.0",
+    "pydantic>=2.0.0",
+    "fastapi>=0.104.0",
+    "uvicorn[standard]>=0.24.0",
+    "python-multipart>=0.0.6",
+    "httpx>=0.25.0",
+    "claude-agent-sdk>=0.2.103",
+    "fastembed>=0.4.0",
+    "scikit-learn>=1.4.0",
+    "litellm>=1.0.0",
+    "python-dotenv>=1.0.0",
+    "matplotlib>=3.8.0",
+    "tqdm>=4.66.5",
+    "statsmodels>=0.14.0",
+    "pyarrow>=25.0.1",
+]
+
+[project.optional-dependencies]
+gpu = [
+    "fastembed-gpu>=0.4.0",
+    "onnxruntime-gpu>=1.18.0",
+]
+
+[[tool.uv.index]]
+name = "onnxruntime-cuda-12"
+url = "https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-12/pypi/simple/"
+explicit = true
+
+[tool.uv.sources]
+onnxruntime-gpu = { index = "onnxruntime-cuda-12" }

@@ -1,0 +1,133 @@
+#!/bin/bash
+#==============================================================================
+# LSF Job Submission Script for GPU Embedding
+#==============================================================================
+#
+# Submit with: bsub < embed_job.lsf
+# Check status: bjobs
+# View output:  cat embed_<JOBID>.out
+#
+#==============================================================================
+
+#------------------------------------------------------------------------------
+# QUEUE SETTINGS (change based on your cluster's queue names)
+#------------------------------------------------------------------------------
+#BSUB -q normal                 # Queue name - check `bqueues` for available queues
+
+#------------------------------------------------------------------------------
+# GPU RESOURCES (adjust based on job size and available GPUs)
+#------------------------------------------------------------------------------
+#BSUB -gpu "num=1:gmem=70G"  # Request 1x NVIDIA A100 SXM GPU (70GB of 80GB)
+
+#------------------------------------------------------------------------------
+# CPU/MEMORY RESOURCES
+#------------------------------------------------------------------------------
+#BSUB -n 4                      # Number of CPU cores
+#BSUB -R "rusage[mem=64GB]"     # Memory per core (16GB * 4 = 64GB total)
+# #BSUB -R "span[hosts=1]"      # Uncomment to ensure all cores on same host
+
+#------------------------------------------------------------------------------
+# TIME LIMIT (estimate: ~50k records @ ~500/sec = ~2min, but allow buffer)
+#------------------------------------------------------------------------------
+#BSUB -W 1:00                   # Wall time limit (HH:MM) - 1 hour should be plenty
+
+#------------------------------------------------------------------------------
+# JOB IDENTIFICATION
+#------------------------------------------------------------------------------
+#BSUB -J embed_direct           # Job name (shows in bjobs output)
+#BSUB -o embed_%J.out           # Stdout file (%J = job ID)
+##BSUB -e embed_%J.err           # Stderr file (separate from stdout)
+
+#------------------------------------------------------------------------------
+# NOTIFICATIONS (optional - uncomment and set your email)
+#------------------------------------------------------------------------------
+# #BSUB -u your.email@example.com
+# #BSUB -N                       # Send email when job finishes
+
+#==============================================================================
+# ENVIRONMENT SETUP
+#==============================================================================
+
+# Print job info for debugging
+echo "=========================================="
+echo "Job ID: $LSB_JOBID"
+echo "Host: $(hostname)"
+echo "Date: $(date)"
+echo "Working dir: $(pwd)"
+echo "=========================================="
+
+
+ #------------------------------------------------------------------------------
+  # CUDA / cuDNN SETUP (required for GPU acceleration)
+  #------------------------------------------------------------------------------
+  # Option 1: CUDA 12.8 (available on RHEL 9.5 nodes)
+#  export CUDA_HOME=/usr/local/cuda-12.8
+#  export CUDA_HOME=/opt/share/cuda-12.9
+
+  # Option 2: If CUDA 12.8 not available, uncomment one of these:
+ export CUDA_HOME=/opt/share/cuda-12.4
+  # export CUDA_HOME=/opt/share/cuda-12.1
+
+  # cuDNN for CUDA 12
+  export CUDNN_HOME=/opt/share/cudnn-linux-x86_64-9.8.0.87_cuda12-archive
+
+  # Add to PATH and library path
+  export PATH="$CUDA_HOME/bin:$PATH"
+  export LD_LIBRARY_PATH="$CUDA_HOME/lib64:$CUDNN_HOME/lib:$LD_LIBRARY_PATH"
+
+  # Verify CUDA is accessible
+  echo "CUDA_HOME: $CUDA_HOME"
+  nvcc --version || echo "nvcc not found - check CUDA_HOME path"
+
+# Show GPU info
+nvidia-smi || echo "nvidia-smi not available"
+
+# Change to script directory (adjust path as needed)
+cd ~/adrs_data/src
+
+# Activate virtual environment if needed
+# source .venv/bin/activate         # Uncomment if using venv
+# conda activate myenv              # Or use conda
+
+# Enable GPU acceleration for fastembed
+export FASTEMBED_GPU=1
+
+#==============================================================================
+# INPUT/OUTPUT FILES (adjust paths as needed)
+#==============================================================================
+
+INPUT_FILE="direct_code_to_embed.jsonl"      # Input from export_for_embedding.py
+OUTPUT_FILE="direct_code_embeddings.jsonl"   # Output embeddings
+
+#==============================================================================
+# RUN EMBEDDING
+#==============================================================================
+
+echo "Starting embedding..."
+echo "Input: $INPUT_FILE"
+echo "Output: $OUTPUT_FILE"
+echo "Model: code (jina-embeddings-v2-base-code, 768-dim)"
+echo ""
+
+uv run python embed_batch.py \
+    --input "$INPUT_FILE" \
+    --output "$OUTPUT_FILE" \
+    --model code \
+    --chunk-size 2048 \
+    --chunk-overlap 256 \
+    --max-tokens 32768 \
+    --resume
+
+EXIT_CODE=$?
+
+echo ""
+echo "=========================================="
+echo "Finished at: $(date)"
+echo "Exit code: $EXIT_CODE"
+if [ -f "$OUTPUT_FILE" ]; then
+    echo "Output lines: $(wc -l < "$OUTPUT_FILE")"
+    echo "Output size: $(du -h "$OUTPUT_FILE" | cut -f1)"
+fi
+echo "=========================================="
+
+exit $EXIT_CODE

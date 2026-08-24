@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADRS Campaign Manager</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>ADRS Campaign Manager</h1>
+
+    <nav class="nav">
+        <button class="nav-btn active" data-page="upload">Upload</button>
+        <button class="nav-btn" data-page="analytics">Analytics</button>
+    </nav>
+
+    <!-- Upload Page -->
+    <div id="page-upload" class="page active">
+        <div class="stats">
+            <div class="stats-label">Campaigns Stored</div>
+            <div class="stats-value" id="campaignCount">-</div>
+        </div>
+
+        <div class="upload-section">
+            <div class="upload-area" id="uploadArea">
+                <div>Drag & drop a .tar.gz file here or click to browse</div>
+                <div class="file-name" id="fileName"></div>
+            </div>
+            <input type="file" class="file-input" id="fileInput" accept=".gz,.tgz,application/gzip,application/x-gzip,application/x-compressed-tar">
+
+            <div class="form-group">
+                <label for="authorEmail">Author Email <span style="color: #ef4444;">*</span></label>
+                <input type="email" id="authorEmail" placeholder="you@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="versionLink">Version (GitHub commit link)</label>
+                <input type="url" id="versionLink" placeholder="https://github.com/org/repo/commit/abc123">
+            </div>
+
+            <div class="form-group">
+                <label for="systemType">System Type <span style="color: #ef4444;">*</span></label>
+                <select id="systemType">
+                    <option value="skydiscover">SkyDiscover</option>
+                    <option value="openevolve">OpenEvolve</option>
+                    <option value="gepa">GEPA</option>
+                    <option value="coding_agent">Coding Agent</option>
+                </select>
+            </div>
+
+            <button class="btn" id="uploadBtn" disabled>Upload</button>
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar-wrapper">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <div class="progress-text" id="progressText">Preparing...</div>
+            </div>
+            <div class="message" id="message"></div>
+        </div>
+    </div>
+
+    <!-- Analytics Page -->
+    <div id="page-analytics" class="page">
+        <div class="analytics-section">
+            <div class="analytics-header">
+                <h2>Analytics Dashboard</h2>
+                <select id="analyticsType" class="analytics-select">
+                    <option value="summary">Summary</option>
+                    <option value="clusters">Research Question Clusters</option>
+                    <option value="variance">Variance Analysis (Q1: Basin Structure)</option>
+                    <option value="calibration">Calibration Analysis (Q2: Stagnation Heuristic)</option>
+                    <option value="code-diversity">Diversity Analysis (Q3)</option>
+                </select>
+            </div>
+            <div id="analyticsContent">
+                <div class="empty-state">Select an analytics type to view data.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shared utilities -->
+    <script>
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Navigation
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const page = btn.dataset.page;
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                document.getElementById('page-' + page).classList.add('active');
+                if (page === 'analytics') {
+                    loadAnalytics();
+                }
+            });
+        });
+
+        // Analytics loader
+        const analyticsType = document.getElementById('analyticsType');
+        analyticsType.addEventListener('change', loadAnalytics);
+
+        async function loadAnalytics() {
+            const type = analyticsType.value;
+            const analyticsContent = document.getElementById('analyticsContent');
+            analyticsContent.innerHTML = '<div class="loading">Loading...</div>';
+
+            try {
+                if (type === 'summary') {
+                    const res = await fetch('/analytics/summary');
+                    if (!res.ok) throw new Error('Failed to fetch analytics');
+                    const data = await res.json();
+                    renderSummary(data);
+                } else if (type === 'clusters') {
+                    const res = await fetch('/analytics/clusters');
+                    if (!res.ok) throw new Error('Failed to fetch clusters');
+                    const data = await res.json();
+                    renderClusters(data);
+                } else if (type === 'variance') {
+                    const groupByAlg = typeof varianceGroupByAlgorithm !== 'undefined' ? varianceGroupByAlgorithm : true;
+                    const res = await fetch(`/analytics/variance?min_runs=2&group_by_algorithm=${groupByAlg}`);
+                    if (!res.ok) throw new Error('Failed to fetch variance data');
+                    const data = await res.json();
+                    renderVariance(data);
+                } else if (type === 'calibration') {
+                    const res = await fetch('/analytics/calibration');
+                    if (!res.ok) throw new Error('Failed to fetch calibration data');
+                    const data = await res.json();
+                    renderCalibration(data);
+                } else if (type === 'code-diversity') {
+                    renderCodeDiversity();
+                }
+            } catch (e) {
+                analyticsContent.innerHTML = '<div class="message error" style="display:block;">Error loading analytics: ' + e.message + '</div>';
+            }
+        }
+    </script>
+
+    <!-- Module scripts -->
+    <script src="/js/upload.js"></script>
+    <script src="/js/analytics-summary.js"></script>
+    <script src="/js/analytics-clusters.js"></script>
+    <script src="/js/analytics-variance.js"></script>
+    <script src="/js/analytics-calibration.js"></script>
+    <script src="/js/analytics-code-diversity.js"></script>
+</body>
+</html>

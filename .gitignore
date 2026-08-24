@@ -1,0 +1,43 @@
+# Environment files
+.env
+.env.local
+.env.*.local
+.devcontainer/
+
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+skydiscover_examples/
+successful_campaigns/
+*.zip
+.claude/*
+
+
+data/
+gamble-data/
+gamble-data-transformed/
+*.tar.gz
+
+slides/
+src/.cache/
+.claude/
+.DS_Store
+Certus/
+Inbar/
+Odellia/
+paper/
+eb1_model.txt
+*.out
+*.jsonl
+skydiscover/
+
+INTERNAL_*
+src/hf_export/data/
+src/hf_export/*.md
