@@ -24,3 +24,8 @@ AI-driven research systems (ADRS) like OpenEvolve, SkyDiscover, and GEPA each pr
 ## Analytics
 
 ROAR ships with built-in analytics pipelines for exploring pooled run data, including basin structure detection, stopping heuristic calibration, and context diversity analysis.
+
+
+## Dataset
+
+Dataset can be found here: https://huggingface.co/datasets/mdctleo/ROAR
