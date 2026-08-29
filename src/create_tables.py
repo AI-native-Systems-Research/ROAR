@@ -24,7 +24,8 @@ CREATE EXTENSION IF NOT EXISTS vector;
 CREATE TABLE IF NOT EXISTS systems (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
-    version TEXT
+    version TEXT NOT NULL DEFAULT '',
+    CONSTRAINT systems_name_version_key UNIQUE (name, version)
 );
 
 -- Campaigns: one top-level investigation or discovery run

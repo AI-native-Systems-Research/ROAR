@@ -1,14 +1,22 @@
 #!/usr/bin/env python3
-"""Parser for OpenEvolve campaign outputs.
+"""Parser for OpenEvolve NATIVE output.
 
-OpenEvolve uses island-based MAP-Elites with evolution traces.
-Structure:
-- evolution_trace.jsonl: Line-by-line mutation events (parent/child code, metrics, prompts)
+OpenEvolve (github.com/algorithmicsuperintelligence/openevolve) uses island-based
+MAP-Elites. Its `database.py` writes, per checkpoint, `programs/{id}.json` (one file per
+program, with code, metrics, parent_id, generation, timestamp, prompts) plus
+`metadata.json` (island/archive state); the controller also writes a `best/` dir.
+
+Native structure (checkpoints/ and best/ may sit directly under the run dir OR nested
+under a `results/` subdir — both are handled):
 - checkpoints/checkpoint_N/programs/*.json: Program snapshots with full metadata
 - checkpoints/checkpoint_N/metadata.json: Island/archive state
 - best/best_program.py: Best solution code
 - best/best_program_info.json: Best solution metadata
 - logs/: Execution logs
+
+`evolution_trace.jsonl` is NOT native OpenEvolve output — it is written by a separate
+instrumentation layer (EvoTrace) and is present only for some contributors. It is used
+when present but is OPTIONAL; timestamps then come from the programs themselves.
 """
 
 import hashlib
@@ -104,10 +112,29 @@ class OpenEvolveParser:
 
     def __init__(self, folder_path: Path):
         self.folder_path = folder_path
+        # `base` is the dir that actually holds checkpoints/ and best/. The corpus nests
+        # them under results/, so accept either the run root or the results/ dir.
+        self.base = self._resolve_base(folder_path)
         self.evolution_trace: list[dict] = []
         self.program_db: dict[str, dict] = {}
         self.best_info: dict = {}
         self.author_input: dict = {}
+
+    @staticmethod
+    def _resolve_base(folder_path: Path) -> Path:
+        """Find the dir containing checkpoints/ (run root or a results/ subdir)."""
+        if (folder_path / "checkpoints").is_dir():
+            return folder_path
+        if (folder_path / "results" / "checkpoints").is_dir():
+            return folder_path / "results"
+        return folder_path
+
+    def _logs_dir(self) -> Path | None:
+        """Locate the run's logs/ dir (under base, run root, or base's parent)."""
+        for cand in (self.base / "logs", self.folder_path / "logs", self.base.parent / "logs"):
+            if cand.is_dir():
+                return cand
+        return None
 
     def parse(self) -> ADRSParsedCampaign | None:
         """Parse all campaign data. Returns ADRSParsedCampaign or None."""
@@ -115,23 +142,25 @@ class OpenEvolveParser:
             print(f"Error: {self.folder_path} is not a directory")
             return None
 
-        # Load author input (optional, contains system version)
-        self.author_input = load_json(self.folder_path / "author_input.json", warn_on_error=False) or {}
+        # Load author input (optional, contains system version). May sit at run root,
+        # the results/ dir, or run root parent.
+        for cand in (self.base, self.folder_path, self.base.parent):
+            data = load_json(cand / "author_input.json", warn_on_error=False)
+            if data:
+                self.author_input = data
+                break
 
-        # Load evolution trace
-        self.evolution_trace = load_jsonl(self.folder_path / "evolution_trace.jsonl")
-        if not self.evolution_trace:
-            print(f"Error: No evolution_trace.jsonl found in {self.folder_path}")
-            return None
+        # Load evolution trace if present (OPTIONAL — an EvoTrace add-on, not native).
+        self.evolution_trace = load_jsonl(self.base / "evolution_trace.jsonl")
 
         # Load best program info
-        self.best_info = load_json(self.folder_path / "best" / "best_program_info.json") or {}
+        self.best_info = load_json(self.base / "best" / "best_program_info.json") or {}
 
         # Build program database from checkpoints
         self._build_program_database()
 
         if not self.program_db:
-            print(f"Error: No programs found in checkpoints in {self.folder_path}")
+            print(f"Error: No programs found in checkpoints in {self.base}")
             return None
 
         campaign = self._parse_campaign()
@@ -149,7 +178,7 @@ class OpenEvolveParser:
 
     def _build_program_database(self):
         """Build database of all programs from checkpoints (deduplicated by ID)."""
-        checkpoints_dir = self.folder_path / "checkpoints"
+        checkpoints_dir = self.base / "checkpoints"
         if not checkpoints_dir.exists():
             return
 
@@ -178,17 +207,24 @@ class OpenEvolveParser:
         # Extract research question from prompts if available
         research_question = self._extract_research_question()
 
-        # Get timestamps from evolution trace
+        # Get timestamps from the evolution trace when present, else from the programs.
         started_at = None
         ended_at = None
         if self.evolution_trace:
-            first_ts = self.evolution_trace[0].get("timestamp")
-            last_ts = self.evolution_trace[-1].get("timestamp")
-            started_at = parse_timestamp(first_ts)
-            ended_at = parse_timestamp(last_ts)
+            started_at = parse_timestamp(self.evolution_trace[0].get("timestamp"))
+            ended_at = parse_timestamp(self.evolution_trace[-1].get("timestamp"))
+        else:
+            prog_ts = [
+                p.get("timestamp")
+                for p in self.program_db.values()
+                if p.get("timestamp") is not None
+            ]
+            if prog_ts:
+                started_at = parse_timestamp(min(prog_ts))
+                ended_at = parse_timestamp(max(prog_ts))
 
-        # Total iterations
-        total_iterations = len(self.evolution_trace)
+        # Total iterations (trace length when available, else number of programs)
+        total_iterations = len(self.evolution_trace) or len(self.program_db)
 
         # Best metrics from best_info or last evolution entry
         final_metrics = {}
@@ -249,11 +285,11 @@ class OpenEvolveParser:
     def _extract_config(self) -> dict:
         """Extract configuration from prompts and metadata."""
         config = {
-            "total_iterations": len(self.evolution_trace),
+            "total_iterations": len(self.evolution_trace) or len(self.program_db),
         }
 
         # Get island count from checkpoint metadata
-        checkpoints_dir = self.folder_path / "checkpoints"
+        checkpoints_dir = self.base / "checkpoints"
         if checkpoints_dir.exists():
             for checkpoint_dir in sorted(checkpoints_dir.iterdir()):
                 metadata = load_json(checkpoint_dir / "metadata.json", warn_on_error=False)
@@ -342,57 +378,32 @@ class OpenEvolveParser:
                 continue
 
             metrics = prog.get("metrics", {})
-            if not metrics:
+            if not isinstance(metrics, dict) or not metrics:
                 continue
 
             candidate_measurements = []
 
-            # Top-level metrics
-            metric_names = [
-                "combined_score",
-                "cpu_hit_rate",
-                "ttft_ratio",
-                "throughput_ratio",
-                "eviction_rate",
-                "evictions",
-                "lookup_total",
-                "lookup_hits",
-                "lookup_misses",
-                "engine_external_prefix_hit_rate",
-                "engine_gpu_prefix_hit_rate",
-            ]
+            # Generic: emit every scalar metric the program reports (works for any
+            # benchmark, not just a fixed list). One level of nesting (metrics.metrics)
+            # is flattened; deeper structures / lists are skipped.
+            def _is_scalar(v) -> bool:
+                return isinstance(v, (int, float, str, bool))
 
-            for name in metric_names:
-                value = metrics.get(name)
-                if value is not None:
+            for name, value in metrics.items():
+                if value is None:
+                    continue
+                if _is_scalar(value):
                     candidate_measurements.append(
-                        ADRSMeasurement(
-                            name=name,
-                            value=str(value),
-                        )
+                        ADRSMeasurement(name=name, value=str(value))
                     )
-
-            # Nested metrics (metrics.metrics)
-            nested = metrics.get("metrics", {})
-            nested_names = [
-                "request_throughput",
-                "output_token_throughput",
-                "mean_ttft_ms",
-                "p99_ttft_ms",
-                "mean_request_latency_ms",
-                "total_requests",
-                "failures",
-            ]
-
-            for name in nested_names:
-                value = nested.get(name)
-                if value is not None:
-                    candidate_measurements.append(
-                        ADRSMeasurement(
-                            name=name,
-                            value=str(value),
-                        )
-                    )
+                elif isinstance(value, dict):
+                    for nested_name, nested_value in value.items():
+                        if nested_value is not None and _is_scalar(nested_value):
+                            candidate_measurements.append(
+                                ADRSMeasurement(
+                                    name=nested_name, value=str(nested_value)
+                                )
+                            )
 
             if candidate_measurements:
                 measurements[prog_id] = candidate_measurements
@@ -420,7 +431,7 @@ class OpenEvolveParser:
         artifacts = []
 
         # Best program
-        best_program = self.folder_path / "best" / "best_program.py"
+        best_program = self.base / "best" / "best_program.py"
         if best_program.exists():
             artifacts.append(
                 ADRSArtifact(
@@ -432,7 +443,7 @@ class OpenEvolveParser:
             )
 
         # Best program info
-        best_info = self.folder_path / "best" / "best_program_info.json"
+        best_info = self.base / "best" / "best_program_info.json"
         if best_info.exists():
             artifacts.append(
                 ADRSArtifact(
@@ -443,8 +454,8 @@ class OpenEvolveParser:
                 )
             )
 
-        # Evolution trace
-        trace_file = self.folder_path / "evolution_trace.jsonl"
+        # Evolution trace (optional; only present when EvoTrace instrumentation ran)
+        trace_file = self.base / "evolution_trace.jsonl"
         if trace_file.exists():
             artifacts.append(
                 ADRSArtifact(
@@ -456,8 +467,8 @@ class OpenEvolveParser:
             )
 
         # Logs directory
-        logs_dir = self.folder_path / "logs"
-        if logs_dir.exists():
+        logs_dir = self._logs_dir()
+        if logs_dir:
             for log_file in logs_dir.glob("*"):
                 if log_file.is_file() and not log_file.name.startswith("."):
                     artifacts.append(
@@ -471,7 +482,7 @@ class OpenEvolveParser:
 
         # Per-candidate program files from checkpoints
         seen_program_ids: set[str] = set()
-        checkpoints_dir = self.folder_path / "checkpoints"
+        checkpoints_dir = self.base / "checkpoints"
         if checkpoints_dir.exists():
             for checkpoint_dir in sorted(checkpoints_dir.iterdir()):
                 if not checkpoint_dir.is_dir() or checkpoint_dir.name.startswith("."):

@@ -82,22 +82,25 @@ class CampaignInserter:
                 raise
 
     def _ensure_system(self, cur: psycopg.Cursor, system):
-        """Ensure the system exists and get its ID."""
+        """Ensure the system exists and get its ID (atomic get-or-create)."""
+        version = system.version or ""  # normalize missing version to '' (matches NOT NULL column)
         cur.execute(
-            "SELECT id FROM systems WHERE name = %s AND version IS NOT DISTINCT FROM %s",
-            (system.name, system.version),
+            "INSERT INTO systems (name, version) VALUES (%s, %s) "
+            "ON CONFLICT (name, version) DO NOTHING RETURNING id",
+            (system.name, version),
         )
         row = cur.fetchone()
 
         if row:
             self.system_id = row[0]
+            print(f"Created new system: {system.name} v{version!r}")
         else:
+            # Row already existed (or a concurrent txn just created it) -> reuse it.
             cur.execute(
-                "INSERT INTO systems (name, version) VALUES (%s, %s) RETURNING id",
-                (system.name, system.version),
+                "SELECT id FROM systems WHERE name = %s AND version = %s",
+                (system.name, version),
             )
             self.system_id = cur.fetchone()[0]
-            print(f"Created new system: {system.name} v{system.version}")
 
     def _insert_campaign(self, cur: psycopg.Cursor, campaign):
         """Insert the campaign record."""
@@ -243,17 +246,32 @@ class CampaignInserter:
 
 def detect_system_type(folder_path: Path) -> str | None:
     """Auto-detect the system type from folder structure."""
+    def _has(*names: str) -> bool:
+        """True if any marker exists in folder_path or folder_path/results."""
+        return any(
+            (folder_path / n).exists() or (folder_path / "results" / n).exists()
+            for n in names
+        )
+
     # NOUS indicators
     if (folder_path / "state.json").exists() and (folder_path / "ledger.json").exists():
         return "nous"
 
-    # GEPA indicators: summary.json with "framework": "gepa" and iterations.jsonl
+    # ShinkaEvolve: native SQLite database (unique marker).
+    if _has("evolution_db.sqlite"):
+        return "shinka"
+
+    # GEPA native: serialized GEPAResult / checkpoint (unique markers). The CURATED GEPA
+    # bundle (summary.json/iterations.jsonl/.rs) is NOT auto-detected here — it is handled
+    # via oneoff_parsers/parse_gepa_curated.py.
+    if _has("gepa_result.json", "candidates.json", "gepa_state.bin"):
+        return "gepa"
+
+    # coding_agent curated bundle: summary.json with "framework": "coding_agent".
     if (folder_path / "iterations.jsonl").exists() and (folder_path / "summary.json").exists():
         try:
             with open(folder_path / "summary.json") as f:
                 summary = json.load(f)
-                if summary.get("framework") == "gepa":
-                    return "gepa"
                 if summary.get("framework") == "coding_agent":
                     return "coding_agent"
         except Exception:
@@ -328,6 +346,10 @@ def insert_campaign(folder_path: Path, system_type: str | None = None) -> bool:
         from parse_openevolve import parse_openevolve_campaign
 
         parsed = parse_openevolve_campaign(folder_path)
+    elif system_type == "shinka":
+        from parse_shinka import parse_shinka_campaign
+
+        parsed = parse_shinka_campaign(folder_path)
     elif system_type == "coding_agent":
         from parse_coding_agent import parse_coding_agent_campaign
 
@@ -381,6 +403,9 @@ def _parse_single_campaign(
         elif actual_type == "openevolve":
             from parse_openevolve import parse_openevolve_campaign
             parsed = parse_openevolve_campaign(folder_path)
+        elif actual_type == "shinka":
+            from parse_shinka import parse_shinka_campaign
+            parsed = parse_shinka_campaign(folder_path)
         elif actual_type == "coding_agent":
             from parse_coding_agent import parse_coding_agent_campaign
             parsed = parse_coding_agent_campaign(folder_path)
@@ -494,7 +519,7 @@ def main():
     parser.add_argument(
         "--system",
         type=str,
-        choices=["nous", "skydiscover", "gepa", "openevolve"],
+        choices=["nous", "skydiscover", "gepa", "openevolve", "shinka"],
         help="System type (auto-detect if not specified)",
     )
 

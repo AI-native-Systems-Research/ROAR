@@ -34,6 +34,7 @@ from insert_adrs_campaign import CampaignInserter, detect_system_type
 from parse_skydiscover import parse_skydiscover_campaign
 from parse_openevolve import parse_openevolve_campaign
 from parse_gepa import parse_gepa_campaign
+from parse_shinka import parse_shinka_campaign
 from parse_coding_agent import parse_coding_agent_campaign
 from embeddings import get_embedding_model
 from analytics import CampaignAnalytics
@@ -68,6 +69,7 @@ class SystemType(str, Enum):
     SKYDISCOVER = "skydiscover"
     OPENEVOLVE = "openevolve"
     GEPA = "gepa"
+    SHINKA = "shinka"
     CODING_AGENT = "coding_agent"
 
 
@@ -262,6 +264,8 @@ async def parse_campaign(campaign_path: Path, system_type: str | None, author: s
                 parsed = await asyncio.to_thread(parse_openevolve_campaign, campaign_path)
             elif system_type == "gepa":
                 parsed = await asyncio.to_thread(parse_gepa_campaign, campaign_path)
+            elif system_type == "shinka":
+                parsed = await asyncio.to_thread(parse_shinka_campaign, campaign_path)
             elif system_type == "coding_agent":
                 parsed = await asyncio.to_thread(parse_coding_agent_campaign, campaign_path)
             else:
