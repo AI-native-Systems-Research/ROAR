@@ -73,7 +73,7 @@ def _truncate_problem(rq: str) -> str:
 
 
 from analytics.utils import abbreviate_problem as _abbreviate_problem
-from analytics.utils import normalize_model_name
+from analytics.utils import display_mechanism, normalize_model_name
 
 
 # =============================================================================
@@ -785,7 +785,7 @@ def _generate_single_figure(
                     marker=markers[i % len(markers)],
                     linestyle=line_styles[i % len(line_styles)],
                     color=color,
-                    label=group,
+                    label=display_mechanism(group),
                     markersize=6, linewidth=2, alpha=0.85)
             ax.fill_between(k_vals, ci_lowers, ci_uppers,
                             color=color, alpha=0.15)
@@ -917,7 +917,7 @@ def _generate_faceted_figure(
         ax.set_xlim(0, 55)
         # Only show subplot title when multiple algorithms
         if n_algs > 1:
-            ax.set_title(algorithm, fontweight='bold')
+            ax.set_title(display_mechanism(algorithm), fontweight='bold')
         ax.grid(True, alpha=0.3)
 
     # Set shared y-axis limits
@@ -929,7 +929,7 @@ def _generate_faceted_figure(
 
     # Title - include algorithm name if only one
     if n_algs == 1:
-        alg_suffix = f' ({algorithms[0]})'
+        alg_suffix = f' ({display_mechanism(algorithms[0])})'
     else:
         alg_suffix = ''
     if len(problems) == 1:

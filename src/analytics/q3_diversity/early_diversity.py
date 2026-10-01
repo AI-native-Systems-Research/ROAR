@@ -16,6 +16,7 @@ from analytics.q3_diversity._common import (
     _generate_empty_figure,
     _get_database_url,
     _truncate_problem,
+    display_mechanism,
     normalize_model_name,
 )
 
@@ -340,7 +341,7 @@ def generate_early_diversity_scatter_figure(data: dict[str, Any]) -> bytes:
             marker = MARKER_PALETTE[i % len(MARKER_PALETTE)]
             linestyle = LINESTYLE_PALETTE[i % len(LINESTYLE_PALETTE)]
 
-            label = group_name
+            label = display_mechanism(group_name)
             if len(label) > 20:
                 label = label[:18] + "..."
             rho = gs.get("spearman_rho")

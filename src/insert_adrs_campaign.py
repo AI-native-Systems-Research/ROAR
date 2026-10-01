@@ -13,7 +13,6 @@ Usage:
     python insert_adrs_campaign.py --all /path/to/campaigns_directory
 
     # Specify system type explicitly
-    python insert_adrs_campaign.py --system nous /path/to/campaign_folder
     python insert_adrs_campaign.py --system skydiscover /path/to/campaign_folder
 """
 
@@ -27,6 +26,7 @@ from pathlib import Path
 import psycopg
 
 from adrs_models import ADRSParsedCampaign, ADRSArtifact
+from system_detection import detect_system_type
 
 DATABASE_URL = os.environ.get(
     "DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/adrs"
@@ -244,74 +244,13 @@ class CampaignInserter:
             )
 
 
-def detect_system_type(folder_path: Path) -> str | None:
-    """Auto-detect the system type from folder structure."""
-    def _has(*names: str) -> bool:
-        """True if any marker exists in folder_path or folder_path/results."""
-        return any(
-            (folder_path / n).exists() or (folder_path / "results" / n).exists()
-            for n in names
-        )
-
-    # NOUS indicators
-    if (folder_path / "state.json").exists() and (folder_path / "ledger.json").exists():
-        return "nous"
-
-    # ShinkaEvolve: native SQLite database (unique marker).
-    if _has("evolution_db.sqlite"):
-        return "shinka"
-
-    # GEPA native: serialized GEPAResult / checkpoint (unique markers). The CURATED GEPA
-    # bundle (summary.json/iterations.jsonl/.rs) is NOT auto-detected here — it is handled
-    # via oneoff_parsers/parse_gepa_curated.py.
-    if _has("gepa_result.json", "candidates.json", "gepa_state.bin"):
-        return "gepa"
-
-    # coding_agent curated bundle: summary.json with "framework": "coding_agent".
-    if (folder_path / "iterations.jsonl").exists() and (folder_path / "summary.json").exists():
-        try:
-            with open(folder_path / "summary.json") as f:
-                summary = json.load(f)
-                if summary.get("framework") == "coding_agent":
-                    return "coding_agent"
-        except Exception:
-            pass
-
-    # OpenEvolve indicators: evolution_trace.jsonl and checkpoints/
-    if (folder_path / "evolution_trace.jsonl").exists() and (folder_path / "checkpoints").exists():
-        return "openevolve"
-
-    # SkyDiscover indicators - two layouts:
-    # Layout 1: config.yaml + output/ (gamble-data-transformed style)
-    if (folder_path / "config.yaml").exists() and (folder_path / "output").exists():
-        config_yaml = folder_path / "config.yaml"
-        try:
-            import yaml
-            with open(config_yaml) as f:
-                config = yaml.safe_load(f)
-                if config and ("llm" in config or "evaluator" in config):
-                    return "skydiscover"
-        except Exception:
-            pass
-
-    # Layout 2: checkpoints/ directly in root (odellia style, no output/ wrapper)
-    # best/ may not exist for incomplete runs
-    if (folder_path / "checkpoints").exists():
-        # Verify it has the expected checkpoint structure (programs/ subdir)
-        checkpoints_dir = folder_path / "checkpoints"
-        for checkpoint in checkpoints_dir.iterdir():
-            if checkpoint.is_dir() and (checkpoint / "programs").exists():
-                return "skydiscover"
-
-    return None
-
-
 def insert_campaign(folder_path: Path, system_type: str | None = None) -> bool:
     """Insert a single campaign into the database.
 
     Args:
         folder_path: Path to campaign folder
-        system_type: System type ('nous', 'skydiscover') or None for auto-detect
+        system_type: System type ('skydiscover', 'openevolve', 'gepa', 'shinka',
+            'coding_agent') or None for auto-detect
 
     Returns:
         True if successful, False otherwise
@@ -330,11 +269,7 @@ def insert_campaign(folder_path: Path, system_type: str | None = None) -> bool:
     # Parse based on system type
     parsed: ADRSParsedCampaign | None = None
 
-    if system_type == "nous":
-        from parse_nous import parse_nous_campaign
-
-        parsed = parse_nous_campaign(folder_path)
-    elif system_type == "skydiscover":
+    if system_type == "skydiscover":
         from parse_skydiscover import parse_skydiscover_campaign
 
         parsed = parse_skydiscover_campaign(folder_path)
@@ -354,6 +289,10 @@ def insert_campaign(folder_path: Path, system_type: str | None = None) -> bool:
         from parse_coding_agent import parse_coding_agent_campaign
 
         parsed = parse_coding_agent_campaign(folder_path)
+    elif system_type == "gepa_curated":
+        from oneoff_parsers.parse_gepa_curated import parse_gepa_curated_campaign
+
+        parsed = parse_gepa_curated_campaign(folder_path)
     else:
         print(f"  Error: Unknown system type: {system_type}")
         return False
@@ -391,10 +330,7 @@ def _parse_single_campaign(
             return folder_path, None, "Could not detect system type"
 
         parsed: ADRSParsedCampaign | None = None
-        if actual_type == "nous":
-            from parse_nous import parse_nous_campaign
-            parsed = parse_nous_campaign(folder_path)
-        elif actual_type == "skydiscover":
+        if actual_type == "skydiscover":
             from parse_skydiscover import parse_skydiscover_campaign
             parsed = parse_skydiscover_campaign(folder_path)
         elif actual_type == "gepa":
@@ -409,6 +345,9 @@ def _parse_single_campaign(
         elif actual_type == "coding_agent":
             from parse_coding_agent import parse_coding_agent_campaign
             parsed = parse_coding_agent_campaign(folder_path)
+        elif actual_type == "gepa_curated":
+            from oneoff_parsers.parse_gepa_curated import parse_gepa_curated_campaign
+            parsed = parse_gepa_curated_campaign(folder_path)
         else:
             return folder_path, None, f"Unknown system type: {actual_type}"
 
@@ -519,7 +458,7 @@ def main():
     parser.add_argument(
         "--system",
         type=str,
-        choices=["nous", "skydiscover", "gepa", "openevolve", "shinka"],
+        choices=["skydiscover", "gepa", "openevolve", "shinka", "coding_agent"],
         help="System type (auto-detect if not specified)",
     )
 

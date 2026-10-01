@@ -25,7 +25,7 @@ import numpy as np
 import psycopg
 from psycopg.rows import dict_row
 
-from analytics.utils import normalize_model_name
+from analytics.utils import display_mechanism, normalize_model_name
 
 # Bimodality coefficient threshold (5/9)
 BC_THRESHOLD = 5 / 9  # ≈ 0.555
@@ -488,7 +488,7 @@ def generate_figure_for_problem(
         model = cell["models"]
         algorithm = cell.get("algorithm")
         if algorithm:
-            xlabels.append(f"{model}\n{algorithm}")
+            xlabels.append(f"{model}\n{display_mechanism(algorithm)}")
         else:
             xlabels.append(model)
 

@@ -1,0 +1,45 @@
+# Git
+.git/
+.gitignore
+.github/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv
+venv/
+ENV/
+
+# Development
+.devcontainer/
+.claude/
+.venv/
+
+# Data and uploads (large files/directories)
+data/
+successful_campaigns/
+successful_campaigns.zip
+successful_campaigns.tar.gz
+skydiscover_examples/
+gamble-data/
+gamble-data-transformed/
+gamble-transformed.tar.gz
+*.tar.gz
+*.zip
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Documentation
+README.md
+*.md
+
+# OS
+.DS_Store
+Thumbs.db

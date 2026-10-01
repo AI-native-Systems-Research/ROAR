@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS campaigns (
     system_id UUID REFERENCES systems(id) ON DELETE CASCADE,
     author TEXT NOT NULL,
     name TEXT,
-    research_question TEXT,
+    research_question TEXT NOT NULL,
     research_question_embedding vector(384),
     started_at TIMESTAMP,
     ended_at TIMESTAMP,

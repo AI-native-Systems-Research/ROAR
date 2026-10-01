@@ -17,6 +17,7 @@ from analytics.q3_diversity._common import (
     _generate_empty_figure,
     _get_database_url,
     _truncate_problem,
+    display_mechanism,
     normalize_model_name,
 )
 
@@ -318,9 +319,7 @@ def compute_factor_importance(
 
     For each group, fits ``improvement ~ z(factors) + z(phase) + (1|campaign)`` and
     reports each factor's log-odds change per 1 SD, with within-campaign clustering
-    and iteration-phase controlled. This replaces the earlier pooled Welch t-test,
-    which treated non-independent, phase-confounded mutations as i.i.d. samples and
-    thereby overstated significance and effect sizes (see also q2_calibration).
+    and iteration-phase controlled.
     """
     import pandas as pd
 
@@ -498,7 +497,7 @@ def _generate_factor_heatmap(
                             fill=False, hatch='///', alpha=0.4,
                             edgecolor='gray', linewidth=0.5))
 
-            ax.set_title(algorithm, fontweight="bold", fontsize=16)
+            ax.set_title(display_mechanism(algorithm), fontweight="bold", fontsize=16)
 
         plt.tight_layout()
 
@@ -654,7 +653,7 @@ def generate_factor_importance_figure(
             correlations = group.get("correlations", {})
             values = [correlations.get(f, 0) for f in FACTOR_KEYS]
             offset = (i - n_groups / 2 + 0.5) * width
-            label = group["group"]
+            label = display_mechanism(group["group"])
             if len(label) > 20:
                 label = label[:18] + "..."
             n_imp = group.get('n_improvements', 0)
