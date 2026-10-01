@@ -12,7 +12,7 @@ import psycopg
 from psycopg.rows import dict_row
 from sklearn.metrics.pairwise import cosine_similarity
 
-from analytics.utils import abbreviate_problem, normalize_model_name
+from analytics.utils import abbreviate_problem, display_mechanism, normalize_model_name
 
 DATABASE_URL_DEFAULT = "postgresql://postgres:postgres@localhost:5432/adrs"
 

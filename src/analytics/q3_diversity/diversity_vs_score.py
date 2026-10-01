@@ -12,6 +12,7 @@ from analytics.q3_diversity._common import (
     LINESTYLE_PALETTE,
     MARKER_PALETTE,
     _generate_empty_figure,
+    display_mechanism,
     normalize_model_name,
     query_campaign_diversity_and_scores,
 )
@@ -226,7 +227,7 @@ def generate_diversity_vs_score_scatter_figure(
             marker = MARKER_PALETTE[i % len(MARKER_PALETTE)]
             linestyle = LINESTYLE_PALETTE[i % len(LINESTYLE_PALETTE)]
 
-            label = group_name
+            label = display_mechanism(group_name)
             if len(label) > 20:
                 label = label[:18] + "..."
             rho = gs.get("spearman_rho")

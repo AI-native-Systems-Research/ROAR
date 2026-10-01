@@ -5,37 +5,33 @@
 #
 # Submit with: sbatch embed_job.sub
 # Check status: squeue -u $USER
-# View output:  cat embed_<JOBID>.out
+# View output:  cat embed_job_<JOBID>.out
 #
 #==============================================================================
 
 #------------------------------------------------------------------------------
-# QUEUE / PARTITION SETTINGS
+# ACCOUNT / QOS
 #------------------------------------------------------------------------------
-#SBATCH --partition=normal
+#SBATCH -A antoniob
+#SBATCH --qos=normal
 
 #------------------------------------------------------------------------------
-# GPU RESOURCES
+# RESOURCES
 #------------------------------------------------------------------------------
 #SBATCH --gres=gpu:1
-#SBATCH --mem-per-gpu=70G
-
-#------------------------------------------------------------------------------
-# CPU/MEMORY RESOURCES
-#------------------------------------------------------------------------------
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=64G
+#SBATCH --mem=256G
 
 #------------------------------------------------------------------------------
 # TIME LIMIT
 #------------------------------------------------------------------------------
-#SBATCH --time=01:00:00
+#SBATCH --time=4:00:00
 
 #------------------------------------------------------------------------------
 # JOB IDENTIFICATION
 #------------------------------------------------------------------------------
-#SBATCH --job-name=embed_direct
-#SBATCH --output=embed_%j.out
+#SBATCH -J embed_job
+#SBATCH -o embed_job_%j.out
 
 #------------------------------------------------------------------------------
 # NOTIFICATIONS (optional - uncomment and set your email)
@@ -55,23 +51,52 @@ echo "Working dir: $(pwd)"
 echo "=========================================="
 
 #------------------------------------------------------------------------------
+# PROJECT DIR (override with ROAR_SRC=... sbatch embed_job.sub)
+#------------------------------------------------------------------------------
+cd "${ROAR_SRC:-$HOME/adrs_data/src}" || exit 1
+
+# uv installed via the standalone installer lives here; batch jobs skip ~/.bashrc
+export PATH="$HOME/.local/bin:$PATH"
+
+#------------------------------------------------------------------------------
 # CUDA / cuDNN SETUP
 #------------------------------------------------------------------------------
-export CUDA_HOME=/opt/share/cuda-12.4
+# onnxruntime-gpu needs CUDA 12 + cuDNN 9 at load time and ships neither. We use the
+# pip-installed nvidia-* wheels in the venv; `module load cuda/12.x cudnn/9` works too.
+# Use the venv interpreter directly from here on: `uv run` re-syncs the environment on
+# every call, which silently drops anything it is not told to keep.
+PY="$PWD/.venv/bin/python"
+[ -x "$PY" ] || { echo "ERROR: no venv at $PY - run: uv sync --extra gpu"; exit 1; }
 
-export CUDNN_HOME=/opt/share/cudnn-linux-x86_64-9.8.0.87_cuda12-archive
-
-export PATH="$CUDA_HOME/bin:$PATH"
-export LD_LIBRARY_PATH="$CUDA_HOME/lib64:$CUDNN_HOME/lib:$LD_LIBRARY_PATH"
-
-echo "CUDA_HOME: $CUDA_HOME"
-nvcc --version || echo "nvcc not found - check CUDA_HOME path"
+export LD_LIBRARY_PATH="$("$PY" -c '
+import os, nvidia
+base = os.path.dirname(nvidia.__file__)
+print(":".join(os.path.join(base, d, "lib") for d in os.listdir(base)
+                if os.path.isdir(os.path.join(base, d, "lib"))))
+'):$LD_LIBRARY_PATH"
 
 nvidia-smi || echo "nvidia-smi not available"
 
-cd ~/adrs_data/src
+# ORT spawns one thread per host core and cannot pin them inside the cgroup
+# (pthread_setaffinity_np spam); cap it at the cores we actually asked for.
+export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK:-4}"
 
 export FASTEMBED_GPU=1
+
+# Fail fast instead of silently embedding on CPU for ~17 hours. NOTE: checking
+# ort.get_available_providers() is NOT enough - it lists providers compiled into the
+# build even when their .so cannot be dlopen()ed. Load the libs, then embed one text
+# through the real code path with fastembed's CPU-fallback warning promoted to an error.
+"$PY" -W error::RuntimeWarning -c "
+import ctypes, sys
+for lib in ('libcudart.so.12', 'libcudnn.so.9', 'libcublas.so.12'):
+    try:
+        ctypes.CDLL(lib)
+    except OSError as e:
+        sys.exit(f'cannot load {lib}: {e}')
+from embeddings import EmbeddingModel, embed_texts
+print('embedding smoke test dim:', len(embed_texts(['int main(){}'], model=EmbeddingModel.CODE)[0]), flush=True)
+" || { echo 'ERROR: CUDA/cuDNN not usable - aborting (would run on CPU)'; exit 1; }
 
 #==============================================================================
 # INPUT/OUTPUT FILES
@@ -90,7 +115,7 @@ echo "Output: $OUTPUT_FILE"
 echo "Model: code (jina-embeddings-v2-base-code, 768-dim)"
 echo ""
 
-uv run python embed_batch.py \
+"$PY" embed_batch.py \
     --input "$INPUT_FILE" \
     --output "$OUTPUT_FILE" \
     --model code \

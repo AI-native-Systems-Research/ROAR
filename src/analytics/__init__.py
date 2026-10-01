@@ -66,3 +66,22 @@ class CampaignAnalytics:
     def cluster_by_research_question(self, distance_threshold: float = 0.1) -> dict:
         return get_clusters(self._database_url, distance_threshold)
 
+    def get_recommendation(
+        self,
+        research_question: str,
+        budget: int = 50,
+        algorithm: str | None = None,
+        model: str | None = None,
+    ) -> dict:
+        # Imported lazily: analytics.q5 imports q2_calibration, which pulls in
+        # matplotlib and numpy that most callers of this package do not need.
+        from analytics.q5 import get_recommendation
+
+        return get_recommendation(
+            self._database_url,
+            research_question,
+            budget,
+            algorithm=algorithm,
+            model=model,
+        )
+

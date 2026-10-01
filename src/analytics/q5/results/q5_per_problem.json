@@ -1,0 +1,30 @@
+{
+  "Bounded 2D Knapsack | campaign_weighted": {
+    "mean": 16.532,
+    "ci_low": -1.024,
+    "ci_high": 33.583,
+    "boot_p": 0.032,
+    "n_draws": 1000
+  },
+  "Bounded 2D Knapsack | cell_weighted": {
+    "mean": 19.212,
+    "ci_low": -1.216,
+    "ci_high": 38.568,
+    "boot_p": 0.032,
+    "n_draws": 1000
+  },
+  "Polynomino Packing | campaign_weighted": {
+    "mean": 18.635,
+    "ci_low": 11.552,
+    "ci_high": 25.645,
+    "boot_p": 0.0,
+    "n_draws": 1000
+  },
+  "Polynomino Packing | cell_weighted": {
+    "mean": 15.211,
+    "ci_low": 8.83,
+    "ci_high": 21.204,
+    "boot_p": 0.0,
+    "n_draws": 1000
+  }
+}

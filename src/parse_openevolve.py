@@ -21,9 +21,11 @@ when present but is OPTIONAL; timestamps then come from the programs themselves.
 
 import hashlib
 import json
+import re
 from datetime import datetime
 from pathlib import Path
 
+from model_dirname import models_from_path
 from adrs_models import (
     ADRSArtifact,
     ADRSCampaign,
@@ -91,6 +93,20 @@ def load_json(file_path: Path, warn_on_error: bool = True) -> dict | None:
         return None
 
 
+def load_yaml(file_path: Path) -> dict | None:
+    """Load a YAML file into a dict; None if missing/unparseable (yaml is optional)."""
+    if not file_path.exists():
+        return None
+    try:
+        import yaml
+
+        with open(file_path) as f:
+            data = yaml.safe_load(f)
+        return data if isinstance(data, dict) else None
+    except Exception:
+        return None
+
+
 def load_jsonl(file_path: Path) -> list[dict]:
     """Load JSONL file, return list of records."""
     if not file_path.exists():
@@ -129,12 +145,50 @@ class OpenEvolveParser:
             return folder_path / "results"
         return folder_path
 
+    @classmethod
+    def matches(cls, folder_path: Path) -> bool:
+        """True if folder_path is a native OpenEvolve run: checkpoints/ (at the run root
+        or under results/) plus a native OpenEvolve signal — a best/best_program_info.json
+        or an openevolve_*.log. The native signal keeps this from claiming a SkyDiscover
+        run, which also has checkpoints/ but no such log. Used by system_detection."""
+        base = cls._resolve_base(folder_path)
+        if not (base / "checkpoints").is_dir():
+            return False
+        if (base / "best" / "best_program_info.json").exists():
+            return True
+        for logs in (base / "logs", folder_path / "logs", base.parent / "logs"):
+            if logs.is_dir() and any(logs.glob("openevolve_*.log")):
+                return True
+        return False
+
     def _logs_dir(self) -> Path | None:
         """Locate the run's logs/ dir (under base, run root, or base's parent)."""
         for cand in (self.base / "logs", self.folder_path / "logs", self.base.parent / "logs"):
             if cand.is_dir():
                 return cand
         return None
+
+    def _extract_models(self) -> list[str] | None:
+        """Model(s) for the run, verbatim. OpenEvolve records the model only in its run
+        log (`Initialized ... LLM ... with model: X`); fall back to the run dir name."""
+        logs = self._logs_dir()
+        if logs:
+            log_files = sorted(logs.glob("*.log"))
+            if log_files:
+                try:
+                    text = log_files[-1].read_text(errors="ignore")
+                except OSError:
+                    text = ""
+                found: list[str] = []
+                seen: set[str] = set()
+                for m in re.finditer(r"[Ii]nitialized .*?LLM .*?models?:\s*([\w./:-]+)", text):
+                    tok = m.group(1)
+                    if tok not in seen:
+                        seen.add(tok)
+                        found.append(tok)
+                if found:
+                    return found
+        return models_from_path(self.folder_path)
 
     def parse(self) -> ADRSParsedCampaign | None:
         """Parse all campaign data. Returns ADRSParsedCampaign or None."""
@@ -253,8 +307,8 @@ class OpenEvolveParser:
             started_at=started_at,
             ended_at=ended_at,
             config_used=config_used,
-            algorithm_used="map-elites",
-            models_used=None,
+            algorithm_used="openevolve",
+            models_used=self._extract_models(),
             total_cost_usd=None,
             total_tokens=None,
             final_summary=None,
@@ -262,24 +316,15 @@ class OpenEvolveParser:
         )
 
     def _extract_research_question(self) -> str | None:
-        """Extract research question/objective from prompts."""
-        # Try to get from first program's prompts
-        for prog in self.program_db.values():
-            prompts = prog.get("prompts")
-            if prompts:
-                # Look in full_rewrite_user prompt
-                full_rewrite = prompts.get("full_rewrite_user", {})
-                system_prompt = full_rewrite.get("system", "")
-                if system_prompt:
-                    # Extract problem description - look for key phrases
-                    if "KV cache eviction" in system_prompt:
-                        return "Optimize KV cache eviction policy for vLLM inference server"
-                    # Return first meaningful line
-                    lines = system_prompt.strip().split("\n")
-                    for line in lines:
-                        line = line.strip()
-                        if line and not line.startswith("#") and len(line) > 20:
-                            return line[:200]
+        """Research question, read verbatim from a declared `research_question` key in the
+        run's research_question.yaml. OpenEvolve persists no config into the run dir, so this
+        is author-supplied (run root, results/ dir, or run root parent). A dedicated filename
+        (not config.yaml) is used so the author-supplied file can't trip SkyDiscover detection,
+        which treats config.yaml as one of its markers."""
+        for cand in (self.base, self.folder_path, self.base.parent):
+            cfg = load_yaml(cand / "research_question.yaml")
+            if isinstance(cfg, dict) and cfg.get("research_question"):
+                return cfg["research_question"]
         return None
 
     def _extract_config(self) -> dict:
@@ -535,6 +580,7 @@ def main():
         print(f"System: {result.campaign.system.name} v{result.campaign.system.version}")
         print(f"Research question: {result.campaign.research_question}")
         print(f"Algorithm: {result.campaign.algorithm_used}")
+        print(f"Models: {result.campaign.models_used}")
         print(f"Candidates: {len(result.candidates)}")
         print(f"Edges: {len(result.candidate_edges)}")
         print(f"Measurements: {len(result.measurements)}")

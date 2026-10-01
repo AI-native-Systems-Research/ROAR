@@ -14,7 +14,8 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-from insert_adrs_campaign import CampaignInserter, detect_system_type, _parse_single_campaign
+from insert_adrs_campaign import CampaignInserter, _parse_single_campaign
+from system_detection import detect_system_type
 
 
 def get_folder_stats(folder_path: Path) -> dict:

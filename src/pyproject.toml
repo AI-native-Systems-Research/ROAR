@@ -29,6 +29,12 @@ dependencies = [
 gpu = [
     "fastembed-gpu>=0.4.0",
     "onnxruntime-gpu>=1.18.0",
+    # onnxruntime-gpu dlopen()s these at session creation and ships neither; declaring
+    # them here keeps `uv run` from removing them (a `uv pip install` does not survive
+    # the next sync). Skip if the cluster provides cuda/cudnn modules instead.
+    "nvidia-cuda-runtime-cu12>=12.4",
+    "nvidia-cudnn-cu12>=9.0",
+    "nvidia-cublas-cu12>=12.4",
 ]
 
 [[tool.uv.index]]

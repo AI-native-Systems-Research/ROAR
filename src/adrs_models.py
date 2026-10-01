@@ -76,9 +76,9 @@ class ADRSCampaign(BaseModel):
         None,
         description="Human-readable name for this campaign. Often derived from folder name or run ID."
     )
-    research_question: str | None = Field(
-        None,
-        description="The hypothesis or question this campaign investigated. Free-form text."
+    research_question: str = Field(
+        ...,
+        description="The hypothesis or question this campaign investigated. Free-form text. Required."
     )
     started_at: datetime | None = Field(
         None,
