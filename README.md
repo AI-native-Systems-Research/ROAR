@@ -11,7 +11,7 @@ AI-driven research systems (ADRS) like OpenEvolve, SkyDiscover, and GEPA each pr
 
 - **900+** runs ingested
 - **7** problems covered
-- **13** generator models
+- **14** generator models
 - **6** optimization mechanisms
 
 ## Supported Systems
@@ -39,7 +39,6 @@ If you use ROAR in your research, please cite our preprint:
   author       = {Lin, Leo Y. and Ramani, Vishakha and Celik, Z. Berkay and Castro, Paul and Ellis, Marquita},
   year         = {2026},
   note         = {Preprint},
-  howpublished = {\url{https://github.com/<org>/<repo>}}
 }
 ```
 
