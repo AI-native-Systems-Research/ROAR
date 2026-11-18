@@ -56,6 +56,7 @@ SEED_SLUGS = (
     "cheng2025barbarians@v1",
     "gupta2026harness@v1",
     "ibm-ai-native-systems@v1",
+    "roar",
 )
 
 DEFAULT_ASSESSOR = {

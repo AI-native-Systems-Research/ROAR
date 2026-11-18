@@ -541,3 +541,22 @@ def test_allocate_concurrent_connections_get_distinct_slugs(db):
     assert not errors, errors
     assert len(results) == 20 and len(set(results)) == 20
     assert all(SLUG_RE.match(s) for s in results)
+
+
+# =============================================================================
+# ROAR-authored campaigns reference the `roar` source (spec: Seed)
+# =============================================================================
+
+def test_roar_authored_upload_references_roar_source(fresh_db, prov):
+    url = fresh_db()
+    rs = prov.ROAR_SOURCE
+    cols = ("slug", "title", "version", "year", "url", "license_spdx", "redistribution", "attribution",
+            "authors", "bibtex")
+    vals = ["roar"] + [rs.get(k) for k in cols[1:]]
+    with psycopg.connect(url) as conn:  # direct insert: the helper's `url` arg collides with the column
+        conn.execute(f"INSERT INTO source_datasets ({', '.join(cols)}) VALUES ({', '.join(['%s'] * len(cols))})", vals)
+        conn.commit()
+    p = build_parsed(source={"slug": "roar", "consent": True})
+    assert insert(url, p, submitted_by=ALICE) is True
+    cid, _ = campaign_row(url, p.campaign.name)
+    assert _mapping(url, cid) == ("roar", ALICE)

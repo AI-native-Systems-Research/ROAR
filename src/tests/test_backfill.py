@@ -191,4 +191,4 @@ def test_backfill_empty_db(fresh_db):
     url = fresh_db(provenance=False)
     counts = import_backfill().backfill(url)
     assert _nonzero(counts) == {}
-    assert len(fetchall(url, "SELECT slug FROM source_datasets")) == 4
+    assert len(fetchall(url, "SELECT slug FROM source_datasets")) == len(SEED_SLUGS)

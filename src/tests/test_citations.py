@@ -247,3 +247,49 @@ def test_format_bibtex_one_entry_per_source(prov):
 def test_format_bad_fmt_raises_value_error(prov, fmt):
     with pytest.raises(ValueError):
         prov.format_citations([_src()], fmt=fmt)
+
+
+# --- ROAR-authored campaigns (spec: the `roar` source) ------------------------------
+
+_SPEC_SOURCE_COLS = ["slug", "title", "version", "year", "url", "license_spdx", "redistribution",
+                     "attribution", "authors", "bibtex", "consent_recorded_at"]
+
+
+def _roar_frames(prov):
+    import pandas as pd
+    roar = {k: prov.ROAR_SOURCE.get(k) for k in _SPEC_SOURCE_COLS}
+    roar["slug"] = "roar"
+    other = {k: None for k in _SPEC_SOURCE_COLS}
+    other.update(slug="zz-other@v1", title="Other dataset", version="v1", year=2026, url="https://example.com/o",
+                 license_spdx="CC-BY-4.0", redistribution="full", attribution="named", authors="Alice Test")
+    sources = pd.DataFrame([roar, other], columns=_SPEC_SOURCE_COLS)
+    ids = {k: str(uuid.uuid4()) for k in ("r1", "r2", "o1")}
+    cs = pd.DataFrame({"campaign_id": [ids["r1"], ids["r2"], ids["o1"]],
+                       "source_slug": ["roar", "roar", "zz-other@v1"]})
+    return ids, cs, sources
+
+
+def test_required_citations_roar_authored_only_is_roar_alone(prov):
+    ids, cs, sources = _roar_frames(prov)
+    out = prov.required_citations([ids["r1"], ids["r2"]], cs, sources)
+    assert [d["slug"] for d in out] == ["roar"]
+    assert _norm(out[0]["bibtex"]) == _norm(prov.ROAR_SOURCE["bibtex"])
+
+
+def test_required_citations_roar_not_duplicated_with_other_sources(prov):
+    ids, cs, sources = _roar_frames(prov)
+    out = prov.required_citations([ids["r1"], ids["o1"]], cs, sources)
+    assert [d["slug"] for d in out] == ["roar", "zz-other@v1"]
+
+
+def test_required_citations_roar_in_extra_sources_not_duplicated(prov):
+    ids, cs, sources = _roar_frames(prov)
+    out = prov.required_citations([ids["o1"]], cs, sources, extra_sources=["roar"])
+    assert [d["slug"] for d in out] == ["roar", "zz-other@v1"]
+
+
+def test_format_citations_roar_alone_emits_one_entry(prov):
+    ids, cs, sources = _roar_frames(prov)
+    text = prov.format_citations(prov.required_citations([ids["r1"]], cs, sources), fmt="bibtex")
+    assert text.count("@misc{lin2026roar") == 1
+    assert text.count("@") == 1

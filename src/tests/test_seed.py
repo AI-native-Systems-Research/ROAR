@@ -47,6 +47,11 @@ EXPECTED = {
         "authors": "IBM Research AI-Native Systems",
         "bibtex": None,
     },
+    "roar": {
+        "title": "ROAR: Unifying Runs across Heterogeneous AI-Driven Research Systems",
+        "year": 2026,
+        "url": None,
+    },
 }
 
 
@@ -98,7 +103,7 @@ def _field(bib: str, name: str) -> str | None:
     return m2.group(0).strip()
 
 
-def test_seed_has_exactly_four_slugs():
+def test_seed_has_exactly_the_spec_slugs():
     assert set(_load()) == set(SEED_SLUGS)
 
 
@@ -154,3 +159,16 @@ def test_seed_ibm_has_no_bibtex():
     e = _load()["ibm-ai-native-systems@v1"]
     assert e.get("bibtex") is None
     assert e.get("year") is None and e.get("url") is None
+
+
+def test_seed_roar_row_equals_roar_source():
+    """Spec: the `roar` seed row is ROAR itself; every field equals provenance.ROAR_SOURCE."""
+    try:
+        import provenance
+    except ImportError as e:  # pragma: no cover - red phase
+        pytest.fail(f"spec module provenance not importable: {e}")
+    e = _load()["roar"]
+    rs = provenance.ROAR_SOURCE
+    norm = lambda v: " ".join(v.split()) if isinstance(v, str) else v
+    for k in ("title", "version", "year", "url", "license_spdx", "redistribution", "attribution", "authors", "bibtex"):
+        assert norm(e.get(k)) == norm(rs.get(k)), f"roar.{k}"
