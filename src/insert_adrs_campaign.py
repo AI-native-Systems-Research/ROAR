@@ -25,12 +25,93 @@ from pathlib import Path
 
 import psycopg
 
-from adrs_models import ADRSParsedCampaign, ADRSArtifact
+from adrs_models import ADRSParsedCampaign, ADRSArtifact, ADRSAssessor, ADRSSource
+from provenance import ProvenanceError, label, normalize_submitter
 from system_detection import detect_system_type
 
 DATABASE_URL = os.environ.get(
     "DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/adrs"
 )
+
+PROVENANCE_KEYS = ("author", "version", "assessor", "source")
+NAMED_REQUIRED_FIELDS = ("slug", "title", "version", "url", "license_spdx", "redistribution", "authors")
+SOURCE_ROW_FIELDS = ("slug", "title", "version", "year", "url", "license_spdx", "redistribution",
+                     "attribution", "authors", "bibtex", "owner")
+
+
+def resolve_provenance_input(campaign_path: Path, root: Path) -> dict:
+    """Merge every author_input.json from root down to campaign_path (both inclusive).
+
+    Per top-level key, the file nearest the campaign wins; nested dicts (assessor,
+    source) are replaced whole. Only author, version, assessor and source are returned.
+    Never reads above root.
+    """
+    root = Path(root).resolve()
+    campaign_path = Path(campaign_path).resolve()
+    rel = campaign_path.relative_to(root)  # ValueError if campaign_path is not under root
+    chain = [root]
+    for part in rel.parts:
+        chain.append(chain[-1] / part)
+
+    merged: dict = {}
+    for folder in chain:
+        f = folder / "author_input.json"
+        if not f.is_file():
+            continue
+        try:
+            with open(f) as fh:
+                data = json.load(fh)
+        except (json.JSONDecodeError, OSError):
+            continue
+        if isinstance(data, dict):
+            merged.update({k: data[k] for k in PROVENANCE_KEYS if k in data})
+    return merged
+
+
+def allocate_anon_slug(conn) -> tuple[str, str]:
+    """Take nextval('anon_contributor_seq') once -> (slug, title)."""
+    with conn.cursor() as cur:
+        cur.execute("SELECT nextval('anon_contributor_seq')")
+        n = cur.fetchone()[0]
+    return f"contributor-{label(n)}@v1", f"Independent contributor {label(n)}"
+
+
+def allocate_job_anon_slug(database_url: str | None = None) -> str:
+    """Allocate (and commit) one anonymous slug for an upload job."""
+    with psycopg.connect(database_url or DATABASE_URL) as conn:
+        slug, _title = allocate_anon_slug(conn)
+        conn.commit()
+    return slug
+
+
+def is_anonymous_first_upload(source) -> bool:
+    """An anonymous source block without a slug (the server assigns one)."""
+    if source is None:
+        return False
+    if isinstance(source, ADRSSource):
+        source = source.model_dump()
+    return isinstance(source, dict) and source.get("attribution") == "anonymous" and not source.get("slug")
+
+
+def check_anonymous_blocks(sources) -> bool:
+    """True if any source block is an anonymous first upload. Raises ProvenanceError
+    unless all such blocks are identical (one anonymous contributor per upload)."""
+    blocks = [ADRSSource.model_validate(s).model_dump() if isinstance(s, dict) else s.model_dump()
+              for s in sources if is_anonymous_first_upload(s)]
+    if any(b != blocks[0] for b in blocks):
+        raise ProvenanceError(
+            "an upload may contain only one anonymous contributor: all anonymous source blocks must be identical"
+        )
+    return bool(blocks)
+
+
+def attach_provenance(parsed: ADRSParsedCampaign, prov: dict) -> ADRSParsedCampaign:
+    """Set parsed.assessor / parsed.source from resolved provenance input."""
+    if "assessor" in prov:
+        parsed.assessor = ADRSAssessor.model_validate(prov["assessor"])
+    if "source" in prov:
+        parsed.source = ADRSSource.model_validate(prov["source"])
+    return parsed
 
 
 class CampaignInserter:
@@ -59,17 +140,34 @@ class CampaignInserter:
                 cur.execute("SELECT COUNT(*) FROM campaigns;")
                 return cur.fetchone()[0]
 
-    def insert(self, parsed: ADRSParsedCampaign) -> bool:
-        """Insert all campaign data. Returns True if successful."""
+    def insert(
+        self,
+        parsed: ADRSParsedCampaign,
+        assigned_anon_slug: str | None = None,
+        submitted_by: str | None = None,
+    ) -> bool:
+        """Insert all campaign data with its source and generation-time evaluation, in
+        one transaction. Returns True if successful; raises ProvenanceError (after
+        rolling back) if a provenance rule is violated."""
         with psycopg.connect(self.database_url) as conn:
             try:
                 with conn.cursor() as cur:
+                    slug, anon_title = self._resolve_source(cur, parsed, assigned_anon_slug, submitted_by)
+                    campaign = parsed.campaign
+                    if anon_title is not None:
+                        # Anonymous: the label replaces the author; submitted_by keeps the submitter.
+                        campaign = campaign.model_copy(update={"author": anon_title})
                     self._ensure_system(cur, parsed.campaign.system)
-                    self._insert_campaign(cur, parsed.campaign)
+                    self._insert_campaign(cur, campaign)
                     self._insert_candidates_bulk(cur, parsed.candidates)
-                    self._insert_measurements_bulk(cur, parsed.measurements)
+                    evaluation_id = self._insert_evaluation(cur, parsed.assessor)
+                    self._insert_measurements_bulk(cur, parsed.measurements, evaluation_id)
                     self._insert_artifacts_bulk(cur, parsed.artifacts)
                     self._insert_candidate_edges_bulk(cur, parsed.candidate_edges)
+                    cur.execute(
+                        "INSERT INTO campaign_sources (campaign_id, source_slug, submitted_by) VALUES (%s, %s, %s)",
+                        (self.campaign_id, slug, normalize_submitter(submitted_by)),
+                    )
 
                 conn.commit()
                 return True
@@ -80,6 +178,103 @@ class CampaignInserter:
                 import traceback
                 traceback.print_exc()
                 raise
+
+    def _resolve_source(
+        self, cur: psycopg.Cursor, parsed: ADRSParsedCampaign,
+        assigned_anon_slug: str | None, submitted_by: str | None,
+    ) -> tuple[str, str | None]:
+        """Validate parsed.assessor/source and create the source row if needed.
+
+        Returns (source_slug, anonymous title or None). Raises ProvenanceError.
+        """
+        if parsed.assessor is None:
+            raise ProvenanceError("an assessor block is required")
+        src = parsed.source
+        if src is None:
+            raise ProvenanceError("a source block is required")
+        if src.consent is not True:
+            raise ProvenanceError("source.consent must be true")
+        if src.attribution not in (None, "named", "anonymous"):
+            raise ProvenanceError("source.attribution must be 'named' or 'anonymous'")
+        if src.redistribution not in (None, "full", "pointer_only"):
+            raise ProvenanceError("source.redistribution must be 'full' or 'pointer_only'")
+        submitter = normalize_submitter(submitted_by)
+        supplied = {k: v for k, v in src.model_dump().items() if v is not None and k != "consent"}
+
+        if src.attribution == "anonymous" and not src.slug:
+            # Anonymous first upload: the server-assigned slug identifies the contributor.
+            if any(v is not None for v in (src.title, src.authors, src.bibtex)):
+                raise ProvenanceError("an anonymous source must not include slug, title, authors or bibtex")
+            if assigned_anon_slug is None:
+                raise ProvenanceError("an anonymous first upload needs a server-assigned slug")
+            if submitter is None:
+                raise ProvenanceError("an anonymous first upload needs a submitter")
+            self._check_new_source(src)
+            title = "Independent contributor " + assigned_anon_slug.removeprefix("contributor-").rsplit("@", 1)[0]
+            row = dict(supplied, slug=assigned_anon_slug, title=title, owner=submitter)
+            if self._create_source(cur, row):
+                return assigned_anon_slug, title
+            supplied = dict(supplied, slug=assigned_anon_slug)  # batch: the row already exists
+        elif src.attribution == "named" and (not src.slug or self._fetch_source(cur, src.slug) is None):
+            # New named source.
+            missing = [f for f in NAMED_REQUIRED_FIELDS if getattr(src, f) is None]
+            if missing:
+                raise ProvenanceError(f"a named source requires {', '.join(missing)}")
+            if src.title.lower().startswith("independent contributor"):
+                raise ProvenanceError("a named source title must not start with 'Independent contributor'")
+            self._check_new_source(src)
+            if self._create_source(cur, dict(supplied, owner=submitter)):
+                return src.slug, None
+        elif not src.slug:
+            raise ProvenanceError("a source block needs a slug, or attribution 'named' or 'anonymous'")
+
+        # Existing-source reference.
+        slug = supplied["slug"]
+        row = self._fetch_source(cur, slug)
+        if row is None:
+            raise ProvenanceError(f"unknown source slug {slug!r}")
+        if row["redistribution"] == "pointer_only":
+            raise ProvenanceError(f"source {slug!r} is pointer_only and cannot receive uploads")
+        if row["attribution"] == "anonymous" and (row["owner"] is None or row["owner"] != submitter):
+            raise ProvenanceError(f"only the original submitter may upload to anonymous source {slug!r}")
+        differing = [k for k, v in supplied.items() if row[k] != v]
+        if differing:
+            raise ProvenanceError(f"source {slug!r} exists with different {', '.join(differing)}")
+        return slug, row["title"] if row["attribution"] == "anonymous" else None
+
+    @staticmethod
+    def _check_new_source(src):
+        if src.redistribution is None:
+            raise ProvenanceError("source.redistribution is required")
+        if src.redistribution == "pointer_only":
+            raise ProvenanceError("pointer_only sources cannot be uploaded")
+
+    @staticmethod
+    def _fetch_source(cur: psycopg.Cursor, slug: str) -> dict | None:
+        cur.execute(f"SELECT {', '.join(SOURCE_ROW_FIELDS)} FROM source_datasets WHERE slug = %s", (slug,))
+        row = cur.fetchone()
+        return dict(zip(SOURCE_ROW_FIELDS, row)) if row else None
+
+    @staticmethod
+    def _create_source(cur: psycopg.Cursor, row: dict) -> bool:
+        """Insert a source row (consent recorded now). False if the slug already exists."""
+        cols = list(row)
+        cur.execute(
+            f"INSERT INTO source_datasets ({', '.join(cols)}, consent_recorded_at) "
+            f"VALUES ({', '.join(['%s'] * len(cols))}, now()) "
+            "ON CONFLICT (slug) DO NOTHING RETURNING slug",
+            [row[c] for c in cols],
+        )
+        return cur.fetchone() is not None
+
+    def _insert_evaluation(self, cur: psycopg.Cursor, assessor: ADRSAssessor):
+        """Insert the generation-time evaluation for this campaign (kind is never taken from input)."""
+        cur.execute(
+            "INSERT INTO evaluations (assessor_name, assessor_version, platform, code_ref, kind) "
+            "VALUES (%s, %s, %s, %s, 'generation_time') RETURNING id",
+            (assessor.name, assessor.version, assessor.platform, assessor.code_ref),
+        )
+        return cur.fetchone()[0]
 
     def _ensure_system(self, cur: psycopg.Cursor, system):
         """Ensure the system exists and get its ID (atomic get-or-create)."""
@@ -169,8 +364,8 @@ class CampaignInserter:
             if candidate.external_id:
                 self.candidate_ids[candidate.external_id] = candidate_db_id
 
-    def _insert_measurements_bulk(self, cur: psycopg.Cursor, measurements: dict):
-        """Insert all measurement records using bulk insert."""
+    def _insert_measurements_bulk(self, cur: psycopg.Cursor, measurements: dict, evaluation_id=None):
+        """Insert all measurement records using bulk insert, stamped with evaluation_id."""
         if not measurements:
             return
 
@@ -182,11 +377,11 @@ class CampaignInserter:
                 continue
 
             for measurement in measurement_list:
-                rows.append((candidate_id, measurement.name, measurement.value))
+                rows.append((candidate_id, measurement.name, measurement.value, evaluation_id))
 
         if rows:
             cur.executemany(
-                "INSERT INTO measurements (candidate_id, name, value) VALUES (%s, %s, %s)",
+                "INSERT INTO measurements (candidate_id, name, value, evaluation_id) VALUES (%s, %s, %s, %s)",
                 rows,
             )
 
@@ -244,13 +439,17 @@ class CampaignInserter:
             )
 
 
-def insert_campaign(folder_path: Path, system_type: str | None = None) -> bool:
+def insert_campaign(
+    folder_path: Path, system_type: str | None = None, provenance_root: Path | None = None
+) -> bool:
     """Insert a single campaign into the database.
 
     Args:
         folder_path: Path to campaign folder
         system_type: System type ('skydiscover', 'openevolve', 'gepa', 'shinka',
             'coding_agent') or None for auto-detect
+        provenance_root: Topmost folder whose author_input.json applies (default:
+            folder_path). An anonymous upload gets its own slug.
 
     Returns:
         True if successful, False otherwise
@@ -310,9 +509,13 @@ def insert_campaign(folder_path: Path, system_type: str | None = None) -> bool:
         f"{len(parsed.artifacts)} artifacts"
     )
 
+    prov = resolve_provenance_input(folder_path, provenance_root or folder_path)
+    attach_provenance(parsed, prov)
+    anon_slug = allocate_job_anon_slug() if is_anonymous_first_upload(parsed.source) else None
+
     # Insert into database
     inserter = CampaignInserter()
-    if inserter.insert(parsed):
+    if inserter.insert(parsed, assigned_anon_slug=anon_slug, submitted_by=prov.get("author")):
         print(f"  Successfully inserted campaign: {parsed.campaign.name}")
         return True
     else:
@@ -415,6 +618,13 @@ def insert_all_campaigns(
         print("No campaigns were successfully parsed")
         return 0, len(parse_errors)
 
+    # Resolve provenance per campaign (root .. campaign author_input.json files). All
+    # anonymous first-upload blocks must be identical; they share one allocated slug.
+    provenance = {path: resolve_provenance_input(path, campaigns_dir) for path, _ in parsed_campaigns}
+    anon_slug = None
+    if check_anonymous_blocks([p.get("source") for p in provenance.values()]):
+        anon_slug = allocate_job_anon_slug()
+
     # Phase 2: Insert all campaigns
     print("Phase 2: Inserting campaigns into database...")
     success_count = 0
@@ -423,7 +633,9 @@ def insert_all_campaigns(
     inserter = CampaignInserter()
     for _i, (path, parsed) in enumerate(parsed_campaigns):
         try:
-            if inserter.insert(parsed):
+            prov = provenance[path]
+            attach_provenance(parsed, prov)
+            if inserter.insert(parsed, assigned_anon_slug=anon_slug, submitted_by=prov.get("author")):
                 print(f"  Inserted: {parsed.campaign.name or path.name}")
                 success_count += 1
             else:

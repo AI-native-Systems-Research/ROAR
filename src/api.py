@@ -29,7 +29,14 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from insert_adrs_campaign import CampaignInserter
+from insert_adrs_campaign import (
+    CampaignInserter,
+    allocate_job_anon_slug,
+    attach_provenance,
+    check_anonymous_blocks,
+    resolve_provenance_input,
+)
+from provenance import ProvenanceError
 from system_detection import detect_system_type
 from parse_skydiscover import parse_skydiscover_campaign
 from parse_openevolve import parse_openevolve_campaign
@@ -100,6 +107,7 @@ class JobStatus(BaseModel):
     current: str | None = None
     message: str | None = None
     result: UploadResponse | None = None
+    anon_slug: str | None = None  # server-assigned anonymous source slug for this job, if any
 
 
 def validate_tar_file(tar_path: Path) -> tuple[bool, str]:
@@ -380,6 +388,20 @@ async def process_upload_job(
         print(f"[JOB {job_id}] Extraction complete, found {len(campaign_paths)} campaigns", flush=True)
 
         total_campaigns = len(campaign_paths)
+
+        # Resolve provenance (author_input.json from the upload root down to each campaign)
+        # before anything is inserted. One anonymous contributor per upload: all anonymous
+        # first-upload blocks must be identical and share one slug for the whole job.
+        provenance = {p: resolve_provenance_input(p, extract_path) for p in campaign_paths}
+        try:
+            has_anon = check_anonymous_blocks([prov.get("source") for prov in provenance.values()])
+        except ValueError as e:  # ProvenanceError or an invalid source block
+            shutil.rmtree(extract_path, ignore_errors=True)
+            upload_jobs[job_id].update({"status": "error", "message": f"Provenance error: {e}"})
+            return
+        anon_slug = await asyncio.to_thread(allocate_job_anon_slug) if has_anon else None
+        upload_jobs[job_id]["anon_slug"] = anon_slug
+
         upload_jobs[job_id].update({
             "progress": 0,
             "total": total_campaigns,
@@ -447,10 +469,11 @@ async def process_upload_job(
                 for parsed in parsed_list:
                     insert_start = time.time()
                     inserter = CampaignInserter()
+                    attach_provenance(parsed, provenance[campaign_path])
 
-                    # Insert into database (run in thread)
+                    # Insert into database (run in thread); submitted_by is the form author
                     insert_success = await asyncio.to_thread(
-                        inserter.insert, parsed
+                        inserter.insert, parsed, assigned_anon_slug=anon_slug, submitted_by=author
                     )
                     insert_elapsed = time.time() - insert_start
                     print(f"[JOB {job_id}] DB insert {parsed.campaign.name or campaign_path.name}: {insert_elapsed:.2f}s", flush=True)
@@ -605,6 +628,7 @@ async def upload_campaign(
         "current": None,
         "message": "Starting processing...",
         "result": None,
+        "anon_slug": None,
     }
 
     # Start background processing
@@ -726,12 +750,13 @@ async def process_parsed_upload_job(
         total_artifacts = 0
         total_edges = 0
 
-        for idx, line in enumerate(lines):
-            upload_jobs[job_id].update({
-                "progress": idx,
-                "current": f"Campaign {idx + 1}/{total_campaigns}",
-            })
+        # Provenance defaults: a root author_input.json next to _parsed.jsonl. A line's own
+        # assessor/source block takes precedence over it.
+        root_prov = resolve_provenance_input(parsed_jsonl_path.parent, parsed_jsonl_path.parent)
 
+        # Validate every line before inserting anything.
+        parsed_lines = []
+        for idx, line in enumerate(lines):
             try:
                 # Parse JSON
                 data = json.loads(line)
@@ -743,10 +768,37 @@ async def process_parsed_upload_job(
                 if author and not parsed.campaign.author:
                     parsed.campaign.author = author
 
-                # Insert into database
+                attach_provenance(parsed, {k: root_prov[k] for k in ("assessor", "source")
+                                           if k in root_prov and getattr(parsed, k) is None})
+                parsed_lines.append((idx, parsed))
+            except json.JSONDecodeError as e:
+                errors.append(f"Line {idx + 1}: Invalid JSON - {e}")
+            except Exception as e:
+                errors.append(f"Line {idx + 1}: Validation failed - {e}")
+
+        # One anonymous contributor per upload: identical blocks, one slug per job.
+        try:
+            has_anon = check_anonymous_blocks([parsed.source for _, parsed in parsed_lines])
+        except ProvenanceError as e:
+            shutil.rmtree(extract_path, ignore_errors=True)
+            upload_jobs[job_id].update({"status": "error", "message": f"Provenance error: {e}"})
+            return
+        anon_slug = await asyncio.to_thread(allocate_job_anon_slug) if has_anon else None
+        upload_jobs[job_id]["anon_slug"] = anon_slug
+
+        for idx, parsed in parsed_lines:
+            upload_jobs[job_id].update({
+                "progress": idx,
+                "current": f"Campaign {idx + 1}/{total_campaigns}",
+            })
+
+            try:
+                # Insert into database; submitted_by is the form author
                 insert_start = time.time()
                 inserter = CampaignInserter()
-                insert_success = await asyncio.to_thread(inserter.insert, parsed)
+                insert_success = await asyncio.to_thread(
+                    inserter.insert, parsed, assigned_anon_slug=anon_slug, submitted_by=author
+                )
                 insert_elapsed = time.time() - insert_start
 
                 if not insert_success:
@@ -768,10 +820,8 @@ async def process_parsed_upload_job(
                     "candidates": len(parsed.candidates),
                 })
 
-            except json.JSONDecodeError as e:
-                errors.append(f"Line {idx + 1}: Invalid JSON - {e}")
             except Exception as e:
-                errors.append(f"Line {idx + 1}: Validation failed - {e}")
+                errors.append(f"Line {idx + 1}: Insertion failed - {e}")
 
             await asyncio.sleep(0)
 
@@ -890,6 +940,7 @@ async def upload_parsed_campaign(
         "current": None,
         "message": "Starting processing...",
         "result": None,
+        "anon_slug": None,
     }
 
     # Start background processing
@@ -931,6 +982,52 @@ async def list_upload_jobs() -> list[JobStatus]:
     return [JobStatus(**job) for job in upload_jobs.values()]
 
 
+# Provenance blocks (docs/PROVENANCE_SPEC.md), shared by /upload/instructions and /upload/formats.
+PROVENANCE_INSTRUCTIONS = {
+    "description": (
+        "Every campaign REQUIRES an assessor block and a source block, or it is rejected. Put them in "
+        "author_input.json (a root file applies to every campaign below it; a nearer file overrides it "
+        "per top-level key) or, for /upload/parsed, on each _parsed.jsonl line (a line's block beats a "
+        "root author_input.json next to _parsed.jsonl)."
+    ),
+    "assessor": {
+        "name": "Assessor (evaluator) name (required)",
+        "version": "Assessor version (required)",
+        "platform": "Platform the assessor ran on, e.g. 'linux-x86_64' (required, non-empty; 'unknown' allowed)",
+        "code_ref": "Reference to the assessor code, e.g. a commit URL (optional)",
+    },
+    "source": {
+        "consent": "Must be true: you consent to ROAR storing and redistributing this data",
+        "attribution": "'named' or 'anonymous'",
+        "redistribution": "'full' ('pointer_only' sources are not accepted for upload)",
+        "license_spdx": "SPDX license identifier, e.g. 'CC-BY-4.0'",
+        "new_named_source": (
+            "attribution='named' with slug (versioned, e.g. 'mydataset@v1'), title, version, url, "
+            "license_spdx, redistribution and authors; optional year and bibtex"
+        ),
+        "anonymous_contributor": (
+            "attribution='anonymous' with redistribution, license_spdx and consent, and NO slug, title or "
+            "authors. The server assigns a slug (e.g. 'contributor-A@v1') and returns it as anon_slug in "
+            "GET /upload/status/{job_id}"
+        ),
+        "existing_source": (
+            "{'slug': '<slug>', 'consent': true}. An anonymous source accepts re-uploads only from its "
+            "original submitter (the form author)"
+        ),
+    },
+    "example": {
+        "assessor": {"name": "my-evaluator", "version": "1.2.0", "platform": "linux-x86_64",
+                     "code_ref": "https://github.com/acme/evaluator/commit/abc123"},
+        "source": {"attribution": "anonymous", "redistribution": "full", "license_spdx": "CC-BY-4.0",
+                   "consent": True},
+    },
+    "rules": [
+        "One anonymous contributor per upload; keep the returned anon_slug.",
+        "Don't put personal names in folder names or file paths; they become campaign names and artifact URIs.",
+    ],
+}
+
+
 @app.get("/upload/instructions")
 async def get_upload_instructions():
     """Get structured workflow instructions for uploading campaign data.
@@ -943,7 +1040,8 @@ async def get_upload_instructions():
             "Try /upload first with detected system_type. Fall back to /upload/parsed if no "
             "parser matches OR if parsing fails. Two metadata items are mandatory for every "
             "campaign: author_input.json (batch-level author + version, see step_0) and "
-            "research_question (per-campaign, REQUIRED, see step_0b)."
+            "research_question (per-campaign, REQUIRED, see step_0b). Every campaign also needs "
+            "assessor and source provenance blocks (see step_0c)."
         ),
         "step_0_provide_author_version": {
             "description": (
@@ -974,6 +1072,7 @@ async def get_upload_instructions():
             },
             "why": "Centralizes batch upload metadata in one place. Author identifies who ran the campaign; version links to the exact code that produced it.",
         },
+        "step_0c_provide_assessor_and_source": PROVENANCE_INSTRUCTIONS,
         "step_0b_set_research_question": {
             "description": (
                 "research_question is REQUIRED for every campaign (DB NOT NULL, Pydantic required). "
@@ -1575,6 +1674,8 @@ def _get_pydantic_schema_summary() -> dict:
         ADRSArtifact,
         ADRSCandidateEdge,
         ADRSSystem,
+        ADRSAssessor,
+        ADRSSource,
     )
 
     def summarize_model(model_class) -> dict:
@@ -1602,6 +1703,8 @@ def _get_pydantic_schema_summary() -> dict:
         "ADRSMeasurement": summarize_model(ADRSMeasurement),
         "ADRSArtifact": summarize_model(ADRSArtifact),
         "ADRSCandidateEdge": summarize_model(ADRSCandidateEdge),
+        "ADRSAssessor": summarize_model(ADRSAssessor),
+        "ADRSSource": summarize_model(ADRSSource),
     }
 
 
@@ -1707,6 +1810,7 @@ async def get_upload_formats():
             },
             "note": "All parsers (built-in and custom) should read this file and map author to ADRSCampaign.author and version to ADRSSystem.version",
         },
+        "provenance": PROVENANCE_INSTRUCTIONS,
         "output_format": {
             "description": "For /upload/parsed, create _parsed.jsonl at archive root",
             "format": "JSON Lines - one ADRSParsedCampaign JSON object per line",

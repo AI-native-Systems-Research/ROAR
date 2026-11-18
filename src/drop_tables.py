@@ -10,6 +10,9 @@ DATABASE_URL = os.environ.get(
 )
 
 TABLES = [
+    "campaign_sources",
+    "source_datasets",
+    "evaluations",
     "artifacts",
     "measurements",
     "candidate_edges",
@@ -17,6 +20,8 @@ TABLES = [
     "campaigns",
     "systems",
 ]
+
+SEQUENCES = ["anon_contributor_seq"]
 
 
 def main():
@@ -33,6 +38,9 @@ def main():
             for table in TABLES:
                 cur.execute(f"DROP TABLE IF EXISTS {table} CASCADE")
                 print(f"  Dropped: {table}")
+            for sequence in SEQUENCES:
+                cur.execute(f"DROP SEQUENCE IF EXISTS {sequence} CASCADE")
+                print(f"  Dropped: {sequence}")
         conn.commit()
 
     print("All tables dropped successfully.")

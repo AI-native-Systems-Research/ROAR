@@ -250,6 +250,59 @@ class ADRSCandidateEdge(BaseModel):
     )
 
 
+class ADRSAssessor(BaseModel):
+    """The assessor (evaluator) that produced the campaign's scores at generation time."""
+
+    name: str = Field(
+        ...,
+        description="Assessor name (e.g., the evaluator script or harness)."
+    )
+    version: str = Field(
+        ...,
+        description="Assessor version (semver, git hash, or descriptive string)."
+    )
+    platform: str = Field(
+        ...,
+        min_length=1,
+        description="Platform the assessor ran on (e.g., 'linux-x86_64'). Use 'unknown' if not known."
+    )
+    code_ref: str | None = Field(
+        None,
+        description="Reference to the assessor code (e.g., a commit URL)."
+    )
+
+
+class ADRSSource(BaseModel):
+    """The source dataset a campaign belongs to (for citation and licensing).
+
+    Either a new named source (attribution='named' with slug, title, version, url,
+    license_spdx, redistribution, authors), an anonymous first upload
+    (attribution='anonymous' without slug, title or authors; the server assigns the
+    slug), or a reference to an existing source by slug. consent must be true.
+    """
+
+    slug: str | None = Field(
+        None,
+        description="Versioned source identifier (e.g., 'mydataset@v1'). Omit for an anonymous first upload."
+    )
+    title: str | None = Field(None, description="Dataset title (named sources).")
+    version: str | None = Field(None, description="Dataset version (e.g., 'v1').")
+    year: int | None = Field(None, description="Publication year.")
+    url: str | None = Field(None, description="Dataset or paper URL.")
+    license_spdx: str | None = Field(None, description="SPDX license identifier (e.g., 'CC-BY-4.0').")
+    redistribution: str | None = Field(
+        None,
+        description="'full' (ROAR may redistribute the data). 'pointer_only' sources are not accepted for upload."
+    )
+    attribution: str | None = Field(None, description="'named' or 'anonymous'.")
+    authors: str | None = Field(None, description="Authors, BibTeX style ('A and B'). Named sources only.")
+    bibtex: str | None = Field(None, description="BibTeX entry to cite (optional, named sources only).")
+    consent: bool | None = Field(
+        None,
+        description="Must be true: the submitter consents to ROAR storing and redistributing this data."
+    )
+
+
 class ADRSParsedCampaign(BaseModel):
     """Complete campaign data ready for database insertion.
 
@@ -282,6 +335,14 @@ class ADRSParsedCampaign(BaseModel):
     candidate_edges: list[ADRSCandidateEdge] = Field(
         default_factory=list,
         description="Parent/context relationships between candidates."
+    )
+    assessor: ADRSAssessor | None = Field(
+        None,
+        description="Assessor that produced the scores. Required for insertion."
+    )
+    source: ADRSSource | None = Field(
+        None,
+        description="Source dataset block. Required for insertion."
     )
 
     class Config:

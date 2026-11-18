@@ -125,6 +125,54 @@ CREATE INDEX IF NOT EXISTS idx_candidates_direct_code_embedding ON candidates
     USING hnsw (direct_code_embedding vector_cosine_ops);
 """
 
+# Provenance and assessor versioning (docs/PROVENANCE_SPEC.md). Kept separate from
+# SCHEMA, which external loaders apply verbatim to frozen databases. Additive and
+# idempotent; applied after SCHEMA.
+PROVENANCE_SCHEMA = """
+-- Source datasets: one row per cited dataset (versioned slug, e.g. 'cheng2025barbarians@v1')
+CREATE TABLE IF NOT EXISTS source_datasets (
+    slug TEXT PRIMARY KEY,
+    title TEXT,
+    version TEXT,
+    year INTEGER,
+    url TEXT,
+    license_spdx TEXT,                -- NULL = none declared/recorded
+    redistribution TEXT NOT NULL CHECK (redistribution IN ('full', 'pointer_only')),
+    attribution TEXT NOT NULL CHECK (attribution IN ('named', 'anonymous')),
+    authors TEXT,
+    bibtex TEXT,                      -- only if supplied; never generated into the DB
+    consent_recorded_at TIMESTAMPTZ,  -- NULL = not recorded; set on first insert only
+    owner TEXT,                       -- normalized submitter; NEVER exported
+    CHECK (attribution <> 'anonymous' OR (authors IS NULL AND bibtex IS NULL)),
+    CHECK (attribution <> 'named' OR (authors IS NOT NULL AND title IS NOT NULL
+           AND title NOT ILIKE 'independent contributor%'))
+);
+
+-- Anonymous contributor labels: contributor-A@v1, contributor-B@v1, ...
+CREATE SEQUENCE IF NOT EXISTS anon_contributor_seq START 1;
+
+-- Campaign -> source mapping (one source per campaign)
+CREATE TABLE IF NOT EXISTS campaign_sources (
+    campaign_id UUID PRIMARY KEY REFERENCES campaigns(id) ON DELETE CASCADE,
+    source_slug TEXT NOT NULL REFERENCES source_datasets(slug),
+    submitted_by TEXT                 -- normalized; NEVER exported; NULL for v1
+);
+
+-- Evaluations: the assessor that produced a set of measurements
+CREATE TABLE IF NOT EXISTS evaluations (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    assessor_name TEXT NOT NULL,
+    assessor_version TEXT NOT NULL,
+    platform TEXT NOT NULL,
+    code_ref TEXT,
+    kind TEXT NOT NULL CHECK (kind IN ('generation_time', 'regrade')),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- A measurement is generation-time iff evaluation_id IS NULL OR evaluations.kind = 'generation_time'
+ALTER TABLE measurements ADD COLUMN IF NOT EXISTS evaluation_id UUID REFERENCES evaluations(id);
+"""
+
 
 def create_database_if_not_exists(db_name):
     """Create the database if it doesn't exist."""
@@ -161,6 +209,7 @@ def main():
     with psycopg.connect(DATABASE_URL) as conn:
         with conn.cursor() as cur:
             cur.execute(SCHEMA)
+            cur.execute(PROVENANCE_SCHEMA)
         conn.commit()
     print("✓ All tables created successfully")
 
