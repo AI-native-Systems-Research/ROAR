@@ -1,0 +1,861 @@
+campaign_id,problem,model,algorithm,early_diversity,best_score,n_early_candidates,n_total_candidates,early_tokens
+007af652-cbc9-4d0c-88dc-e3920790318d,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1586,0,16,61,1381.62
+00c6e7ad-585f-4b85-905b-a688c37bb30e,Polynomino Packing,eb1-preview,evox,0.4018,0,11,55,1933.18
+0262f51e-e9b1-4fe3-86aa-55952a73eeae,Polynomino Packing,eb1-preview,evox,0.1356,43.7711,16,61,686.188
+02a2bb47-2b17-44b6-adbf-e2a6234df1f0,Polynomino Packing,eb1-preview,best_of_n,0.4592,72.969,12,31,1779.67
+02e8114c-aee8-45e2-b455-20717f231cf5,Polynomino Packing,eb1,best_of_n,0.123,82.3129,16,61,3453.94
+02f1443f-9bea-48a0-82e5-ba2b862147db,Bounded 2D Knapsack,Claude Opus 4.6,best_of_n,0.1882,100,16,61,1074.31
+02f35b2f-4d5f-4ed2-84c0-ddb62306ae06,Palindrome Hamiltonian Path,eb1-preview,evox,0.1791,0,16,61,2662.94
+03139fd5-cd00-432f-8f5d-8949c6cf6d43,Palindrome Hamiltonian Path,GPT-5.4,best_of_n,0.1737,0,16,61,2316.69
+03837a75-d8aa-475e-a513-ee16ccd95180,Bounded 2D Knapsack,GPT-OSS-20B,best_of_n,0.1576,95.2633,16,61,1024.75
+03e15934-e5e1-42fe-82c5-b9e927212f69,Bounded 2D Knapsack,GPT-5.4,best_of_n,0.136,99.6133,16,61,2901.75
+04098393-1598-4dc1-932e-c3de901123fb,Bounded 2D Knapsack,GPT-OSS-20B,evox,0.1733,95.9167,13,47,1651
+0432f24e-1142-45ff-8bd6-c58c930498bf,Palindrome Hamiltonian Path,Claude Opus 4.6,adaevolve,0.2641,0,17,62,3175.18
+04417159-e84e-4a96-86fe-dc7c48751c91,Polynomino Packing,eb1-delta-preview,evox,0.1417,43.6015,16,58,521.562
+045c549e-db0e-4537-9fd6-a757131e95b1,Polynomino Packing,eb1-preview,best_of_n,0.1926,68.0752,12,57,2344.33
+0494f426-2277-40ef-80b1-ca9863207fa0,Polynomino Packing,eb1-frontier-preview,adaevolve,0.314,79.7709,18,44,1144.17
+05345e38-687a-447f-982f-10d1df0e1434,Bounded 2D Knapsack,eb1,adaevolve,0.2422,100,17,56,2043.65
+053f379b-1aa4-4e11-8d2e-5cf5e10cf8ee,Bounded 2D Knapsack,eb1-pro,adaevolve,0.5695,100,5,14,2940.4
+05401127-b447-4bf4-99e8-61464997b245,Polynomino Packing,eb1-frontier-preview,evox,0.3774,0,9,29,1936
+058d0f24-3d34-4961-8bca-b2b6792e9d5e,Polynomino Packing,eb1-delta-preview,evox,0.1233,44.7704,16,61,558.125
+0593c54f-9def-45e4-9d5b-ff72847756bc,Palindrome Hamiltonian Path,eb1-preview,best_of_n,0.141,0,16,61,1580.25
+05b2d5dd-2dbe-4610-958a-19063f18efec,Bounded 2D Knapsack,eb1-delta-preview,evox,0.2179,100,10,37,2269.3
+06f48fa5-4721-459e-8ca7-aa691c9136f7,Bounded 2D Knapsack,GPT-OSS-20B,best_of_n,0.1648,95.9167,16,61,815.375
+072c86b6-324c-49db-9507-ddec7b5cda90,Palindrome Hamiltonian Path,GPT-5-mini,adaevolve,0.2199,0,17,60,1889.59
+073f81ec-137f-4e2e-8cb1-736e4a3fa64d,Polynomino Packing,GPT-OSS-20B,best_of_n,0.1766,44.9859,16,61,875.25
+07ce8c6d-fe94-474a-bc6d-fadfb5d8e621,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1773,0,16,61,1491.75
+089fcc31-81a9-4f31-97df-2513228377ec,Polynomino Packing,eb1-frontier-preview,evox,0.2379,59.2294,9,48,1905.44
+08dcf7ef-d6d6-4595-9b8e-b72f96a691e0,Palindrome Hamiltonian Path,GPT-5.4,adaevolve,0.2478,0,17,62,1605.88
+0916975a-8c46-4403-9f0d-d47eb4ce369e,Polynomino Packing,eb1-delta-preview,adaevolve,0.2485,22.1727,17,50,1628.94
+0919e32b-91d9-4d97-9c84-7d0c620f69cc,Palindrome Hamiltonian Path,eb1,adaevolve,0.3026,0,16,58,2146.75
+096410a3-eaf2-4ad4-8a46-1784fcf2f1d0,Bounded 2D Knapsack,GPT-5-mini,evox,0.2395,0,9,30,3115
+097facb3-292b-4c62-b59c-fb115f6b859f,Polynomino Packing,Kimi-K2.5,best_of_n,0.1656,37.7815,14,59,1837.5
+09c33746-99e3-4acf-be39-0f76381c0f11,Bounded 2D Knapsack,GPT-5.4,best_of_n,0.1632,99.6133,16,61,4630.62
+0a55d9a6-2596-4047-8be9-5f568b1800f9,Bounded 2D Knapsack,Gemini-2.5-Flash,evox,0.1995,0,12,48,3237.83
+0a8bac91-0403-4757-a76c-9fd209ff5256,Polynomino Packing,eb1,adaevolve,0.2694,15.6877,17,57,2087.24
+0ad02816-1f34-4184-8d61-0ee3cf9a1649,Palindrome Hamiltonian Path,eb1-preview,evox,0.1421,0,16,60,1797.06
+0af12576-d453-4735-b5e8-35c460f6a63e,Polynomino Packing,eb1-preview,best_of_n,0.1306,65.0494,16,61,2513.12
+0af52a07-4391-4c1e-9c4f-a1b1478aa92b,Bounded 2D Knapsack,Qwen-3.5-9B,best_of_n,0.2103,0,15,59,1587.6
+0b37fa77-6343-45bc-a078-b6c3f99e2225,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.2484,0,14,59,1528.57
+0b5ba8dd-ba9c-4bc0-a0d5-7fd8f6ac8232,Polynomino Packing,eb1-preview,evox,0.1327,47.6765,16,60,888.75
+0b653e67-49e2-4da4-937d-44ce200aaa00,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1522,0,16,60,1803
+0c932f98-d859-42b9-97b4-9154e5e97796,Palindrome Hamiltonian Path,eb1-preview,evox,0.1578,0,16,61,4251.19
+0c9b0e40-26f7-4679-b41b-d1b5035f8bb1,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1467,0,16,61,4039.5
+0cb35977-7d8c-47d4-b16a-34de068e80df,Bounded 2D Knapsack,Claude Opus 4.6,best_of_n,0.1602,100,16,61,1215.69
+0cebbb56-f4ab-466f-b6b5-bc49f93ab862,Bounded 2D Knapsack,GPT-5.4,adaevolve,0.223,100,17,52,4763.06
+0d189678-e8bf-4d3a-bd80-a11f30c838b6,Palindrome Hamiltonian Path,GPT-5.4,best_of_n,0.1969,0,13,50,1503.92
+0d32bb87-a668-43db-976c-fa99b5c003d5,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1627,0,15,59,1481.07
+0d5d31cb-896f-4031-99d3-7d74723c2c0a,Bounded 2D Knapsack,Kimi-K2.5,evox,0.2482,99.6133,8,40,1487.25
+0da7989e-3ed7-4c11-8fb1-ddd2ca32d407,Palindrome Hamiltonian Path,Kimi-K2.5,evox,0.221,0,9,32,3303.22
+0dd1f405-af5d-44de-ab59-3c5ffd193bbf,Polynomino Packing,eb1-preview,best_of_n,0.1367,59.5778,14,59,2532
+0de53114-d92e-400f-b974-5f5e25f9453e,Palindrome Hamiltonian Path,Kimi-K2.5,evox,0.244,0,9,22,2536.89
+0e94cb57-d97d-48ef-b88f-fd1dda78f395,Palindrome Hamiltonian Path,eb1-preview,evox,0.1865,0,16,60,1826.19
+0ec434b0-af1b-4244-b85a-5263891ead92,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1713,0,16,61,3632.69
+0f27d973-4848-4ef7-a58c-542ec9c1bdcf,Polynomino Packing,eb1-frontier-preview,evox,0.1689,72.097,16,61,1787.69
+0f2f52b0-cfa2-42d5-a80d-724cfb8ea269,Bounded 2D Knapsack,eb1-delta-preview,best_of_n,0.1596,100,16,61,2088.81
+0f7a5db7-41f6-4500-a6cd-72884e54373c,Polynomino Packing,Kimi-K2.5,adaevolve,0.3901,45.9252,16,37,1533.31
+0f9f38d6-6aa3-46fb-8651-1ff1ed1abe3e,Bounded 2D Knapsack,Qwen-3.5-9B,adaevolve,0.2652,0,17,62,955.824
+0fb9b8c2-39d1-4dd4-8acf-3b79cbaf8dbd,Palindrome Hamiltonian Path,Claude Opus 4.6,evox,0.2419,0,16,61,753.688
+0fc96e98-65af-47ff-b718-7fd87688db6c,Polynomino Packing,eb1-preview,best_of_n,0.1483,0,13,56,2248.38
+0fe3c443-b6c6-451b-99e6-245b504f3d71,Polynomino Packing,eb1-preview,evox,0.3953,0,9,41,1657.11
+1006be5f-20fa-4edb-a66c-0ae06f729e1c,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.2314,0,11,56,2428.09
+102b784c-a0e3-49a8-8fd3-cabf3ea928ae,Palindrome Hamiltonian Path,GPT-5-mini,adaevolve,0.2198,0,17,62,1179.06
+1072e2a7-be19-447b-89b4-c222159dac86,Palindrome Hamiltonian Path,eb1-frontier-preview,best_of_n,0.2015,0,16,61,1933.56
+107d03cd-1c3a-4bfb-8251-aae1775fea1b,Polynomino Packing,Claude Opus 4.6,evox,0.1758,16.6289,16,61,926.938
+109255e1-0e5d-4e9f-bcc7-e5bdb0dd8710,Polynomino Packing,eb1-preview,adaevolve,0.2635,0,18,59,1836.39
+10d25321-850d-4792-9a7e-3112f1881249,Polynomino Packing,Gemini-2.5-Flash,adaevolve,0.3632,66.076,17,50,2863.82
+1131bb83-7c54-4fc4-8fb3-9e385e60475c,Palindrome Hamiltonian Path,eb1-preview,evox,0.1714,0,14,57,2062
+113260e3-8a06-4098-a8ac-8992aef47959,Polynomino Packing,GPT-5.4,best_of_n,0.1413,0,16,61,2243.19
+11a8c63b-8570-4a6f-a6ad-510cc55f005c,Polynomino Packing,eb1-preview,evox,0.136,44.7642,16,60,693.312
+11ad99c8-63ce-4320-bf42-fb68de39f405,Palindrome Hamiltonian Path,eb1-preview,evox,0.1689,0,16,61,1604.75
+11c4cc5c-ce71-4ea3-bdff-b5bb09be59aa,Polynomino Packing,Qwen-3.5-9B,adaevolve,0.4816,0,17,62,1074.24
+121f4469-4112-45f8-a7a4-597baace5007,Bounded 2D Knapsack,eb1-preview,best_of_n,0.1251,100,16,61,5106.12
+12414281-2dd1-40e4-9973-cfddc3c99450,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.2106,0,16,60,2340.5
+130eac10-989b-4161-bb83-5993f5499b0b,Bounded 2D Knapsack,Gemini-2.5-Flash,best_of_n,0.1624,45.2067,15,60,3424
+13255317-c42c-4ea3-84ef-af2c213d46b9,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1609,0,15,60,1572.53
+13413b1e-086e-4704-8cae-8e5c04166082,Palindrome Hamiltonian Path,Kimi-K2.5,adaevolve,0.2904,0,17,59,2186.29
+13426108-48d7-4a5f-bd1a-6ad85e8bb2e5,Bounded 2D Knapsack,eb1-preview,evox,0.2194,100,24,87,2249.17
+1344f341-4d5a-419c-bd0c-d18d6b6df5c8,Polynomino Packing,Qwen-3.5-9B,evox,0.1561,0,13,53,1550.54
+13acaa5a-5de5-4582-bc0d-95b3fec52c3d,Bounded 2D Knapsack,GPT-5-mini,adaevolve,0.2341,100,16,49,3733
+13c0d5a6-513f-4efa-9c33-969ae09bd723,Palindrome Hamiltonian Path,eb1-preview,evox,0.1592,0,16,61,2518.31
+13c89a3d-4051-4ea9-97c8-ad23b8786464,Polynomino Packing,eb1-frontier-preview,evox,0.1912,28.546,10,43,2678.9
+143473c3-1cb3-4be5-b054-647744167faa,Bounded 2D Knapsack,eb1-pro,adaevolve,0.4084,100,8,24,2053.5
+146067cb-8c0f-4afc-96b2-4227cb4f88ca,Bounded 2D Knapsack,Kimi-K2.5,evox,0.2436,99.6667,8,14,4567.88
+149aa8e8-0078-4345-bfe5-e63bb9c24d87,Bounded 2D Knapsack,eb1-frontier-preview,evox,0.1676,100,16,60,1704
+15036376-467c-46cd-846e-92bb3934e888,Palindrome Hamiltonian Path,eb1-preview,evox,0.152,0,15,60,2654.53
+1562b2a2-ea2a-4c24-aeb1-40a98a7e84f1,Bounded 2D Knapsack,GPT-5.4,adaevolve,0.247,100,17,51,3493.18
+15af470f-fbcc-4661-b22d-c07019bd4ebb,Palindrome Hamiltonian Path,Kimi-K2.5,evox,0.1816,0,12,51,2678.33
+15c19f83-e95c-4218-903c-ba52ae5d9421,Bounded 2D Knapsack,Gemini-2.5-Flash,evox,0.1651,100,13,50,3260.38
+15df3022-44b6-47cf-ae08-e37f54d0efcd,Polynomino Packing,eb1-frontier-preview,adaevolve,0.2404,67.5312,17,55,548.412
+161b0009-a115-4aec-872c-8481c63d6a7d,Bounded 2D Knapsack,GPT-5.4,evox,0.1461,99.6133,16,61,3675.12
+1667adf9-87d6-4ed8-90b7-f63dca2522e5,Palindrome Hamiltonian Path,GPT-OSS-20B,evox,0.2761,0,13,50,969.308
+16e41f78-2a3b-403f-ac90-71e15b4fdedf,Polynomino Packing,eb1-frontier-preview,evox,0.1312,66.0658,16,56,575.062
+179a90c8-ad66-4ed1-b284-5f96e5e3a79a,Bounded 2D Knapsack,GPT-OSS-20B,best_of_n,0.1569,100,16,59,1977.12
+18a28a7d-e11c-4e47-bb29-2cccad7d4931,Polynomino Packing,eb1-preview,adaevolve,0.2271,79.2027,17,56,623.118
+18b0fd07-15d3-4528-82d3-d9bcdfdedcf2,Palindrome Hamiltonian Path,GPT-5-mini,best_of_n,0.5507,0,3,11,1233
+18e8f6ab-e5ca-42c1-a134-d44c2f1a4407,Bounded 2D Knapsack,Claude Opus 4.6,best_of_n,0.158,100,16,61,962.125
+194e57c5-c0c0-4ae2-87aa-91b7cd5547e6,CUDA Layer Norm kernel optimization,unknown,evox,0.0454,474.075,26,99,
+197bfdc9-923f-44fd-aec8-bf6b882abe36,Bounded 2D Knapsack,Kimi-K2.5,best_of_n,0.1614,100,30,112,4083.73
+19beaeba-1881-497d-991f-883a50aebf70,Bounded 2D Knapsack,GPT-5.4,evox,0.1321,100,16,61,4273.31
+19f0a7ae-7221-4c6c-9c8d-546932767e53,Polynomino Packing,eb1-preview,best_of_n,0.1186,0,16,61,517.5
+19fb4a9e-9592-487b-9e51-b0bb41ebbc62,Palindrome Hamiltonian Path,GPT-5-mini,evox,0.1587,0,16,61,2597.94
+1a1139f8-c41e-4dc2-9c54-024e741e444b,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1865,0,16,61,2386.62
+1a430236-62a4-40f2-8e33-f29f929edba1,Polynomino Packing,GPT-5.4,evox,0.1945,45.3653,17,62,1834
+1a435705-6d72-4588-83dc-286c275c6eea,Polynomino Packing,GPT-5-mini,best_of_n,0.1899,45.7886,16,61,2240.25
+1b072e3f-5ad4-4cc7-a9d5-e62d3f162e42,Bounded 2D Knapsack,eb1-delta-preview,adaevolve,0.2528,100,16,49,1810.62
+1b0d14d9-3d32-4adf-9f70-4e993bf02fde,Bounded 2D Knapsack,eb1-frontier-preview,best_of_n,0.114,100,16,59,5016.31
+1b96ce6a-a2c0-4893-b742-595cf6e0bc86,Palindrome Hamiltonian Path,eb1-preview,adaevolve,0.2183,0,17,61,1936.82
+1b9bfea5-1d73-4f65-8f25-58a1b7566d36,Polynomino Packing,eb1-delta-preview,adaevolve,0.2649,45.1166,17,49,1612.47
+1b9e69d4-61ac-498b-ace4-1b78293efd8e,Palindrome Hamiltonian Path,eb1-preview,evox,0.1952,0,16,61,3434.5
+1c8b675e-cbd0-4186-8115-7e26a212aee7,Polynomino Packing,eb1-delta-preview,evox,0.1466,77.3728,17,66,2256.82
+1cb67331-8502-4e4e-aa1f-6153d53f94cd,Polynomino Packing,eb1,evox,0.4685,60.3411,4,13,3353.5
+1cc160cc-c71d-4c97-81b9-45203a480410,Bounded 2D Knapsack,Gemini-2.5-Flash,best_of_n,0.1729,100,15,59,3660.6
+1d704809-1a1f-427d-817e-2a7e658fbfcd,Palindrome Hamiltonian Path,Gemini-2.5-Flash,evox,0.1575,0,12,40,2608.17
+1da1e8d7-6c42-45b7-b32d-3c55a9f27aaf,Polynomino Packing,Kimi-K2.5,evox,0.1646,42.5759,13,36,3656.31
+1e13cb68-b831-4f2e-9882-1bbf4a81b58c,Palindrome Hamiltonian Path,eb1-preview,evox,0.2195,0,16,60,1566.69
+1e598fbd-14b5-4807-905e-7b23e6d321b4,Palindrome Hamiltonian Path,Gemini-2.5-Flash,evox,0.858,0,2,31,956.5
+1eea4ac9-e684-4763-8486-0c645fae8801,Palindrome Hamiltonian Path,eb1-preview,evox,0.1671,0,16,61,2942.56
+1ef9bcd2-39e1-43eb-98d7-5b49298067a5,Palindrome Hamiltonian Path,eb1-preview,evox,0.1435,0,16,59,1426
+1f00eff9-6d27-4143-8ec9-199796e8ffe7,Polynomino Packing,eb1-delta-preview,best_of_n,0.1269,0,16,61,505.688
+1f3ec40c-116e-4f38-a077-22d717851e25,Palindrome Hamiltonian Path,GPT-5-mini,adaevolve,0.2225,0,17,64,1019.59
+1f4e40bb-e88a-4a83-be68-be13e67f6d2e,Bounded 2D Knapsack,Qwen-3.5-9B,adaevolve,0.2642,0,17,61,1530.06
+1f5a8d6f-6294-4a0b-bafe-f1ed640f90b8,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1703,0,16,61,1661.94
+1f6517ec-fd0d-40bd-995c-bccdd8af13e4,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1619,0,16,61,3160.88
+1f93a0c6-3407-4eeb-912d-0629d0a5695b,Polynomino Packing,GPT-OSS-20B,best_of_n,0.2165,45.3136,14,59,1191.71
+1fd3bb45-66fd-4333-ba74-3cc4aee4ddfa,Bounded 2D Knapsack,eb1-delta-preview,adaevolve,0.2455,100,17,54,3023.65
+1fde163e-32b2-4783-ad82-5330e6663a1d,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1628,0,16,61,1730
+1fe9b05f-7eed-4959-b04f-540290843d07,Bounded 2D Knapsack,GPT-5-mini,best_of_n,0.1548,99.6133,16,61,3247.88
+2049fb92-d279-4063-a4ba-94e2a528920e,Polynomino Packing,GPT-5.4,best_of_n,0.1243,46.1964,16,61,1550.25
+20ea2feb-0d89-42c4-8328-9c69e9cbd7e3,Polynomino Packing,Gemini-2.5-Flash,adaevolve,0.3064,0,17,64,3644.76
+211ac633-e7de-43a5-b9ba-b9f9688b20a5,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1715,0,16,60,2053.25
+211d7be6-0452-4062-92e5-5ab863bc4aea,Bounded 2D Knapsack,eb1-frontier-preview,best_of_n,0.1445,100,16,61,2537.69
+2128f036-c493-4b4d-8954-83814a3e3b9d,Bounded 2D Knapsack,eb1-frontier-preview,best_of_n,0.1914,100,16,61,3461.25
+218413bc-ebdb-498c-96ea-c6cf9a2f56d9,Bounded 2D Knapsack,eb1,adaevolve,0.2421,100,17,54,2368.65
+21d83479-3b2c-4b0a-afdf-82fe10f4850a,Bounded 2D Knapsack,eb1,evox,0.1678,100,11,43,5342.45
+21ef1468-a407-470b-a236-a4c799e63c11,Dispatcher cold path: 4 drives → DRAM → GPU; maxim...,Claude Sonnet 4.6,adaevolve,0.002,0.3899,4,12,
+22747c33-e941-4684-87ec-031cfe6977ef,Polynomino Packing,Claude Opus 4.6,best_of_n,0.1476,0,16,62,1460.62
+230d6c01-40c6-4bf4-9cda-8e6a98ec1896,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1604,0,16,61,2708.94
+23251d40-a5f7-4460-98c8-0056a2caf233,Bounded 2D Knapsack,eb1-preview,evox,0.2424,100,18,74,1988.67
+238c46ac-4e64-458c-9090-47b8aa8b3552,Palindrome Hamiltonian Path,eb1-preview,evox,0.1806,0,16,61,2613.44
+23b91000-3620-4119-9e5e-4dff8caa9127,Palindrome Hamiltonian Path,eb1-preview,evox,0.1796,0,16,61,2199.44
+23bd390e-c070-4d2f-bc9c-5fc7a51f50c1,Palindrome Hamiltonian Path,Claude Opus 4.6,best_of_n,0.1702,0,16,61,2716.31
+241a9db3-16ce-42ae-a960-fc60c7517e78,Bounded 2D Knapsack,GPT-OSS-20B,best_of_n,0.2031,100,15,60,1226.87
+258226ac-6f14-410f-a928-d62b1f0c7bd0,Polynomino Packing,eb1-preview,best_of_n,0.1661,71.3659,14,59,2144
+25c72300-a19f-4d74-aeee-68f29c8ef08b,Palindrome Hamiltonian Path,eb1-preview,adaevolve,0.2062,0,17,62,1895.24
+25cd8b4f-5617-4d33-8f59-c11a8ef1a98a,Palindrome Hamiltonian Path,eb1-frontier-preview,best_of_n,0.1618,0,16,61,2089.31
+26db9060-1be2-48c6-a198-56851c366ce0,Polynomino Packing,Gemini-2.5-Flash,adaevolve,0.2345,0,17,61,3632.06
+26ecc399-6479-43c6-baf7-d6d6d5c3ba06,Bounded 2D Knapsack,eb1,evox,0.1294,100,16,61,3329.12
+272efcc2-ca44-4d28-8b2e-2a3c36f723ef,Polynomino Packing,eb1-preview,best_of_n,0.1683,43.7043,16,61,795.875
+276a01cd-38c4-4dab-8981-62f882cfd990,Polynomino Packing,Claude Opus 4.6,adaevolve,0.2407,0,17,62,949.059
+276ad421-cf9c-44ff-a4cd-8c802429c88c,Bounded 2D Knapsack,Qwen-3.5-9B,best_of_n,0.1929,0,16,61,1902
+283fa824-21a8-41f8-a063-8d54c5725095,Palindrome Hamiltonian Path,Claude Opus 4.6,evox,0.2189,0,13,49,715.615
+28720639-5a1f-41e4-b039-4a376f6691f8,Palindrome Hamiltonian Path,eb1-preview,evox,0.2296,0,16,61,1880.94
+2904b305-dd7e-4cdb-9fef-04b3127f8aa5,Bounded 2D Knapsack,GPT-OSS-20B,best_of_n,0.1472,0,16,61,1739.31
+2990b828-fa6d-423e-ab13-9af43b793185,Palindrome Hamiltonian Path,eb1-preview,best_of_n,0.1208,0,16,61,1567.56
+29a7783d-7924-4f81-b802-0f1fc87bcb2c,Bounded 2D Knapsack,eb1,adaevolve,0.2222,100,17,59,2946.82
+2acf518b-2485-4d92-afcb-a594946792c6,Polynomino Packing,eb1,adaevolve,0.3832,81.0357,41,65,3126.61
+2ad267fe-6669-439b-973d-53f3e8cbbd74,Palindrome Hamiltonian Path,eb1-preview,evox,0.1624,0,16,61,2666
+2b46ffb2-9b94-4188-bdd6-3726f06caaff,Palindrome Hamiltonian Path,eb1-preview,evox,0.1732,0,16,61,2195.81
+2bdb1175-8900-40a6-8928-ef0c16cfae22,Polynomino Packing,Kimi-K2.5,adaevolve,0.2319,54.8548,17,54,2255.65
+2c1680be-1d73-451e-83b4-00b32b6ac886,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.2066,0,29,98,2465.48
+2c802f0b-d331-4fdb-ba8e-111deac79899,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1823,0,16,61,2146.62
+2ca029f8-cb73-490b-8a2d-218acc405361,Polynomino Packing,eb1-frontier-preview,evox,0.2912,56.8938,6,22,648.5
+2d70448d-b014-46f4-9e4d-a4c824332cc4,Bounded 2D Knapsack,GPT-5-mini,adaevolve,0.231,100,34,80,4183.68
+2d9685fa-b6dd-4cf3-b0c5-a7f110cb8cde,Bounded 2D Knapsack,eb1,best_of_n,0.1194,100,16,61,5579.56
+2e3146d0-b8a0-43c3-a375-579cc218f0a1,Palindrome Hamiltonian Path,eb1-preview,adaevolve,0.2837,0,17,62,2412.71
+2e34617e-f875-40d1-9f30-5442a93a51b6,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1876,0,16,61,2188.12
+2e4f14fa-782f-4f49-b04d-37ad7db50680,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1601,0,16,61,3302.5
+2eb908c8-cbe1-4271-8728-b1783af780d7,Bounded 2D Knapsack,GPT-OSS-20B,adaevolve,0.4911,0,17,62,629.471
+2f6150f8-69d5-4f69-961e-1f338301798b,Polynomino Packing,Kimi-K2.5,adaevolve,0.233,6.9116,17,41,3270.94
+2f8a6a24-523b-45f7-9f0a-d5f3cf206247,Polynomino Packing,eb1-frontier-preview,best_of_n,0.1207,0,15,60,2413.27
+2fc76d78-9785-401a-8517-726ce228d3a3,Bounded 2D Knapsack,eb1-preview,best_of_n,0.117,99.6133,16,61,3249.31
+2fd396ef-27f0-47f4-84b3-089f97f307c7,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1948,0,16,60,1372.25
+2fd50d41-5d83-40c9-a1ba-e8ffa66d647a,Polynomino Packing,Kimi-K2.5,evox,0.2249,45.6144,9,39,2948.22
+2ffdec68-fffb-4456-8c06-342e2aecc25c,Palindrome Hamiltonian Path,eb1-frontier-preview,adaevolve,0.2389,0,17,62,1239.24
+30d299bb-6279-443f-8bd3-84dab52ff80d,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1589,0,16,61,2482.25
+3143cf16-3e54-4cea-938a-955e20e20c4b,Palindrome Hamiltonian Path,eb1-preview,evox,0.198,0,16,61,2812.88
+31610e77-5c88-4c74-a39e-572ffbcdc88f,Bounded 2D Knapsack,GPT-OSS-20B,best_of_n,0.1736,99.6133,16,61,1423
+318f2fb9-5c70-4b78-93e2-2a2a88d168a6,Polynomino Packing,eb1,adaevolve,0.3607,78.3996,9,30,2634.56
+320c3012-fef1-40dc-84eb-25e2258c2265,Bounded 2D Knapsack,GPT-OSS-20B,evox,0.2455,99.6133,10,44,1707.2
+3232ce45-39a7-4a70-87bc-a67e83a133ee,Polynomino Packing,eb1-preview,best_of_n,0.1584,60.3866,14,59,2677.79
+32e46f81-de3d-4421-bf52-0fdf8880c942,Polynomino Packing,eb1-frontier-preview,best_of_n,0.1198,43.2774,16,61,570.438
+32eabbe9-6f0e-4e10-b852-5e308b463d4e,Bounded 2D Knapsack,eb1-preview,best_of_n,0.1403,67.06,16,61,4169.25
+334f3617-dcb9-4408-87d1-35a47868c0a8,Polynomino Packing,Gemini-2.5-Flash,best_of_n,0.1226,0,16,61,4154.19
+33854b9a-8168-4e2b-bde3-b25d97bd86a2,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1747,0,16,60,2519.06
+33e4dc9c-293b-44ea-8508-c6e01daa9da2,Polynomino Packing,eb1-delta-preview,best_of_n,0.1326,44.741,16,60,594.5
+34076aa3-34bf-4821-b450-8a985fe5981d,Palindrome Hamiltonian Path,eb1-preview,adaevolve,0.2554,0,17,62,2724.71
+348a9185-768c-425e-8477-0b0acfbfccc9,Palindrome Hamiltonian Path,eb1-preview,adaevolve,0.2238,0,17,62,1640.82
+34b0180b-5701-48d1-86f2-c6d721e09b5c,Palindrome Hamiltonian Path,eb1-frontier-preview,adaevolve,0.2719,0,17,62,1628.47
+34b1239a-253c-4586-bd6c-b25504331ad5,Palindrome Hamiltonian Path,Gemini-2.5-Flash,evox,0.1371,0,14,37,2967.71
+34eb352b-f849-424f-a12a-ae8f600428d0,Polynomino Packing,eb1-preview,best_of_n,0.1354,0,15,57,2139.2
+34f81fa8-558f-40d6-8a99-f6e9705dea29,Palindrome Hamiltonian Path,eb1-preview,evox,0.18,0,16,61,2250.12
+34fe6d6a-6992-4642-9e0a-fdec443ff811,Polynomino Packing,eb1-preview,best_of_n,0.1386,0,13,58,2525.23
+36102f70-6675-4d5d-9c5d-7e6117e91267,Polynomino Packing,eb1-preview,best_of_n,0.1208,56.7666,16,61,779.062
+36eb6e9d-0eca-4bb0-b84e-417d5c7a2911,Polynomino Packing,eb1-delta-preview,adaevolve,0.2589,59.8021,15,45,2790.87
+37c0c8d6-6ff5-4cfd-8a3b-6c32cce4e61a,Polynomino Packing,eb1-frontier-preview,adaevolve,0.2505,71.7317,16,48,713.938
+384a6a5f-c802-49ca-9735-325db7873c0f,Palindrome Hamiltonian Path,eb1-frontier-preview,adaevolve,0.2246,0,17,62,2083.12
+384acf18-d03f-44d8-a906-1bba576d00bb,Bounded 2D Knapsack,eb1-frontier-preview,evox,0.1373,100,16,61,1834.25
+385e5298-3c93-4654-9cbc-855bf14c7c81,Bounded 2D Knapsack,eb1-frontier-preview,best_of_n,0.154,100,15,60,3843.33
+3862664d-4485-4497-9502-aba7d4d858a3,Polynomino Packing,eb1-preview,adaevolve,0.2978,46.6259,17,47,1007.24
+3871f5a2-ea77-4118-9f6e-c6408c4d3705,Polynomino Packing,eb1,adaevolve,0.2563,72.4816,14,38,1356.71
+38e00f52-119a-4be2-af56-5e1240cd3cc2,Bounded 2D Knapsack,Gemini-2.5-Flash,adaevolve,0.3756,0,17,61,3342.29
+391efdb1-44b0-48dc-af71-fb7f2b92e42c,Polynomino Packing,eb1-delta-preview,adaevolve,0.3311,70.8126,15,45,1305.07
+39eed47e-6b08-4f12-a6e0-fd770662bdfd,Bounded 2D Knapsack,Qwen-3.5-9B,best_of_n,0.1736,0,16,60,1229.81
+39f481d6-3652-4033-b81b-5156d66da2d1,Palindrome Hamiltonian Path,eb1-preview,evox,0.1482,0,15,60,3418.07
+3a0bc4c8-b401-4588-b196-45ee06e0c9c1,Polynomino Packing,eb1-frontier-preview,evox,0.1308,44.7702,16,56,606.062
+3a452e9a-e812-4c31-9b36-e87a79d805f9,Bounded 2D Knapsack,eb1-delta-preview,adaevolve,0.2868,100,12,39,5290.08
+3a5d2c27-9689-4546-9c67-72383000042d,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1912,0,16,60,1746.38
+3ad530bf-d77f-4387-86d1-884a6e2a7274,Bounded 2D Knapsack,Gemini-2.5-Flash,best_of_n,0.1399,100,15,60,3476.67
+3b13cd7a-698a-4418-9500-b60b43de3c3d,Bounded 2D Knapsack,Kimi-K2.5,adaevolve,0.2402,99.6133,16,51,4398
+3b5ae4f6-c3c8-4b14-9a13-4cf9618c08a7,Polynomino Packing,eb1-preview,best_of_n,0.2482,75.8448,7,20,543.429
+3bd3d35a-53b2-4d6e-b690-b076b45496a5,CUDA Layer Norm kernel optimization,unknown,adaevolve,0.0522,581.922,24,35,
+3cb50ff0-e7fa-4162-a999-dd247085e9f8,Bounded 2D Knapsack,GPT-5-mini,adaevolve,0.2484,100,16,39,3356.44
+3cbbc4ab-55db-4145-b46a-6fd55eceec09,Polynomino Packing,GPT-5-mini,best_of_n,0.3631,39.6668,6,22,1338.33
+3cc20bd6-12dc-42c3-8496-a3bb03dc59e9,Palindrome Hamiltonian Path,eb1,evox,0.4359,0,4,12,4327
+3cf44d79-998e-47c7-8ef2-f89ff79e967d,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1391,0,16,61,1563.94
+3ffd3cdf-451e-4e53-a1a1-db84a8600146,Polynomino Packing,eb1-delta-preview,best_of_n,0.1156,43.7043,16,60,605.875
+402321b4-4d0c-42b2-b1d7-d63366f0e671,Palindrome Hamiltonian Path,eb1-preview,evox,0.1741,0,16,61,1565.12
+4052a33a-a6d1-44f5-bcd3-84ce5ec54193,Bounded 2D Knapsack,Kimi-K2.5,best_of_n,0.1365,100,16,55,4743.31
+40c41d3a-4ad7-4c74-87e4-35931621e511,Polynomino Packing,eb1,adaevolve,0.2371,79.7637,17,47,3690.82
+40e79843-0ef1-4780-8106-18e36ffd6cda,Bounded 2D Knapsack,Claude Opus 4.6,evox,0.162,100,16,61,1672.94
+40fd29f2-c682-47dd-8361-1a2e6979833a,Polynomino Packing,eb1,adaevolve,0.3713,81.0357,22,44,4872.64
+410a864d-3d49-40af-a434-ce088bc0e5c3,Bounded 2D Knapsack,eb1-preview,adaevolve,0.2444,100,16,54,4511.25
+41116083-7612-4221-b64d-d71ddbf1d64c,CUDA Attention kernel optimization,unknown,evox,0.0553,1.8488,51,201,
+41d0b74a-2438-4c0c-ae8a-8ec0b9103095,Polynomino Packing,GPT-5-mini,best_of_n,0.1596,74.091,16,61,2997.81
+41f344c3-22d7-43c3-8339-2aa204759b25,Polynomino Packing,Qwen-3.5-9B,evox,0.1405,0,13,53,2209
+41f49c6b-a8c3-4545-bcc8-9e4eeb05b5ff,Bounded 2D Knapsack,eb1-delta-preview,adaevolve,0.2216,100,17,58,4518.06
+420e08ec-2592-4589-9789-af4d8b192fa4,Bounded 2D Knapsack,eb1-delta-preview,adaevolve,0.2491,100,16,42,2442.38
+42184d10-25f3-4abe-abef-6bd2fed9fe0c,Polynomino Packing,eb1-delta-preview,best_of_n,0.1403,44.7702,16,61,561
+42d970c0-3ca0-4f85-9aee-bb1483ec724c,Polynomino Packing,Kimi-K2.5,best_of_n,0.1597,6.9917,16,59,2644
+42f6ef3f-08d9-4963-990f-74f319e83de1,Polynomino Packing,GPT-5.4,evox,0.1371,70.91,16,61,2517.19
+432c1832-dfd7-468d-9556-cec1086684da,Palindrome Hamiltonian Path,Kimi-K2.5,adaevolve,0.2565,0,17,59,2395.18
+437e572e-e4bd-4b44-b57b-27a1819ad7b7,Polynomino Packing,Kimi-K2.5,evox,0.1663,0,12,31,1708.42
+43993711-668b-482e-8d5a-b79d87806719,Polynomino Packing,eb1-delta-preview,adaevolve,0.2471,21.6101,17,47,1381.24
+43a0d0cc-f636-4c6c-bd1e-3a8fbcf46dbd,Polynomino Packing,eb1-preview,adaevolve,0.2231,63.5118,16,46,795.062
+43e3f9d8-b0a9-4a3f-8918-67d321778315,Bounded 2D Knapsack,eb1,adaevolve,0.2239,100,17,50,2463.24
+43eb7a7b-0e48-4914-9d31-814af393fc16,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1573,0,16,60,2205.31
+44b2e06b-8696-444c-ba36-4cc5e920f167,Palindrome Hamiltonian Path,GPT-5-mini,evox,0.151,0,15,60,2201.2
+44e4368b-792b-46e5-9e58-a112f8f14c02,Bounded 2D Knapsack,eb1-delta-preview,best_of_n,0.148,100,16,61,2973.5
+45020924-2eeb-4158-836a-7b872b257b4d,Bounded 2D Knapsack,eb1-delta-preview,adaevolve,0.2583,99.6133,17,56,3772.76
+45989b1f-70d5-461d-81fb-8b9fa1fea0eb,Polynomino Packing,Qwen-3.5-9B,adaevolve,0.3699,0,17,61,1573.88
+45cd1e0f-2c51-4a0d-9613-288d1f1a32db,Bounded 2D Knapsack,eb1-delta-preview,best_of_n,0.1636,100,16,61,2696.81
+45e91089-7715-470f-b8f7-044ab1ee9480,Polynomino Packing,eb1-preview,adaevolve,0.2655,67.9447,17,40,2803.71
+46027e45-dcf6-472c-8e81-9f90ab81c309,Polynomino Packing,GPT-5-mini,best_of_n,0.1758,48.3363,16,61,2119.25
+46203da5-58b4-4d3d-8515-d172d5ba1ecb,Palindrome Hamiltonian Path,eb1-preview,evox,0.1484,0,16,61,1801.81
+4630f8ad-14e8-4574-bc59-8d7f93402aa5,Palindrome Hamiltonian Path,eb1-preview,evox,0.2031,0,16,61,1911.44
+46611ff9-dabf-44a7-bc38-7a33de2d5a9b,Polynomino Packing,eb1,best_of_n,0.1331,60.5918,16,61,2820
+46788e15-ac9f-4fa1-8b76-1e100ff7af6a,Polynomino Packing,eb1-delta-preview,adaevolve,0.2781,76.2517,17,45,1716.88
+46a1df98-0d0b-4485-a795-c84890076aee,Polynomino Packing,eb1-delta-preview,evox,0.135,43.7711,16,61,557
+47452efd-fcef-4a46-badc-d04f55c54137,Polynomino Packing,eb1-preview,adaevolve,0.3198,69.9578,16,43,1563.69
+477f1f66-25d7-40b6-a39f-8862f150272c,Palindrome Hamiltonian Path,eb1-preview,evox,0.1941,0,16,61,2499.38
+47e6b76e-7997-4bf7-b6e0-7062e6e7ac97,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1704,0,16,61,2864.12
+4840c833-c8a7-4e14-ae3a-be9242b99ae2,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1862,0,15,59,1960.87
+48c03ce2-b744-406c-bf18-81925d357cb1,Bounded 2D Knapsack,eb1-delta-preview,best_of_n,0.1692,100,16,61,2369.94
+48cd6174-51c5-408e-91fc-b702dfd75b0a,Polynomino Packing,Gemini-2.5-Flash,best_of_n,0.1503,0,16,60,3390.75
+48e3dfed-a9d9-4c98-bf35-b3563bfd5e0a,Polynomino Packing,Gemini-2.5-Flash,best_of_n,0.122,0,18,63,3105.5
+49b78cc0-406c-4882-9352-8a81116c4c64,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1865,0,15,60,1340.47
+49c86b87-c83c-4cc6-b713-16bf52fbeb41,Bounded 2D Knapsack,Claude Opus 4.6,best_of_n,0.1591,100,16,61,1271.5
+4b514118-3420-41ab-a1a6-bddc5f05aa01,Bounded 2D Knapsack,eb1-preview,best_of_n,0.1516,99.6133,16,61,4176.75
+4ba295eb-0ace-4dc6-acdc-8d4ba22edf1d,Polynomino Packing,eb1-preview,best_of_n,0.1414,60.0571,15,60,2645.47
+4c17af13-5d23-49f2-a5bc-3a1fad084622,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1593,0,16,61,2894.12
+4c84d6b4-fd6e-4ed6-bc3a-1959d7280680,Palindrome Hamiltonian Path,eb1-frontier-preview,adaevolve,0.2682,0,17,62,1738.71
+4c87e1ce-343b-406a-b10a-5509d0f7b0c9,Polynomino Packing,eb1-delta-preview,adaevolve,0.4282,74.2389,7,31,990.571
+4cbb8755-1ebd-4f73-b1c2-898a07e5e654,Bounded 2D Knapsack,eb1-preview,evox,0.1954,100,11,42,1921.55
+4e7e85f8-6782-4cc4-83ed-5cb7c91cd1b7,Polynomino Packing,eb1-delta-preview,adaevolve,0.2564,54.0642,17,55,1807.41
+4f17eb5f-0a61-47b6-8f47-9c84f4d3dd30,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1695,0,16,61,2113.62
+4f778bf3-1339-4f03-aacb-754893f7646c,Bounded 2D Knapsack,eb1-frontier-preview,adaevolve,0.5877,100,4,12,2660.75
+50259e23-0f17-4412-8223-243815624f5d,Polynomino Packing,eb1-frontier-preview,evox,0.1693,43.7711,14,54,726.286
+50423a8f-03d6-49cc-ab5d-db39303f5cdc,Bounded 2D Knapsack,GPT-OSS-20B,adaevolve,0.3338,95.5333,17,55,1116.82
+50fba7d4-44c5-46d5-ae7b-59d191ffa6d7,Polynomino Packing,eb1-delta-preview,evox,0.1425,68.9461,16,59,2710.75
+51411c77-2fb6-40ee-ba2e-07029b3b80db,Polynomino Packing,Kimi-K2.5,evox,0.166,15.6877,12,44,1735.33
+515d3502-c708-4cd2-b573-99ae69025f6c,Palindrome Hamiltonian Path,GPT-5.4,best_of_n,0.1252,0,16,61,1715.06
+5177542c-2a1f-4839-b097-366be0a1bd7b,Polynomino Packing,Claude Opus 4.6,best_of_n,0.1943,42.8155,16,61,852.312
+517dba0b-3184-46d2-a56b-564f4303b102,Bounded 2D Knapsack,eb1-pro,best_of_n,0.1398,100,16,61,3953.81
+5198b19a-c18a-4aa0-8faa-638168569c62,Polynomino Packing,GPT-5.4,adaevolve,0.2652,19.3438,14,43,2262.21
+520a0428-fc34-4525-ad4f-3cad20b8db8c,Palindrome Hamiltonian Path,eb1,adaevolve,0.3113,0,17,61,2538.71
+5291c7fe-a6cb-44d0-8b54-1e198ce144f8,Bounded 2D Knapsack,Kimi-K2.5,best_of_n,0.1812,99.6133,13,53,3155.92
+52c0f375-b431-451a-88a7-83ad91e2a69a,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1833,0,15,60,3828.87
+530d1e9c-f40f-448d-8f48-76c69505c233,Bounded 2D Knapsack,GPT-5.4,evox,0.1455,99.6133,16,61,4442.06
+532b8c47-ed74-4369-b0d9-79fed938016b,Polynomino Packing,eb1-frontier-preview,evox,0.3924,72.6643,5,32,1355
+5415a2af-4f9b-4e0b-b137-579292adb545,Dispatcher cold path: 4 drives → DRAM → GPU; maxim...,Claude Sonnet 4.6,openevolve,0.0007,0.3823,3,12,
+5415c5ae-e269-4882-aa65-3758bbb3313e,Polynomino Packing,eb1-preview,best_of_n,0.1613,58.9007,14,59,2270.57
+5432126b-64a7-4f0f-aec9-a845007a42e0,Bounded 2D Knapsack,Claude Opus 4.6,evox,0.1719,100,16,61,2293.88
+545517fe-e441-4bb8-846c-abe4ebfdce0d,Polynomino Packing,eb1-frontier-preview,best_of_n,0.1384,0,14,59,2224.36
+54782fa8-a3fe-4aef-90b0-d107e3af0bb5,Bounded 2D Knapsack,eb1-pro,adaevolve,0.2607,100,17,58,2496.88
+5515b48f-ad7d-4318-b528-48fe7234dd4e,Polynomino Packing,eb1-frontier-preview,best_of_n,0.1281,44.768,16,61,648.938
+553249ba-855c-41c7-901b-5f64c9f74564,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1915,0,16,61,1740.12
+55d237e9-0ee2-435d-88c0-35f42a321890,Polynomino Packing,eb1-preview,best_of_n,0.1677,59.4318,11,44,2174.64
+564dd201-d5a3-454e-9c0d-ee764f18db51,Polynomino Packing,GPT-5.4,adaevolve,0.2501,0,17,62,2432.24
+56870ea9-dd31-46f7-bef3-c671d71e047c,Palindrome Hamiltonian Path,GPT-5.4,evox,0.161,0,16,61,2805.19
+56ae8bc1-fced-4200-9099-a6d8b19265b8,Polynomino Packing,Kimi-K2.5,evox,0.4496,51.8655,7,24,1203.86
+56b8d4b6-8a1e-4ef7-8d45-28514d279dd4,Palindrome Hamiltonian Path,GPT-5-mini,evox,0.1543,0,15,59,2763.87
+56d27960-187e-429d-8a97-8cbd8df67d2c,Palindrome Hamiltonian Path,eb1-preview,evox,0.1792,0,16,61,1981.44
+56f721da-8b51-400f-8a14-a8b9b5d2a302,Polynomino Packing,eb1-delta-preview,adaevolve,0.2956,65.5762,17,62,1982.76
+573000b6-2e3f-4331-bdef-f925a36f7e2b,Bounded 2D Knapsack,Claude Opus 4.6,evox,0.1521,100,16,63,1324.62
+57f2cb55-f2b0-46ac-95ad-5e228ac2057d,Bounded 2D Knapsack,Gemini-2.5-Flash,evox,0.1816,100,11,49,3967.64
+57f93ed4-e9f9-4f95-8549-747563621c93,Palindrome Hamiltonian Path,eb1-preview,evox,0.1821,0,16,60,2444.06
+58037ace-9aa5-4da0-9ff9-242085359ed2,Bounded 2D Knapsack,Claude Opus 4.6,adaevolve,0.2911,100,17,56,922.824
+586e8394-b9ca-47f2-94d3-b322446727ee,Palindrome Hamiltonian Path,eb1-preview,evox,0.1592,0,16,61,2728.62
+58a0aaed-40fb-4394-9511-29f673f1d842,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.2061,0,11,42,4077.73
+58ec80c6-eb56-4686-91ca-b190974ff313,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1968,0,16,61,3779.5
+591c3980-c7aa-4658-9875-de50b390a10f,Polynomino Packing,GPT-OSS-20B,evox,0.18,45.0939,12,44,1051.58
+59214100-41d2-4028-966e-ca02cfd66c19,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.194,0,16,61,2068.81
+592631e8-4b5f-4712-ae13-50181969ee29,Polynomino Packing,eb1-preview,best_of_n,0.1456,68.6489,14,59,2594.79
+597b86f2-5ace-4453-8336-6acb86678198,Bounded 2D Knapsack,GPT-OSS-20B,evox,0.1814,99.6133,12,51,1156.42
+59860230-dc39-4008-9b13-83fe8f43e3e1,Bounded 2D Knapsack,eb1-frontier-preview,best_of_n,0.2172,100,16,61,3223.56
+59a93420-0e12-4bbd-9bab-f571b0780695,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.2145,0,15,60,2059.07
+59de8832-6095-42c7-a043-daf7ab9ff614,Bounded 2D Knapsack,GPT-5-mini,adaevolve,0.244,99.7433,16,43,3282.62
+5a18b667-9411-4da6-913c-9d180e5a2ec9,Palindrome Hamiltonian Path,eb1-preview,evox,0.1802,0,16,60,2241.38
+5a523f2a-86bc-4435-b851-7bfb38c3b666,Palindrome Hamiltonian Path,GPT-5.4,adaevolve,0.2496,0,17,62,1785.06
+5a61c714-2a42-4f61-a67a-ba4b95e98c9f,Polynomino Packing,Kimi-K2.5,best_of_n,0.2517,33.5343,8,35,1651.62
+5a6743e1-fd72-4b51-a108-591546c83700,Polynomino Packing,eb1-preview,best_of_n,0.1234,0,16,61,511.812
+5a75067d-f3c6-463c-a5aa-20151949e412,Polynomino Packing,Claude Opus 4.6,best_of_n,0.1568,0,16,61,1296.31
+5a960c5f-cdfe-4f18-82a4-db9f6c5b2164,Polynomino Packing,eb1-preview,adaevolve,0.338,75.8888,15,47,2610.47
+5ad4e708-a439-4856-b55d-8356a6115d1f,Palindrome Hamiltonian Path,Claude Opus 4.6,best_of_n,0.2132,0,32,90,2019.16
+5b1e966d-cab5-4117-ae62-b93ce31f28ed,Palindrome Hamiltonian Path,Kimi-K2.5,evox,0.2164,0,12,50,1603.25
+5b3488c3-de2a-4c69-a2de-4e53bd041b18,Palindrome Hamiltonian Path,GPT-5-mini,adaevolve,0.2298,0,17,62,1734.35
+5b6ad1dc-3801-4fbc-89ab-af13f3eac17a,Bounded 2D Knapsack,eb1,best_of_n,0.1172,100,16,61,5846.25
+5b796995-4593-41cb-aaa3-40bb6c5d8eb7,Bounded 2D Knapsack,eb1-delta-preview,adaevolve,0.5196,66.6667,5,13,1340.2
+5b95c810-680e-4de2-b8c7-7e9016a35803,Polynomino Packing,eb1,best_of_n,0.1389,74.8511,16,61,6202.12
+5bd6d43f-05e5-4ccb-8d8a-0e2defef85d9,Polynomino Packing,eb1-delta-preview,adaevolve,0.2315,71.2342,17,50,1646.35
+5d401c68-c221-465a-ab69-4163a9d2ddb0,Palindrome Hamiltonian Path,eb1-preview,evox,0.1783,0,16,61,3424.5
+5d55094c-2090-44da-9f15-e04232476051,Polynomino Packing,eb1-preview,evox,0.1202,44.763,16,61,639.25
+5d596ecb-7148-4f45-8636-04cfe8609a47,Bounded 2D Knapsack,eb1-preview,evox,0.1587,100,13,51,1792.38
+5d944d5f-f4e6-43d5-9b1b-799d6c2fd616,Polynomino Packing,eb1-preview,evox,0.4018,0,11,55,1933.18
+5dabc059-0393-4eda-ba53-8257fb0f6f58,Polynomino Packing,eb1-delta-preview,best_of_n,0.1445,42.862,16,61,554.75
+5dbee617-6b78-4b32-8a0c-4a93c25bf72c,Palindrome Hamiltonian Path,Claude Opus 4.6,adaevolve,0.2637,0,17,62,2594.24
+5e22d627-dbc5-437a-91b5-05e57fe49e29,Bounded 2D Knapsack,Qwen-3.5-9B,evox,0.1498,0,15,53,1362
+5ee030e0-00b3-45e6-9cd8-9b3242857a76,Bounded 2D Knapsack,eb1-frontier-preview,best_of_n,0.151,100,16,61,2440.38
+5ee069d0-6b84-4e83-b255-d8c977d57d30,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1832,0,16,61,3263.38
+5effc144-bcc7-4f3e-b734-c2e9ffa369a5,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1588,0,16,61,1197.56
+5fa50a31-1c47-4a05-b2cd-ef1c948491dc,Polynomino Packing,eb1-frontier-preview,adaevolve,0.4893,0,15,31,775.133
+6003496f-bf72-4a00-81c0-a7114b4a9478,Polynomino Packing,Kimi-K2.5,evox,0.1522,35.3505,14,40,3429.79
+603cd6be-2b05-4184-bc34-9fc5d93edde1,Bounded 2D Knapsack,eb1-pro,best_of_n,0.1856,100,16,61,2391.69
+6066e040-540d-4e73-852b-ee7ffb4c29a0,Bounded 2D Knapsack,GPT-OSS-20B,adaevolve,0.3409,99.6133,11,37,1941.64
+60a91e77-0087-4315-ba2e-37133380dbf5,Dispatcher cold path: 4 drives → DRAM → GPU; maxim...,Claude Sonnet 4.6,evox,0.0016,0.3853,3,11,
+611920d6-6099-4165-844d-ed216bf433a2,Bounded 2D Knapsack,GPT-5.4,evox,0.1417,100,16,60,4266.12
+61d4bc08-b6bf-4601-8aa2-26ac0e9ae984,Palindrome Hamiltonian Path,GPT-5-mini,evox,0.1565,0,16,60,1965
+62166d28-613f-41c0-b5b0-c213118b4821,Bounded 2D Knapsack,eb1-pro,adaevolve,0.5053,100,6,20,1596.5
+622fd626-1dd1-4d77-99dd-0eb6442a652c,Polynomino Packing,GPT-5-mini,best_of_n,0.1256,35.088,16,61,2999.62
+62da81d5-5f9a-408c-8f6d-c0557166353e,Palindrome Hamiltonian Path,eb1-preview,evox,0.1543,0,16,61,2032.56
+62e352e1-cd8e-417f-a63d-94d71f713961,Polynomino Packing,Gemini-2.5-Flash,evox,0.1476,0,16,52,3375.75
+62ebf0ef-0d3a-4ec1-9e3a-25632dd88148,Polynomino Packing,eb1-frontier-preview,best_of_n,0.1293,44.7053,16,61,612.562
+63157108-e263-4205-959a-e67eacc4bec8,Polynomino Packing,eb1-preview,best_of_n,0.1284,76.2198,16,61,2703.88
+6330ee94-1de3-4a13-82df-1835ce6e8d76,Polynomino Packing,Kimi-K2.5,evox,0.1549,22.6646,16,48,2213.81
+6342591b-581a-42c7-b60c-269a29e6bda2,Bounded 2D Knapsack,eb1-frontier-preview,evox,0.1431,100,15,58,1422.53
+63739dbe-5cdc-44e5-920d-8e72d2ac61ea,Palindrome Hamiltonian Path,eb1-preview,evox,0.1832,0,16,61,4000.19
+63a224bf-9c26-41d8-8c60-768d88d5a028,Palindrome Hamiltonian Path,Gemini-2.5-Flash,evox,0.4622,0,4,35,2213
+63bb36ed-6c8d-49ca-82ca-2d9ac5016efa,Bounded 2D Knapsack,Kimi-K2.5,best_of_n,0.1687,100,12,54,3366
+63bd18ad-173a-4db6-822a-c79c35d0a3ab,Polynomino Packing,GPT-OSS-20B,adaevolve,0.2479,45.7992,17,55,1376.18
+63cbe045-28a7-4be7-81e6-8a4e9f8d55e9,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.193,0,16,61,1803.31
+6400fe4c-e00a-4415-9a9a-c9835079ed75,Polynomino Packing,Gemini-2.5-Flash,adaevolve,0.219,0,17,62,3398.35
+64223d9a-9047-40aa-8651-6eeb8faec403,Bounded 2D Knapsack,GPT-5-mini,evox,0.1791,100,12,45,3571
+6433a036-8d0f-48cd-9826-5d8f7347d5a1,Palindrome Hamiltonian Path,eb1-preview,evox,0.1369,0,16,61,2132.88
+64b3813b-79cf-46a9-84c4-39f41a78ca9c,Bounded 2D Knapsack,eb1,adaevolve,0.2734,100,29,69,3948.86
+64bb034d-e85d-48c3-8a44-dcfe88fa7b16,Bounded 2D Knapsack,Qwen-3.5-9B,adaevolve,0.3377,0,17,62,809.706
+6516ecd2-3a85-42fd-a1b8-14bc7f664aa1,Polynomino Packing,Qwen-3.5-9B,best_of_n,0.1389,0,15,58,1548.73
+65340717-d76e-44b6-bc9f-651534e4bdc5,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1699,0,16,61,1399.75
+65b613aa-6d47-4bdf-9d0d-9901c2ae5dbe,Bounded 2D Knapsack,Qwen-3.5-9B,evox,0.174,0,13,50,1229.08
+65b7838b-b4f6-41f0-a3d5-3ebe56a14140,Palindrome Hamiltonian Path,GPT-OSS-20B,evox,0.331,0,6,26,1061.33
+667edbf9-a42a-43ca-9e99-2e125dcb57af,Dispatcher cold path: 4 drives → DRAM → GPU; maxim...,unknown,gepa,0.0027,0.3803,3,11,
+66fa8600-0c96-422c-9d27-8a53220b3e8a,Polynomino Packing,eb1-frontier-preview,evox,0.1391,70.6665,13,49,2707.08
+67a583f6-3d82-4699-ba17-d3a3a0a48c3c,Bounded 2D Knapsack,GPT-OSS-20B,adaevolve,0.2425,100,17,48,1686.35
+67afc2d6-feca-4597-8b38-a4eac38ab134,Polynomino Packing,Claude Opus 4.6,best_of_n,0.1607,16.6289,16,61,835.438
+67bc92ba-acf9-4d3e-b862-b46d24954c4c,Polynomino Packing,eb1-preview,best_of_n,0.1482,69.8988,15,60,2623
+67d4bd7a-62f5-43ad-90ae-795837bad56d,Palindrome Hamiltonian Path,eb1-preview,best_of_n,0.1625,0,16,61,1193.81
+67de2074-2fab-4ba8-b81b-562b5a8a7d30,Polynomino Packing,eb1-delta-preview,adaevolve,0.3534,76.2517,59,94,1995.05
+67f5d79b-8882-4997-a188-047ac05ea945,Polynomino Packing,eb1-preview,adaevolve,0.2945,64.8309,17,54,2288.71
+68460aef-909c-4675-ac90-14ad8bd8a2c7,Polynomino Packing,Gemini-2.5-Flash,evox,0.1687,0,12,40,3260.25
+684f49f8-540a-4e63-a96f-5ab71a49afbf,Bounded 2D Knapsack,eb1,adaevolve,0.2125,100,17,60,7802.82
+68af129d-a879-49d8-a884-b5368a209215,CUDA Attention kernel optimization,unknown,adaevolve,0.0505,3.4385,46,90,
+68e3d3ea-fc24-4e58-986b-1ea40e13cd5c,Polynomino Packing,eb1-delta-preview,adaevolve,0.2681,63.1126,17,57,1451.88
+69829e1a-76e5-4bfd-b1bd-270861ef64a1,Polynomino Packing,eb1-preview,adaevolve,0.2585,21.7329,14,44,1614.93
+69f082a8-6707-4778-9173-8142098663e5,Palindrome Hamiltonian Path,eb1-preview,adaevolve,0.2317,0,17,62,1594.47
+69f9efa8-1c3e-454a-a228-d688283ea886,Palindrome Hamiltonian Path,eb1-preview,best_of_n,0.136,0,16,61,1309.25
+6a5444cb-5d92-44a4-8007-0e21ff362364,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.161,0,16,61,3464.62
+6a799b7d-fcbb-4c79-9aff-1e3a795f0bc1,Polynomino Packing,eb1-frontier-preview,evox,0.177,68.7973,13,44,2357.23
+6a9e3d4d-5cb4-4bc1-aabe-20d183379d35,Palindrome Hamiltonian Path,eb1,evox,0.1365,0,16,61,5615.31
+6b02f5c4-b450-494f-b311-47a4d713a76b,Bounded 2D Knapsack,eb1,adaevolve,0.2431,100,17,58,2060.82
+6b157d65-2ff4-4c6f-ba61-3326ff9997aa,Polynomino Packing,eb1-frontier-preview,best_of_n,0.1772,77.2251,16,59,1993.25
+6b86cb80-a920-4c36-b2f8-64d2b9aa97d0,Bounded 2D Knapsack,Claude Opus 4.6,adaevolve,0.2378,100,17,47,1018
+6cb94ac6-fa5d-4490-b905-7aef4ace984a,Polynomino Packing,GPT-5-mini,best_of_n,0.1892,45.8729,16,61,1959.69
+6df4f703-ed52-4350-866e-04950406761d,Bounded 2D Knapsack,eb1-preview,adaevolve,0.217,100,17,61,4952.29
+6e2667b0-d60e-436f-8586-f6b09403f97e,Polynomino Packing,eb1-preview,best_of_n,0.1867,72.2027,11,56,2327
+6ea9aaa7-1cba-4872-9b1b-052b239121c6,Palindrome Hamiltonian Path,GPT-5.4,evox,0.2184,0,16,60,2122.38
+6ef0af3d-17c1-4ddc-b3ce-9144c6ca0330,Polynomino Packing,Kimi-K2.5,evox,0.191,14.5219,12,38,3316
+6f2a24cb-26bb-460f-bbaf-985e5dbf7ee6,Bounded 2D Knapsack,eb1,adaevolve,0.533,100,5,14,2597.4
+70072ec9-395f-4531-8a10-4fa0e77abf82,Palindrome Hamiltonian Path,Claude Opus 4.6,adaevolve,0.2829,0,17,62,4334.47
+70740aa4-34ca-4706-9517-01d856443a1f,Polynomino Packing,eb1,best_of_n,0.1419,72.8112,16,61,5483.62
+7080679c-69be-491e-849a-f372c63fe7d6,Bounded 2D Knapsack,eb1-preview,adaevolve,0.2114,100,17,59,7750.71
+7094ca5c-d411-4b8f-ad59-a5a7d65c6875,Polynomino Packing,Claude Opus 4.6,best_of_n,0.162,67.3527,16,61,1693.94
+70957bd5-098e-420c-862a-4ee70d5a3277,Polynomino Packing,eb1-delta-preview,adaevolve,0.3304,15.7016,14,46,2402.86
+7116b225-2897-4079-8202-3bf284465b0f,Palindrome Hamiltonian Path,Claude Opus 4.6,adaevolve,0.2319,0,17,61,1635.65
+71301a68-0949-464b-a668-776c437a2f26,Polynomino Packing,eb1-preview,adaevolve,0.5472,70.554,7,37,664.143
+719e5d84-d8d8-43eb-8333-964ca2c8ce1d,Polynomino Packing,GPT-OSS-20B,best_of_n,0.1724,44.2397,16,60,717
+71d8d389-e2d8-4c79-ad9b-403b9ea72050,Palindrome Hamiltonian Path,Kimi-K2.5,adaevolve,0.2569,0,17,61,2195.82
+71ef0948-79b2-4a8c-887a-93a138e7c016,Bounded 2D Knapsack,eb1-frontier-preview,best_of_n,0.1694,66.6667,16,61,3375.44
+72ecea91-0227-4ded-9092-e6131c2befd0,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.146,0,16,55,1745.12
+7317ee34-c548-4639-970a-213e05c77d5e,Bounded 2D Knapsack,eb1,adaevolve,0.3344,100,10,31,2925
+733bf6f8-330f-43fb-99bf-ed629789d4b4,Palindrome Hamiltonian Path,GPT-OSS-20B,evox,0.228,0,14,43,915.714
+73da9399-fff7-435d-bdf1-c87014844f07,Palindrome Hamiltonian Path,eb1-preview,best_of_n,0.1462,0,14,59,2404.64
+73f0bdf5-1d26-4f46-8ed2-e4e760f3c8e5,Polynomino Packing,Claude Opus 4.6,adaevolve,0.2546,23.4847,17,54,999.176
+73fbd737-33cd-4d8b-8426-9bd94b5eea0a,Bounded 2D Knapsack,Qwen-3.5-9B,evox,0.1602,0,13,55,1359.23
+74119672-41a6-4920-9767-d9cb736dc7d4,Polynomino Packing,eb1-delta-preview,best_of_n,0.119,0,16,61,485.062
+7436de31-b89f-4656-bf72-115ceba9a8ea,Palindrome Hamiltonian Path,eb1-frontier-preview,adaevolve,0.2876,0,17,62,1678.35
+74cca654-005f-49bc-94b5-89330d5cc1f0,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1728,0,16,61,1891.69
+751a7519-8282-4412-a4fe-a9b24a545d1b,Polynomino Packing,GPT-5.4,evox,0.1711,44.3332,14,54,2237.21
+75371224-604c-4691-b1f8-c256675839c5,Bounded 2D Knapsack,eb1-preview,best_of_n,0.1268,99.6133,16,61,4676.44
+7569a020-3813-49e1-851a-7deb5c0e8772,Palindrome Hamiltonian Path,eb1-preview,evox,0.1833,0,16,61,2726.38
+75952d13-0564-487d-8c33-3e0d61de6b4b,Bounded 2D Knapsack,GPT-OSS-20B,adaevolve,0.2758,96.6,17,51,1948.82
+75e483eb-f153-4ec2-a694-c511f12e1b68,Bounded 2D Knapsack,Gemini-2.5-Flash,best_of_n,0.1929,0,15,60,4494.73
+76fc4297-393e-4c6b-99ff-b2d7ef0b4286,Polynomino Packing,Claude Opus 4.6,evox,0.2145,68.3637,16,61,798.188
+774d6f44-89a1-4a62-b7e4-19cdaa28ebc5,Bounded 2D Knapsack,eb1-frontier-preview,best_of_n,0.1577,100,16,61,1788.62
+77849c68-60e0-443c-ae67-654997c52d06,Polynomino Packing,Kimi-K2.5,evox,0.1978,13.8168,11,42,2581.91
+778da499-8e2f-4d40-8ffe-d79d4d0d6921,Polynomino Packing,eb1-delta-preview,best_of_n,0.1184,63.5118,16,61,779.438
+77bc3458-e35b-49c9-8bb3-dd27590b6876,Polynomino Packing,Gemini-2.5-Flash,best_of_n,0.1371,0,16,62,3723.75
+77c87375-cfd6-4937-975a-8caeeaa75264,Polynomino Packing,Kimi-K2.5,best_of_n,0.1235,5.9399,16,61,1692
+77d12514-9fd8-46fd-abba-81475b462eaf,Polynomino Packing,eb1-frontier-preview,evox,0.5623,0,4,14,1375.25
+7804e14d-7947-4f62-af2d-1621a26b4403,Polynomino Packing,Qwen-3.5-9B,evox,0.2356,0,8,42,1553.5
+786c08ce-d802-497f-a30b-b4ed43ac6efc,Polynomino Packing,GPT-5.4,best_of_n,0.1205,0,16,61,1917.75
+78b0f3a3-7c3b-41eb-80c5-9a39465aeb61,Polynomino Packing,Qwen-3.5-9B,best_of_n,0.1327,0,16,61,1462
+78b66bb5-c8e0-432b-9822-b927f41f6d18,Palindrome Hamiltonian Path,eb1-preview,evox,0.1821,0,15,60,4133.73
+78ea6132-0034-4003-a6fa-54373283e2ef,Bounded 2D Knapsack,GPT-OSS-20B,evox,0.1647,0,14,50,978.429
+797472c8-9adb-4123-bfec-a81ed32df537,Polynomino Packing,eb1-delta-preview,best_of_n,0.1418,43.6251,16,61,647.125
+799990a1-80e3-48d9-83da-90a269ee2855,Polynomino Packing,eb1-frontier-preview,evox,0.178,0,10,45,2974.5
+79aa7c1c-9b4c-41fd-a5ac-672676c880d3,Palindrome Hamiltonian Path,eb1-preview,evox,0.1504,0,16,61,4101
+7ad2aad5-e417-4db9-9954-5916a9af0723,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1614,0,16,61,1239.25
+7b22077c-b4ec-4688-99c4-142605b0c429,Bounded 2D Knapsack,eb1,evox,0.1698,100,16,61,2049
+7b9c8ad0-9d3a-4f4e-ae4c-9b1a68d4e0bb,Bounded 2D Knapsack,eb1-preview,evox,0.2683,100,15,65,1828.53
+7b9da309-612f-4b77-9ccc-991060f5a59d,Polynomino Packing,eb1-delta-preview,adaevolve,0.2828,80.3931,16,45,1616.75
+7c1cc3c0-d716-450a-b738-1c4942669897,Palindrome Hamiltonian Path,Kimi-K2.5,evox,0.1957,0,13,48,1639
+7c2071fa-1139-4666-b0ac-b3f4d37c2456,Bounded 2D Knapsack,Qwen-3.5-9B,best_of_n,0.1376,0,16,61,2047.44
+7ce02ff8-4e97-4e16-9d16-11f5d666de29,Palindrome Hamiltonian Path,eb1-preview,evox,0.1877,0,16,60,1406.19
+7d18a85b-289e-441a-a5a7-36dbe7e2f4b2,Bounded 2D Knapsack,GPT-5.4,best_of_n,0.1395,99.6133,16,61,3564.94
+7d191adf-c961-4c1d-9e33-d78abcf005fd,Polynomino Packing,Gemini-2.5-Flash,adaevolve,0.3118,0,17,62,3518.06
+7d3f6ac9-c64d-4095-a399-60ec2f4decd3,Palindrome Hamiltonian Path,eb1-preview,evox,0.1498,0,16,61,3869.56
+7d8266fa-3874-4845-b5e8-6d38750cf5b2,Bounded 2D Knapsack,GPT-5-mini,best_of_n,0.1319,97.1767,16,61,3353.81
+7dad9599-e1b7-4d50-a575-ec3a4d513670,Bounded 2D Knapsack,Claude Opus 4.6,best_of_n,0.1447,100,16,61,919.188
+7e3d220d-31bf-4f1f-ac90-579ef3e62b86,Polynomino Packing,Kimi-K2.5,evox,0.1694,0,15,56,2583.8
+7e496c51-d9d0-415c-9af1-4ba76dde122a,Palindrome Hamiltonian Path,eb1-preview,adaevolve,0.2524,0,17,62,1382.29
+7f6a7609-7e90-407e-a2b5-0563e0d88498,Bounded 2D Knapsack,Claude Opus 4.6,evox,0.1564,100,16,61,1084.25
+7f7718c8-e601-4a67-92a4-58cf0bb30d87,Palindrome Hamiltonian Path,eb1-preview,best_of_n,0.1685,0,16,61,1349.31
+7fe54803-4e1c-4b42-b1e6-e61d6fabc692,Bounded 2D Knapsack,Claude Opus 4.6,adaevolve,0.2502,100,16,47,892.438
+80284a4e-9ce2-4367-9152-f79a7b87942c,Palindrome Hamiltonian Path,eb1-frontier-preview,best_of_n,0.1534,0,16,61,946.562
+80fadf0c-1bc3-4c52-b7c7-65f9d833bb6c,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1869,0,16,61,2130.69
+8127b5a2-bd9c-402f-8e0a-efec816c31ca,Bounded 2D Knapsack,eb1-frontier-preview,best_of_n,0.1372,95.62,16,61,2806.69
+812fb4a1-bb9d-4dd6-a0de-b9e701534950,Bounded 2D Knapsack,Kimi-K2.5,adaevolve,0.2296,100,17,52,4279.29
+814651a9-9ac1-4efd-89b5-519f57ce85b3,Palindrome Hamiltonian Path,eb1-preview,evox,0.1645,0,16,61,1320
+8292819b-3055-4fe8-862b-e95121189ed1,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1874,0,16,58,1549.5
+82c45d4b-609c-41a3-8096-981c1105f93c,Polynomino Packing,GPT-5.4,adaevolve,0.2162,0,17,62,2540.12
+82ff09df-5589-45f0-9905-3237e12ef4b9,Polynomino Packing,eb1-delta-preview,best_of_n,0.1306,15.6877,16,61,810.062
+831d12e6-b146-47d9-8d91-8bba1fda8aba,Polynomino Packing,Gemini-2.5-Flash,adaevolve,0.4504,0,17,62,2918.88
+8355809b-2d67-4222-abe4-991ce539240d,Palindrome Hamiltonian Path,eb1-frontier-preview,best_of_n,0.1244,0,16,61,1392.88
+83d807c2-2f7f-43f1-a990-29d71f7170d3,Bounded 2D Knapsack,eb1,evox,0.1242,100,15,60,5426.47
+843ee5a9-90a1-41fe-b14c-498a711b2c0e,Bounded 2D Knapsack,Claude Opus 4.6,adaevolve,0.2324,100,17,54,1198.24
+8458e5ac-1cf4-4dc4-98c3-a515695b60fb,Polynomino Packing,GPT-5.4,adaevolve,0.2398,0,17,63,2244.35
+84c46c91-e8a9-4254-a0c8-3b610a62fc78,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.2014,0,16,60,2030.12
+84eb34f5-6ccb-44d5-bd37-00b7ff48af94,Palindrome Hamiltonian Path,eb1-preview,evox,0.1688,0,16,61,2120.44
+84fd366e-128f-4762-a59b-c471f38aed5d,Polynomino Packing,Kimi-K2.5,adaevolve,0.2216,6.649,17,57,3072.06
+850a6c73-d74c-4ace-9677-0f8edb4b4f38,Bounded 2D Knapsack,eb1-pro,best_of_n,0.1349,100,16,61,1793.62
+854a5b27-fe45-4ef3-ab2c-583c748d4c06,Polynomino Packing,GPT-OSS-20B,evox,0.2493,43.6995,14,44,947.071
+856c51f9-f329-4caa-851f-0644551a0626,Palindrome Hamiltonian Path,eb1-preview,evox,0.1834,0,16,60,3246.88
+85eef7af-a506-4676-9b7f-50a118b3ffd2,Palindrome Hamiltonian Path,eb1-frontier-preview,best_of_n,0.1256,0,16,61,1679.12
+85f1c5db-d4af-4a82-aabe-67ccbc41f683,Polynomino Packing,eb1-frontier-preview,best_of_n,0.1795,68.4969,16,60,718.25
+86654979-e8dc-410c-8f15-11359457589c,Polynomino Packing,Qwen-3.5-9B,best_of_n,0.1562,3.0707,16,60,1715
+8727be57-3287-437b-83ae-ba6a50fcab1c,Polynomino Packing,eb1-preview,evox,0.1383,42.862,16,56,608.312
+8739e14a-e088-448e-a01b-2aa11ff2c838,Polynomino Packing,Gemini-2.5-Flash,best_of_n,0.1277,69.4857,16,61,3482.44
+87a86ad6-b38b-4aa5-9044-6d1d9b3eb5f7,Bounded 2D Knapsack,Kimi-K2.5,best_of_n,0.1477,100,15,56,4392.6
+87f3e03d-6249-4d8a-ae89-0a7a1f40abae,Polynomino Packing,Kimi-K2.5,best_of_n,0.1379,51.1946,16,60,2610.19
+8876206e-a5fd-4704-b91e-865602320c90,Bounded 2D Knapsack,eb1-delta-preview,adaevolve,0.2307,100,17,45,4046.18
+887b1fdb-ba54-4e50-b47e-b28e1a27f1d7,Polynomino Packing,Claude Opus 4.6,best_of_n,0.1362,15.6877,16,61,856.438
+88a95b19-7226-4f48-8089-a174c66d7fd1,Palindrome Hamiltonian Path,GPT-5-mini,best_of_n,0.1203,0,16,61,1689.69
+892626c1-e9bb-406c-83de-2361367ad8fd,Polynomino Packing,eb1-preview,best_of_n,0.1429,57.4764,16,61,2399.12
+89276264-c5c3-4b07-9668-44fa6c2c201e,Bounded 2D Knapsack,eb1-frontier-preview,best_of_n,0.1528,100,16,61,4117.5
+8a28f900-0ca8-4439-95db-bdf9378717b7,Polynomino Packing,eb1-preview,evox,0.1253,44.7075,16,56,671.438
+8ab1b6b9-270d-4995-a5b3-78f527550f56,Bounded 2D Knapsack,eb1-pro,best_of_n,0.153,100,16,61,1691.56
+8aea3d07-e8d5-4124-b8bc-375c9545c068,Bounded 2D Knapsack,Kimi-K2.5,best_of_n,0.1414,99.7967,16,57,3535
+8bcb9f33-f373-4fcd-afcb-0cf9af53ce24,Polynomino Packing,eb1-preview,best_of_n,0.1787,66.706,14,59,2466.21
+8c0e4d8e-dc23-4c50-b241-79ba1830b866,Palindrome Hamiltonian Path,GPT-5.4,evox,0.1555,0,16,60,3720.12
+8c7736ac-cb36-4bec-8156-8be532475947,Bounded 2D Knapsack,GPT-OSS-20B,adaevolve,0.2198,100,17,51,1599.41
+8d8bd3b4-c344-40b6-b952-aeb2db48f631,Polynomino Packing,GPT-5.4,adaevolve,0.2436,0,17,62,2225.59
+8dae7913-cc0c-42f1-9650-9edf333226f9,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1769,0,16,61,1932.69
+8de8c7a4-de72-46e4-96a3-ecd78ab970e3,Bounded 2D Knapsack,GPT-OSS-20B,evox,0.2498,99.6133,9,39,1407.11
+8e4ee1b4-26b0-4483-884b-516ec1a1b880,Bounded 2D Knapsack,GPT-OSS-20B,best_of_n,0.1712,0,16,61,1319.06
+8e6937a2-8b18-4d7e-93ee-19b51470bcbe,Bounded 2D Knapsack,eb1-preview,adaevolve,0.2479,100,17,57,3022.47
+8e89f9f9-6a11-48ee-bd64-60010db148a3,Bounded 2D Knapsack,Qwen-3.5-9B,adaevolve,0.4669,0,17,62,1295.24
+8e8cb987-9b41-4ab3-b0ba-8e6d3ec20963,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1764,0,16,59,1841.38
+8eefdba9-9da3-4aa2-83b3-c78e6bddbfdb,Bounded 2D Knapsack,GPT-5-mini,adaevolve,0.2484,100,16,38,3356.44
+8f013712-b775-4058-90b8-07036345a911,Palindrome Hamiltonian Path,eb1-preview,evox,0.2374,0,55,206,2598.69
+8f15f5a6-e23b-4eab-9eec-42946af59945,Polynomino Packing,Kimi-K2.5,evox,0.193,40.8807,11,44,1567.73
+8f2c04cd-a2a1-4ac1-9272-2bea1d48c1db,Palindrome Hamiltonian Path,eb1-preview,evox,0.1639,0,16,61,3074.81
+8f2fd047-24d8-4952-9f3b-686ddc7db539,Polynomino Packing,eb1-preview,evox,0.4264,0,7,32,1877.29
+8f53f6bc-f510-484f-90c9-cec9cb3bc557,Palindrome Hamiltonian Path,eb1-preview,evox,0.1811,0,16,61,1719.38
+8fc75505-b0db-4ca7-a4b7-3c2a671239f1,Polynomino Packing,eb1-preview,adaevolve,0.4093,53.8903,8,28,2685.88
+8ff52266-bd90-496b-a693-6b2704856308,Bounded 2D Knapsack,eb1-frontier-preview,best_of_n,0.1958,100,10,50,2227.5
+9030845b-de01-48be-9de9-f87674555268,Polynomino Packing,eb1-preview,best_of_n,0.1269,0,16,61,532.812
+904a7e07-a735-40ae-83d5-545186ef2353,Polynomino Packing,GPT-5-mini,best_of_n,0.1617,63.9735,16,61,2254.88
+9077ad5f-391e-4bc8-a48a-03067d8c4b2d,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.2152,0,16,58,2036.5
+90c2108f-0750-416f-801d-8ebba8228fff,Polynomino Packing,GPT-5-mini,best_of_n,0.1753,46.0639,16,61,2185.44
+91b86c2c-be9b-4002-acbe-e4c2a72be797,Palindrome Hamiltonian Path,eb1-frontier-preview,best_of_n,0.197,0,16,61,1519.94
+91d85485-2d37-4e3c-a468-5106b8baf9f4,Polynomino Packing,Kimi-K2.5,adaevolve,0.2929,64.6461,13,41,2979.31
+91f385c2-7fad-4de9-9034-d1e02790ec42,Palindrome Hamiltonian Path,eb1-preview,evox,0.1876,0,16,61,1761
+924219e5-94dd-4f56-bc36-b744c5bcdf77,Polynomino Packing,eb1-delta-preview,best_of_n,0.1346,44.6484,16,61,653.188
+925f875b-a7a0-4310-9254-036d0dfb13cd,Polynomino Packing,GPT-OSS-20B,evox,0.2198,43.6819,13,47,631.692
+92ae91b2-9723-4980-83d0-357f7918b6e7,Bounded 2D Knapsack,Kimi-K2.5,adaevolve,0.2429,100,17,48,3427
+935bf905-61e4-4919-a166-8c866c107680,Palindrome Hamiltonian Path,Kimi-K2.5,evox,0.1878,0,12,47,1175.83
+93678c2d-8117-4c8a-93f1-7a0d4db06770,Bounded 2D Knapsack,Kimi-K2.5,best_of_n,0.3422,99.6133,6,10,1726.33
+9367e4af-cf7d-45fc-949e-903a156e2c8c,Polynomino Packing,eb1-preview,best_of_n,0.1171,0,16,61,489.062
+9381b93c-72f5-4c88-9961-283e0e1aa51c,Bounded 2D Knapsack,Kimi-K2.5,evox,0.1726,100,12,51,2838.42
+938a51e1-e3b0-411e-bac0-4aa2951e34a5,Palindrome Hamiltonian Path,eb1-preview,best_of_n,0.1671,0,16,61,1540.5
+93a8a0cd-4d09-4a7b-97c7-6594eaf4ffb2,Bounded 2D Knapsack,eb1-delta-preview,adaevolve,0.2116,100,17,59,5897.41
+94697ddc-3f0a-4487-8115-47206472ba4b,Bounded 2D Knapsack,eb1-frontier-preview,evox,0.1874,100,32,105,1695.44
+9553a96a-a57c-437d-a081-07e79719b6fb,Bounded 2D Knapsack,Kimi-K2.5,evox,0.2266,95.9167,9,33,3160.89
+95738638-70b4-45a0-9261-877e6e6a803c,Bounded 2D Knapsack,eb1-pro,adaevolve,0.6004,100,4,12,903.25
+9609f8b5-cbe4-4cc3-a1c7-f6f7e7a9f890,Polynomino Packing,GPT-5.4,adaevolve,0.2295,0,17,62,2549.71
+960d7de7-8789-4160-aa78-95b268f67126,Palindrome Hamiltonian Path,eb1-frontier-preview,best_of_n,0.1613,0,16,61,1103.38
+969bddea-8a88-4cf7-8532-499b3cb73094,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1645,0,16,61,3148.38
+9739beaf-164e-45c4-b874-80a1abb0572b,Polynomino Packing,GPT-5-mini,best_of_n,0.1718,45.4472,16,61,2170.88
+97643f33-03db-4ece-af0b-8ad69656d61f,Bounded 2D Knapsack,eb1-preview,adaevolve,0.2335,100,17,45,2166
+97f2478c-4d08-4da4-ad5e-974210849f48,Bounded 2D Knapsack,GPT-5-mini,evox,0.1578,100,16,61,5932.75
+987a9c20-1fef-4dda-947a-f3896574bcca,Palindrome Hamiltonian Path,eb1-preview,evox,0.1481,0,16,61,3367.44
+98a2b99f-fe00-47db-9958-0a719ab6a6f1,Bounded 2D Knapsack,eb1-preview,adaevolve,0.2583,100,17,49,2871.59
+98b9a8c6-e532-4901-bbe6-e37994b67126,Polynomino Packing,GPT-5.4,best_of_n,0.1339,45.7463,16,61,2453.06
+9931e63f-4644-41cf-bcf1-bcadc184ed62,Bounded 2D Knapsack,GPT-OSS-20B,best_of_n,0.1615,29.6733,16,61,1674.38
+99af62ef-25d2-4349-b926-a0b56f413a8d,Polynomino Packing,eb1-preview,adaevolve,0.2308,70.7116,17,46,2887.12
+99c85c0a-20d7-45f6-aad6-00ba159011e8,Polynomino Packing,eb1-frontier-preview,adaevolve,0.2241,75.7508,17,44,565.294
+9a3c66aa-814f-4145-b4b4-5f36328c02f6,Polynomino Packing,eb1-delta-preview,evox,0.2077,65.7213,12,50,2011.5
+9a8c1f77-8019-4d3e-be17-6c2052a47cd8,Bounded 2D Knapsack,eb1-pro,best_of_n,0.148,100,16,61,1942
+9aa484c3-f92a-429e-96f3-a560ebfaa508,Bounded 2D Knapsack,Gemini-2.5-Flash,best_of_n,0.1392,0,16,61,3930.56
+9afb35dc-b5a4-4850-884c-fc5a6165eca8,CUDA Attention kernel optimization,unknown,evox,0.0234,2.1923,50,190,
+9afd6161-cbaf-4811-9fa7-05c680ca42c7,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1958,0,13,51,3390.77
+9b759422-1a5a-4d83-aeb4-fdf51e1e8326,Bounded 2D Knapsack,eb1,adaevolve,0.2465,100,17,57,2579.82
+9bc5fa47-b1a6-4951-add4-0f306779a0e6,Polynomino Packing,Kimi-K2.5,evox,0.2064,33.2313,15,46,2293.13
+9c019656-751b-43cf-9cfc-38f715fcb034,Bounded 2D Knapsack,GPT-OSS-20B,evox,0.1891,66.3067,10,36,1454.9
+9c31aa87-cf3f-47f5-9cd7-902c6469927f,Bounded 2D Knapsack,Qwen-3.5-9B,best_of_n,0.1323,0,16,61,1155
+9c84f030-953b-4d3e-9f4c-33f5d1d90128,Bounded 2D Knapsack,Kimi-K2.5,evox,0.2683,98.1133,8,28,1787.88
+9e92c18a-d0d9-4cf7-b4a0-7f873f2e0158,Polynomino Packing,Qwen-3.5-9B,adaevolve,0.3954,0,17,62,1212.06
+9f0be244-7576-498b-8d0d-176030466db6,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1757,0,16,61,2367.81
+9f40d8a5-4072-4d7b-a43c-9ec074cdd30e,Polynomino Packing,eb1-preview,evox,0.1472,44.7702,15,59,654.067
+9fc74908-ef6a-42ce-9dcb-4b28044f31e0,Bounded 2D Knapsack,eb1,adaevolve,0.2521,100,17,57,2031.88
+9fd20476-025b-40b3-ac5b-21f18a017dd8,Palindrome Hamiltonian Path,eb1-preview,evox,0.1597,0,15,60,3540.33
+a05da6f2-767b-46b0-a117-0b3f73822d62,Polynomino Packing,Claude Opus 4.6,best_of_n,0.1762,77.3761,16,61,825.188
+a0657777-ec22-420b-b8cd-c7d151aa864b,Polynomino Packing,GPT-5.4,adaevolve,0.2311,56.1215,17,54,2458.53
+a06ce63e-ac67-421b-b84b-ba2e9bcf4f28,Palindrome Hamiltonian Path,eb1-preview,evox,0.1693,0,16,61,2387.25
+a0794318-3530-4536-b6f1-58f78fd57b4d,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1727,0,16,61,2484.56
+a08771bf-fdfc-44c1-82ec-af3d77ef761d,Bounded 2D Knapsack,eb1-frontier-preview,best_of_n,0.1481,100,16,61,2716.31
+a153e4ea-b25c-44f7-b387-03c5e381cf2f,Polynomino Packing,eb1-frontier-preview,adaevolve,0.2193,69.9372,17,47,688.059
+a16ee325-9b04-4c2f-a6d9-1fdf260e8110,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1766,0,16,61,3128.69
+a1dc4ef3-c629-4be2-89dd-affe7ff25eb2,Dispatcher cold path: 4 drives → DRAM → GPU; maxim...,unknown,coding_agent,0,0.3991,3,10,
+a2853c99-32a7-47b4-ba4e-600219372e54,Bounded 2D Knapsack,eb1-preview,evox,0.2101,100,24,87,2298.46
+a2b8f5f5-f794-4bb9-829f-7811375cd516,Bounded 2D Knapsack,eb1-delta-preview,evox,0.3467,100,6,21,2141.17
+a2dc8937-49f8-45af-bc52-6f9b8c9b4e8f,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1587,0,16,61,2210
+a2ea395e-f6f1-4bf5-8825-92efb3c10fff,Bounded 2D Knapsack,Gemini-2.5-Flash,adaevolve,0.2622,0,17,62,2815.06
+a35aac92-9b0c-4827-bec0-e006265c4b60,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1851,0,16,60,1670.31
+a3bd0297-40b1-4bcf-9ebc-837ea2621f3c,Palindrome Hamiltonian Path,GPT-5.4,evox,0.2373,0,16,61,1336.12
+a3fb0134-0e9e-4fef-8c63-01fe1ed803af,Palindrome Hamiltonian Path,eb1,adaevolve,0.2589,0,17,61,2131.47
+a43c81f7-0d9b-484a-906a-9397e36c8121,Bounded 2D Knapsack,Qwen-3.5-9B,adaevolve,0.2803,0,17,62,1282.82
+a46b3978-1024-4d76-b589-4f0f6f1891ca,Bounded 2D Knapsack,Kimi-K2.5,adaevolve,0.236,100,17,43,3410.24
+a47668ec-72e1-4442-a254-9838f2d90c25,Polynomino Packing,eb1-delta-preview,best_of_n,0.1667,44.7658,12,44,583.5
+a485d50e-e951-4000-aa37-b4e24b7af02c,Polynomino Packing,eb1,adaevolve,0.2471,74.1704,17,47,5215.94
+a4b34ec6-91d7-4063-9fa3-110c648dfff4,Palindrome Hamiltonian Path,GPT-5.4,adaevolve,0.2659,0,17,62,1486.47
+a5b416bd-bd20-428f-b357-dba3f2a5166d,Bounded 2D Knapsack,eb1-delta-preview,best_of_n,0.1448,100,14,59,1756.79
+a60558bf-5b6b-4ba5-b954-8722cc8e5d40,Polynomino Packing,Qwen-3.5-9B,evox,0.1784,0,15,58,1774.27
+a64d0004-e0ee-4845-b417-fe231d14d912,Palindrome Hamiltonian Path,Kimi-K2.5,evox,0.2401,0,10,44,2038.5
+a6502c8a-9ff3-44ce-951b-4028647ec158,Palindrome Hamiltonian Path,Claude Opus 4.6,evox,0.1918,0,16,61,991.75
+a6ee70fe-d90d-449c-8939-e40b0149c184,Polynomino Packing,eb1-frontier-preview,best_of_n,0.1422,62.7221,16,61,2665.75
+a7dde383-6b16-49ff-b8fe-8976274d1e08,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1786,0,16,61,1997.19
+a829fae5-19d4-4467-83cb-57e270fbb95d,Bounded 2D Knapsack,GPT-5-mini,adaevolve,0.475,100,6,16,2003
+a832fa17-99d0-4667-a48e-584240f22fda,Palindrome Hamiltonian Path,eb1-preview,evox,0.1511,0,16,61,3261.38
+a8333622-49e4-42d8-bc46-b647ced9c074,Polynomino Packing,eb1-preview,best_of_n,0.1135,0,16,60,2817.31
+a8461e96-41c2-445d-9a61-f492e456a122,Polynomino Packing,eb1,best_of_n,0.1773,72.2423,16,61,2029.44
+a88403e2-d3dd-4815-9349-9b07fc76b0ef,Polynomino Packing,eb1-preview,adaevolve,0.2909,79.053,16,45,2157.69
+a8cc232a-ef1d-458e-ae70-a552346b8033,Polynomino Packing,eb1-delta-preview,adaevolve,0.2439,16.6289,16,60,2077.44
+a96f99b3-c197-4a49-979c-7806d3aad89b,Palindrome Hamiltonian Path,GPT-OSS-20B,evox,0.4033,0,11,42,759.727
+a9a4c823-3ad1-47f7-9037-5a6ec0065346,Bounded 2D Knapsack,GPT-OSS-20B,adaevolve,0.2641,99.6133,17,47,1993.59
+a9a5953b-f117-46eb-a9f2-cc834c64787d,Bounded 2D Knapsack,Gemini-2.5-Flash,adaevolve,0.2899,0,17,62,3089.88
+a9adaf1b-97a0-4bce-922e-f0d405af0092,Polynomino Packing,Qwen-3.5-9B,adaevolve,0.3174,0,17,62,1397.47
+aa31148a-0bc3-4c01-998f-a7ba5bf7b70c,Polynomino Packing,eb1-delta-preview,best_of_n,0.1386,0,16,61,466.562
+aa4ce58b-f2e6-4c56-8e2b-e53a8c1f09f8,Polynomino Packing,Gemini-2.5-Flash,best_of_n,0.139,0,15,60,3583.07
+ab617358-1c2d-4308-b025-9f526bb718bd,Polynomino Packing,GPT-5.4,best_of_n,0.1283,44.1998,16,61,1503.5
+ab7af338-93c0-4d54-8b76-ea30968348ef,Bounded 2D Knapsack,GPT-5.4,evox,0.1565,100,15,59,3047.13
+abf084d6-8cd4-453a-8871-be5f6521d9a6,Bounded 2D Knapsack,eb1-frontier-preview,evox,0.1209,100,16,61,1926.44
+ac10fb05-90e5-44da-9088-1bd363904981,Polynomino Packing,Kimi-K2.5,best_of_n,0.1474,13.0978,15,60,2733.13
+ac7b0c9e-0891-4ac3-b2e0-20ed79f9e9cb,Palindrome Hamiltonian Path,eb1-preview,evox,0.1712,0,15,60,3080.73
+acc11305-beb6-43cd-af94-6a4f9f560e57,Polynomino Packing,GPT-OSS-20B,best_of_n,0.1865,43.6432,16,60,1179.88
+acc6437b-55c7-4e11-8164-181a0c214241,Polynomino Packing,GPT-OSS-20B,evox,0.1904,45.0939,15,47,1057.13
+ad104f7b-93b2-4feb-8049-e9be4762f0b5,Polynomino Packing,Claude Opus 4.6,best_of_n,0.1938,70.5968,16,61,1173.69
+add08d53-c1bc-49f3-b404-2383fbc62f23,Bounded 2D Knapsack,eb1-pro,best_of_n,0.1409,100,16,61,2265.5
+ade72d07-f4b6-4053-b002-95c1a067261a,Bounded 2D Knapsack,eb1,adaevolve,0.2434,100,17,59,2592.53
+ae0588e0-00d4-4ca4-8616-2895915d2328,Bounded 2D Knapsack,GPT-5-mini,evox,0.1787,100,48,146,4217.33
+ae94d1d7-1655-439c-a4ac-907f238a4efd,Bounded 2D Knapsack,eb1-preview,adaevolve,0.3163,100,20,63,6660.15
+aea45513-3a85-4038-a08b-2e6ae5d82d64,Palindrome Hamiltonian Path,Kimi-K2.5,adaevolve,0.2493,0,17,62,1991.76
+aea59bdd-314f-4f82-9ed1-b10df30f7233,Polynomino Packing,eb1-preview,best_of_n,0.1691,59.874,13,58,2239.69
+aebdee10-cb05-49f3-bd9b-f412d28e4ea4,Polynomino Packing,eb1-preview,best_of_n,0.1161,1.0811,15,60,2923.87
+aef0351c-23d3-46f6-9035-cd6687ccf1e6,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.2727,0,53,163,3038.68
+af211c2a-26e4-4065-ba92-4117847a74cb,Bounded 2D Knapsack,eb1-pro,best_of_n,0.1413,100,16,61,2777.56
+afc03e6c-3a3d-4d47-9c89-da790a334566,Palindrome Hamiltonian Path,GPT-5.4,best_of_n,0.1585,0,16,61,2135.56
+b00257e6-613d-4907-83bd-32f50d6b8824,Palindrome Hamiltonian Path,eb1-preview,evox,0.1984,0,16,61,2998.38
+b0d6a971-e555-4cf4-95b5-60c8e50a72b5,Palindrome Hamiltonian Path,Claude Opus 4.6,evox,0.1649,0,16,61,737.25
+b0f3741e-43f5-4740-bb9a-2f7bed69124d,Polynomino Packing,Kimi-K2.5,best_of_n,0.2299,8.9109,9,31,1700.67
+b11a86fa-78d3-4f0a-abb9-1ca06cd2f16d,Bounded 2D Knapsack,eb1-pro,adaevolve,0.4852,100,6,20,5077.17
+b2493a13-5bab-444f-a7b1-d0b89f822358,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1509,0,16,61,1625.12
+b264bf42-89b6-4d73-b38e-4f0f7b4baf9a,Bounded 2D Knapsack,eb1-pro,adaevolve,0.5386,100,5,14,1767.4
+b2affadf-c3e1-40cb-9c3b-0dc9d66dbf2e,Polynomino Packing,Kimi-K2.5,adaevolve,0.2445,67.4451,17,46,3200.76
+b2c118c3-e92c-445b-a63a-1eb60e2b103b,Polynomino Packing,GPT-5.4,adaevolve,0.2513,26.3824,16,44,1684.12
+b2f2fd95-6bb0-4aaf-9bf8-c78cef8c42f8,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.152,0,16,61,2471.88
+b30816de-a9d7-41bf-9b18-ba0829a06168,Palindrome Hamiltonian Path,eb1-preview,evox,0.1878,0,16,61,1613.81
+b37229ae-bed5-4195-a220-a39305ba834b,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1355,0,15,60,1662.13
+b3ffe079-5952-4d8d-9718-fbd5811a475d,Palindrome Hamiltonian Path,eb1-preview,evox,0.1815,0,16,61,2335.5
+b40e6471-0881-4a1b-8340-30214eac45e7,Polynomino Packing,GPT-5.4,best_of_n,0.1265,13.1209,16,61,1903
+b4c251c8-8b8a-4962-bb76-5181d932b77d,Polynomino Packing,eb1-delta-preview,adaevolve,0.2741,74.3558,16,45,1984.56
+b4d2d34b-ed42-4d5e-8f72-7c12621127e0,Polynomino Packing,Kimi-K2.5,evox,0.1731,27.8105,16,51,1884.12
+b4f26e65-8666-44a9-bd43-fae5f1e2a2f6,Palindrome Hamiltonian Path,GPT-5.4,evox,0.1872,0,16,59,2160.75
+b54cf546-33b9-43c1-a5b2-25047779270f,Bounded 2D Knapsack,eb1-frontier-preview,best_of_n,0.1726,100,11,56,4616.09
+b5e6aa12-6731-4e4e-b0a7-13ec6945c71e,Bounded 2D Knapsack,eb1-frontier-preview,best_of_n,0.2312,100,12,57,1857
+b6368405-96a5-4acc-8551-57ad12d20dd8,Polynomino Packing,eb1-frontier-preview,best_of_n,0.5941,58.8353,3,11,1459
+b63e2fc6-0eca-4246-86fb-bcef326e5e1d,Bounded 2D Knapsack,eb1-preview,best_of_n,0.1312,100,16,61,3147.5
+b6860286-96e7-4f17-a7d6-3667a85bccae,Palindrome Hamiltonian Path,Kimi-K2.5,evox,0.1959,0,14,51,1692.57
+b74f6a1a-341f-48fe-a75e-1f5e668a5022,Polynomino Packing,GPT-OSS-20B,adaevolve,0.2697,44.7156,17,46,968.647
+b76f648d-fbd1-4897-a50a-5b490a091377,Polynomino Packing,eb1-preview,best_of_n,0.1174,0,15,60,2130.6
+b77085fa-7824-4f4b-97a8-84230f6edb2d,Palindrome Hamiltonian Path,eb1-frontier-preview,adaevolve,0.2279,0,17,62,1438.47
+b7734ac5-14fb-46c9-aa8a-a33e17ad0efc,Polynomino Packing,Claude Opus 4.6,evox,0.1949,66.1141,16,61,811.625
+b7c00703-5bf5-4793-b460-e7fef7071e64,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1667,0,15,60,2318.67
+b89a4d7a-5704-45b0-a34f-b30466106018,Palindrome Hamiltonian Path,GPT-5.4,best_of_n,0.1252,0,16,61,1557.94
+b8b20171-fcfc-435b-8ed6-bbedc096e7c4,Polynomino Packing,eb1-preview,adaevolve,0.2758,30.6242,17,41,2319.18
+b8b8437a-3130-4f30-a43c-aeb5beddc524,Bounded 2D Knapsack,GPT-OSS-20B,evox,0.2243,99.6133,11,41,1682.27
+b8de8b6a-3303-4d87-b7e0-b7077ca4b1d9,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1682,0,16,61,1469.06
+b8efc620-b4ef-4f45-817a-01e140c44046,Polynomino Packing,eb1-frontier-preview,best_of_n,0.1346,44.883,16,61,629.75
+ba4f6929-d940-472d-ae9d-d9e351d77e65,Palindrome Hamiltonian Path,eb1-frontier-preview,adaevolve,0.2547,0,17,62,1927
+ba5031cf-f805-403c-ac05-f0ea0a2fc837,Bounded 2D Knapsack,GPT-5.4,adaevolve,0.2944,100,17,46,3198
+ba79edc0-ef95-4a8c-85a2-2d629224e7e0,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1763,0,16,56,3650.88
+bb82dac3-3c18-49cb-960d-842a3210ac4e,Palindrome Hamiltonian Path,eb1-preview,evox,0.224,0,15,60,1809.53
+bbab20e7-3878-45d3-8d32-22d85e0fa8bb,Palindrome Hamiltonian Path,eb1-preview,adaevolve,0.2771,0,17,61,2061.47
+bbdb6138-c985-467b-a2b4-ecf000ebdba0,Bounded 2D Knapsack,GPT-OSS-20B,best_of_n,0.1545,99.2333,16,58,1303.56
+bbf7368c-4ca9-4ae4-adaf-3ace2c3f8c4b,Bounded 2D Knapsack,Qwen-3.5-9B,evox,0.2917,0,6,23,1072.83
+bc26130c-29d6-457a-9dcf-84d3756a1a5c,Bounded 2D Knapsack,GPT-5-mini,evox,0.2891,100,21,58,3916.48
+bc93be44-5a23-4095-80b0-e6e4069e1a9d,Polynomino Packing,eb1-preview,best_of_n,0.123,0,15,60,2575.07
+bc993e42-68d8-458a-94c3-1e1ee710bd7d,Bounded 2D Knapsack,eb1-frontier-preview,best_of_n,0.1195,100,16,61,5248.56
+bca1664a-315a-45e1-8bde-55826bc15e61,Bounded 2D Knapsack,Gemini-2.5-Flash,evox,0.3253,0,6,40,2989.5
+bca522d1-3678-4405-a81d-ef6a44322b7b,Palindrome Hamiltonian Path,GPT-5.4,adaevolve,0.2612,0,17,62,1320.65
+bcd0face-60b2-45e6-802f-30d0db757e86,Polynomino Packing,Kimi-K2.5,adaevolve,0.2809,41.3925,14,48,3387.86
+bd1b3b64-8aab-46d1-9d67-dea0011a65b0,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.2067,0,16,61,3115.25
+bda10ef8-2b67-422b-96bc-fe96fcb56ab7,Bounded 2D Knapsack,Gemini-2.5-Flash,evox,0.1837,99.6133,13,47,2272.54
+bdb0ab16-dbb8-41d4-9bf1-c330f1470df0,Polynomino Packing,eb1-preview,adaevolve,0.41,69.75,8,35,1272.12
+be62c808-b3aa-4f7f-8f75-42118170f741,Palindrome Hamiltonian Path,eb1-preview,evox,0.1874,0,16,61,1495.62
+beaf4f6d-2a8d-478c-b122-8c52b5b96a99,Palindrome Hamiltonian Path,Claude Opus 4.6,adaevolve,0.2653,0,17,62,2179.82
+beb74df5-c3ed-4908-9925-c924a4293d72,Polynomino Packing,GPT-5.4,evox,0.139,45.6811,16,61,2473.81
+bee7b7d4-f2a2-4048-9495-9653a3a2a25d,Bounded 2D Knapsack,eb1-delta-preview,adaevolve,0.2228,100,16,56,5941.31
+bf4197f8-1bcd-4e18-bb2d-b7e696be42c8,Palindrome Hamiltonian Path,eb1-preview,evox,0.1434,0,16,61,1440.94
+bf54cbd5-a2f6-49b6-8949-1f0444c3fbda,Bounded 2D Knapsack,GPT-OSS-20B,evox,0.193,95.5333,12,51,1475.5
+bf754cb5-953f-445c-85c0-cc82f694b57c,Palindrome Hamiltonian Path,eb1-preview,adaevolve,0.276,0,17,61,2076
+c02b4f33-fb42-4922-a72d-cf8563952494,Polynomino Packing,eb1-delta-preview,evox,0.1373,44.7075,16,59,682.562
+c09d1c5d-284f-46cf-8c0b-f759a1f6ccd2,Palindrome Hamiltonian Path,eb1-preview,evox,0.1871,0,15,60,4216.27
+c12a6b18-3661-4b03-b607-9e4d12a844f8,Polynomino Packing,eb1-delta-preview,adaevolve,0.2714,15.6877,17,54,1623.29
+c132d495-ddf6-4a21-838e-21adb4514c24,Polynomino Packing,Kimi-K2.5,adaevolve,0.2232,14.8622,17,49,3443.53
+c158bfa2-709e-4517-8365-2f1e6021f5bd,Polynomino Packing,Kimi-K2.5,best_of_n,0.1616,55.6546,14,34,2186.07
+c1687325-26e4-4a3e-9e36-d781672f5ae9,Bounded 2D Knapsack,GPT-5-mini,evox,0.1911,100,12,46,4691.25
+c192a0d7-526b-4afb-9be5-3b0eb3b31a50,CUDA Layer Norm kernel optimization,unknown,adaevolve,0.0699,583.142,26,54,
+c20cfd8f-fcf8-4f0b-9ec6-80438039933f,Polynomino Packing,eb1-frontier-preview,best_of_n,0.1273,0,15,60,2912
+c20fe1a4-6083-43e5-82f4-0394d52747b5,Bounded 2D Knapsack,GPT-5-mini,adaevolve,0.243,100,17,52,3020.18
+c26cd696-6809-4cf5-abce-e3bd73903e94,Polynomino Packing,GPT-OSS-20B,adaevolve,0.2795,46.2677,17,50,1032
+c275cce0-0b69-47a9-94a7-0fc7239c082d,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1506,0,16,61,1895.88
+c3ce5593-fe94-4602-9d84-ae033514f44e,Palindrome Hamiltonian Path,eb1-preview,best_of_n,0.1875,0,13,47,1211.31
+c3dfa147-b2d5-4c77-a358-343f60ba7741,Palindrome Hamiltonian Path,eb1-preview,adaevolve,0.2203,0,17,62,1775.76
+c432eddc-786e-404c-ad65-680938b7a640,Bounded 2D Knapsack,eb1,adaevolve,0.2287,100,17,56,2050.41
+c48947d9-47a7-4755-a1d0-a229a2169c74,Bounded 2D Knapsack,GPT-OSS-20B,evox,0.1643,99.6133,14,45,1494.36
+c499ca4f-6fef-4c5e-b1f7-9e9b4a1f7c2b,Bounded 2D Knapsack,GPT-5.4,adaevolve,0.225,100,17,49,2921.59
+c5536dd8-b52c-4c4d-a6f8-786bc92f5c51,Polynomino Packing,Qwen-3.5-9B,adaevolve,0.3137,0,17,62,1840.12
+c57345a0-5118-4511-bf14-1fd409e1308f,Palindrome Hamiltonian Path,eb1-preview,evox,0.1551,0,16,60,1632.5
+c5749cb7-9cf2-4187-92ed-dc3b31123a1b,Palindrome Hamiltonian Path,GPT-5-mini,evox,0.1899,0,15,60,1863.4
+c5b461b1-adbb-4431-a726-0bfc8eebf8d7,Bounded 2D Knapsack,eb1-pro,adaevolve,0.5564,100,5,14,2201.8
+c71031e0-3e55-4fdf-b84b-1f62ee939bd3,Polynomino Packing,GPT-5.4,adaevolve,0.2414,0,17,61,2256.18
+c79ab592-8e3c-458a-9dff-667d043a7a21,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1891,0,16,61,2246.44
+c7dff20f-08b3-432d-b01c-7ec52d79fd81,Bounded 2D Knapsack,GPT-OSS-20B,adaevolve,0.3162,99.6133,16,37,1429.5
+c8258158-1309-4788-8c5a-079f82769f93,Bounded 2D Knapsack,GPT-OSS-20B,best_of_n,0.1749,96.3933,16,61,2160.06
+c82f17ec-71c3-4fc3-ac20-46f91b16eba4,Bounded 2D Knapsack,eb1,best_of_n,0.1247,100,16,61,3483.06
+c84456ed-aa50-4d5c-91ec-50930b52dc7c,Polynomino Packing,eb1-preview,best_of_n,0.1246,37.4729,16,61,776.312
+c84a0dce-ffcf-4e46-bdd8-e58e21c4ed22,Palindrome Hamiltonian Path,Kimi-K2.5,evox,0.304,0,7,38,2156.86
+c8509873-bc65-49b3-8e2e-8ee79fe39a05,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1568,0,16,61,1716.5
+c91f4d4c-c71d-447d-9b95-e21706a3c786,Polynomino Packing,Claude Opus 4.6,adaevolve,0.2544,19.5701,17,60,983
+c9a602b1-4c21-40d8-80c9-4c92da2612b6,Optimize KV cache eviction policy for vLLM inferen...,Gemini-3-Flash-Preview,openevolve,0.0199,1.2239,16,61,
+ca13dd35-6139-4d15-9931-13af8ad43b79,Palindrome Hamiltonian Path,eb1-frontier-preview,adaevolve,0.2386,0,17,62,959.294
+ca2cd579-eafb-454a-85e0-b3b08e0fb18c,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1697,0,16,61,2112.56
+cb067704-f074-416a-b82e-c7c0117e6fed,Bounded 2D Knapsack,Gemini-2.5-Flash,adaevolve,0.2453,100,17,44,2758.18
+cb7c8525-beb1-42c8-85f8-17f244970363,Bounded 2D Knapsack,GPT-OSS-20B,evox,0.2135,100,13,39,1455.62
+cc3a4928-fae9-41ba-86b7-11f17bdd0dc2,Polynomino Packing,eb1-frontier-preview,evox,0.1657,44.4171,16,55,645.125
+cc5b49ac-6faa-4e78-9a36-134219b7191c,Bounded 2D Knapsack,eb1-preview,adaevolve,0.2187,100,17,57,7003.88
+ccd3cc6e-8694-4099-8cfd-0d2fce06d896,Polynomino Packing,eb1-frontier-preview,best_of_n,0.1459,57.692,14,59,2782.86
+ccfdac88-1e5b-4429-b270-db708789171e,Palindrome Hamiltonian Path,GPT-5-mini,best_of_n,0.1246,0,16,61,1527.25
+cd41704e-f1e1-4f8a-bd5f-9f21c91ad13e,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1955,0,16,61,1567.12
+cdcff21b-4cc9-477e-b00d-d9af67420d3a,Palindrome Hamiltonian Path,eb1-preview,best_of_n,0.1321,0,16,61,1042.56
+cde1a443-314e-4e5e-8780-6de09cbfb373,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.2114,0,16,61,2733.56
+ce1208d7-e3c2-4cfe-831f-536474ccad2e,Polynomino Packing,eb1-frontier-preview,evox,0.1312,42.862,15,60,597.6
+ce32e1cc-3dba-4c3d-8f3d-e3c564065f78,Bounded 2D Knapsack,Claude Opus 4.6,adaevolve,0.3073,100,17,49,1028.41
+ce94e714-c818-4040-869d-2e08c597f3a0,Bounded 2D Knapsack,GPT-OSS-20B,adaevolve,0.2372,100,17,50,1780.88
+ce98e10c-ab99-4311-bebd-dcdbae630c89,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1682,0,16,60,2087.06
+cec926bb-f345-4554-8ed3-ebba09ac5076,Bounded 2D Knapsack,GPT-5-mini,best_of_n,0.1537,100,16,61,3146.94
+cef1753d-ea43-4fc5-bc6b-d83f2324b8d4,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1851,0,14,58,3256.86
+cf009d63-a173-4eff-92db-7f8f1114c3fe,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1864,0,15,59,2492.2
+cf239bff-1cf4-49c1-a958-4939813829b2,Polynomino Packing,Qwen-3.5-9B,best_of_n,0.1471,0,15,59,1873.6
+cf32b03a-f753-49a8-88b2-8f06bc98e7ff,Palindrome Hamiltonian Path,Kimi-K2.5,adaevolve,0.2764,0,15,60,2276.27
+cf5ad450-bf5f-44b8-8f19-3ee244859879,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.172,0,16,61,3103
+cfd8a044-4e8a-432b-b091-4e661d93327c,Bounded 2D Knapsack,GPT-5-mini,best_of_n,0.1547,99.6133,16,61,3813.38
+d00a4f77-9998-4ddf-9031-dcba5080afae,Bounded 2D Knapsack,eb1-pro,best_of_n,0.139,100,16,61,1780.81
+d03e7a70-fcb0-4d99-a0c1-4abf5ce50700,Palindrome Hamiltonian Path,eb1-preview,evox,0.1675,0,16,61,2112.19
+d054a840-4f94-41de-9c45-a85924ff471b,Palindrome Hamiltonian Path,GPT-5-mini,best_of_n,0.1181,0,16,61,1853.31
+d0d5c678-4dbb-4086-a47a-3b86b178f941,Polynomino Packing,GPT-5.4,evox,0.1677,67.5274,32,119,2208.84
+d0f54d50-067d-437f-9a54-b937cdb659a1,Bounded 2D Knapsack,Gemini-2.5-Flash,best_of_n,0.1837,40.6367,15,59,4088.07
+d10e6632-d8b5-48f4-bf7c-7e66a7cf7557,Bounded 2D Knapsack,Kimi-K2.5,adaevolve,0.2819,100,17,49,2428.24
+d1229dbf-44c6-4d96-9987-3442c285254e,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1511,0,16,61,1499.5
+d1411a84-1085-4d15-93fe-731ff30d334b,Polynomino Packing,GPT-5-mini,best_of_n,0.1881,44.9054,16,61,1923.94
+d1489633-9639-46fa-bedf-d89f9bc76d63,Bounded 2D Knapsack,Gemini-2.5-Flash,best_of_n,0.227,93.0167,30,114,3284.27
+d1c419e3-b56a-442c-a361-9dbb5f42f794,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.2458,0,16,61,1984.25
+d2098f62-5a60-4804-a83b-0938e58b16e4,Palindrome Hamiltonian Path,eb1-preview,evox,0.141,0,16,61,3217.06
+d20ee878-04c4-42b8-a6d6-38673a9c15a9,Palindrome Hamiltonian Path,eb1-preview,evox,0.1471,0,15,60,3648.73
+d2594220-56bc-4c12-90bd-ef43ee3531d8,Palindrome Hamiltonian Path,eb1,evox,0.1945,0,17,56,3166.24
+d28670df-698c-48dc-9503-e1228f1f5121,Polynomino Packing,Kimi-K2.5,evox,0.1552,62.3641,14,51,2323.43
+d2aa05e7-0860-4c31-866a-7b4af67c2b11,Bounded 2D Knapsack,eb1,adaevolve,0.2221,100,17,51,1979.71
+d2cde996-8d8d-4bfa-a522-fb9ddd4f34fa,Polynomino Packing,eb1-frontier-preview,evox,0.2175,0,8,36,2699.75
+d2e57dc5-aaf0-41d1-b918-6c17249218ab,Bounded 2D Knapsack,eb1-frontier-preview,evox,0.1738,100,12,47,1426.5
+d405bf4d-ea92-4021-80f8-2dbd76ef5045,Polynomino Packing,GPT-5.4,adaevolve,0.2162,0,17,63,2604.18
+d4452ea3-d59d-41a9-9913-acde2fd0077e,Bounded 2D Knapsack,eb1,evox,0.1139,100,16,61,5096.75
+d490c518-0895-4aec-9bcd-f352d2f18094,Polynomino Packing,GPT-OSS-20B,adaevolve,0.2345,45.4098,17,50,983
+d49f988d-3866-424a-af10-b35e7512ad1e,Polynomino Packing,Claude Opus 4.6,best_of_n,0.156,15.6877,16,61,1417.69
+d4c2cbdf-5ec7-47d3-9bf6-f378ca69eb04,Bounded 2D Knapsack,Gemini-2.5-Flash,adaevolve,0.2957,100,17,51,2866.53
+d522108a-6e64-4fbb-b66e-5c9f6e8e8dd0,Palindrome Hamiltonian Path,eb1-preview,evox,0.1937,0,14,59,2589.64
+d582f931-6b64-4325-ac70-4d9deb4b9e6c,Palindrome Hamiltonian Path,eb1-frontier-preview,best_of_n,0.1494,0,16,61,1412.31
+d5b96f04-f234-4dc4-9c79-faf333eef504,Palindrome Hamiltonian Path,eb1-preview,evox,0.2228,0,16,58,2103.69
+d5c43022-7005-4acf-8110-2b536d641b32,Polynomino Packing,Claude Opus 4.6,best_of_n,0.1436,27.4121,16,61,1009.94
+d613df0e-a05b-44d2-8cc9-0609e2f66a4e,Polynomino Packing,GPT-OSS-20B,best_of_n,0.2318,45.6581,15,60,822.267
+d6cc8499-1fa7-480d-8288-35e596084710,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1838,0,16,61,2626.75
+d6e9db3a-a98b-4e5e-826b-7b100b9b340a,Bounded 2D Knapsack,eb1,evox,0.1265,100,15,59,5702.27
+d73047c6-bba4-4c94-b4d3-d62ee7421c95,Polynomino Packing,eb1-delta-preview,best_of_n,0.1259,44.7074,16,61,502.312
+d781c8a5-3465-4745-9d9e-16f5d45d8cef,Polynomino Packing,eb1-delta-preview,adaevolve,0.3015,61.3306,16,50,2192.88
+d7aefb1d-33df-4cec-8dc0-c630c06ab279,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.2076,0,15,59,1939.53
+d7df9b0a-17a3-43e8-95bc-1abaddf847bf,Polynomino Packing,GPT-5.4,adaevolve,0.2426,0,17,61,3053.94
+d7e1cdb1-8dc1-4927-aafa-b08215c4a99a,Polynomino Packing,eb1,best_of_n,0.1572,49.2957,16,61,5260.56
+d806178b-ca08-4d31-99aa-ec66ac5159cc,Polynomino Packing,Kimi-K2.5,evox,0.162,26.4305,13,49,2054.23
+d8305a45-0b7c-433c-811e-f369044cce18,Polynomino Packing,Kimi-K2.5,adaevolve,0.2352,18.2481,17,53,2841.76
+d8c61475-6851-4a60-81bd-c8fde525aefd,Polynomino Packing,Claude Opus 4.6,evox,0.1609,71.7598,16,61,833.75
+d900f388-bfab-440d-b15f-90b37ec2e075,Polynomino Packing,eb1-frontier-preview,adaevolve,0.4566,0,7,48,1015.43
+d93e0ba7-0c85-4fd1-83ec-7318319e8b3b,Polynomino Packing,eb1-preview,best_of_n,0.1318,64.5437,16,61,2519.06
+d9512227-6cbe-461e-881b-b0ea72495452,Polynomino Packing,Claude Opus 4.6,best_of_n,0.1555,58.0326,16,61,1314.94
+d9d6a6cb-c7de-444f-90d1-4cbecb9c2c94,Bounded 2D Knapsack,eb1,adaevolve,0.2207,100,17,61,5209.94
+daac1feb-493a-4d4e-b2c2-b9dfa2d1ace7,Polynomino Packing,eb1-preview,best_of_n,0.1116,43.7043,16,61,466.688
+dbb152ae-bada-4562-98b6-4a98c4c9d88a,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1532,0,15,54,2697.8
+dbbd4581-4376-44b4-9688-bcff60bf5c9d,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1736,0,16,61,1768.31
+dbcaf7c3-751b-4d0a-93bc-6e9aa8e91b51,Polynomino Packing,eb1-preview,adaevolve,0.2465,78.7507,15,46,713.667
+dc0ba405-158e-4d55-af4d-6faef8b9fa04,Palindrome Hamiltonian Path,GPT-5.4,evox,0.1852,0,16,58,2398.19
+dc76a751-bb67-460f-8e28-870bee7a64a3,Polynomino Packing,Gemini-2.5-Flash,evox,0.1519,0,14,47,3842.07
+dc7c3f27-83c5-4594-8789-5ed9a889603c,Bounded 2D Knapsack,Gemini-2.5-Flash,adaevolve,0.2803,0,17,62,2172.76
+de224287-40fc-4709-9f4f-0a440d951a65,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1863,0,15,58,3028.8
+de39064d-40b5-4cfd-873d-c907bb7bd4c2,Palindrome Hamiltonian Path,Claude Opus 4.6,evox,0.2285,0,16,61,776.75
+de5ce1dc-4159-4bf8-8bf7-dc28373a0427,Polynomino Packing,eb1-preview,best_of_n,0.1884,71.6268,15,60,2178.8
+de84d4f7-cea6-42ad-9d2c-fc961e81a3c7,Palindrome Hamiltonian Path,GPT-5.4,best_of_n,0.1782,0,16,61,1772
+de8fd49c-ce46-46a3-9ddc-d9442c73e193,Polynomino Packing,Claude Opus 4.6,adaevolve,0.2707,15.6877,13,43,861.308
+dea39714-03df-4dd8-9a4c-a4917607d01c,Bounded 2D Knapsack,eb1-pro,best_of_n,0.1419,100,16,61,2169.88
+deb24243-4910-4988-b618-5c5c4ac1399b,Polynomino Packing,eb1,best_of_n,0.1364,71.4912,16,61,6779.81
+def018f2-f2ed-45c2-b962-1683373767d3,Bounded 2D Knapsack,GPT-5.4,best_of_n,0.1476,100,16,61,4117.38
+def1ea1a-88c2-4443-bcfc-020ba77b1e91,Polynomino Packing,Kimi-K2.5,evox,0.2508,69.4615,7,21,1722.29
+df076a71-69e7-4799-aa29-8f2e14eb63cb,Bounded 2D Knapsack,eb1-delta-preview,adaevolve,0.2458,100,17,51,3161.29
+e085b284-6bc4-4c3c-bc01-236c62d28b57,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1722,0,16,61,2374
+e08fb4f1-acc8-40e4-9e8a-967d3c80fcc3,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1621,0,16,60,2665.56
+e1410c55-cbd6-4194-8d77-5729adb158b3,Polynomino Packing,Qwen-3.5-9B,best_of_n,0.1336,0,16,61,2077.62
+e1759b77-f9e4-47d4-9056-c3a980dd36f7,Bounded 2D Knapsack,eb1-pro,adaevolve,0.4065,100,8,27,2195.88
+e181b8fe-487b-4350-992e-19a3210251e1,Bounded 2D Knapsack,GPT-OSS-20B,best_of_n,0.1753,0,16,61,1194.94
+e1d3a6d1-0e12-42b8-9f92-267e4589e203,Bounded 2D Knapsack,eb1-delta-preview,adaevolve,0.2745,100,13,48,4008
+e25909df-9e12-4091-88f1-fd2d25ee627a,Palindrome Hamiltonian Path,Claude Opus 4.6,best_of_n,0.1611,0,16,61,982.5
+e2768ef9-9c1f-4cf2-ac20-9a42fd263088,Polynomino Packing,GPT-OSS-20B,adaevolve,0.3043,44.227,17,50,1027.82
+e283e3aa-8f24-4199-a89b-6d6811659207,Bounded 2D Knapsack,Claude Opus 4.6,evox,0.1957,100,16,61,975.25
+e28d6422-7bc8-4825-8370-9d938081ea41,Palindrome Hamiltonian Path,eb1,evox,0.1576,0,16,60,6394.88
+e2a019cb-63dc-4d6f-9b8b-0cfb563dd5f7,Bounded 2D Knapsack,eb1,best_of_n,0.1462,100,16,61,3746.62
+e2b55efa-c1af-48cd-bbd6-38939115413f,Polynomino Packing,eb1,best_of_n,0.1611,74.6639,16,61,4737.06
+e2fe284a-0e18-432c-b90e-11f3bce7751f,Polynomino Packing,eb1-preview,best_of_n,0.1183,0,15,60,1807.8
+e307db9f-31af-4d37-9107-e856a9f37e6c,Bounded 2D Knapsack,GPT-5-mini,evox,0.48,100,4,13,3899.75
+e35b02f0-86c3-40dc-abc1-6504676ab018,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1593,0,16,60,1689.81
+e3a89b41-7c15-4fce-9134-830cbc955f91,Palindrome Hamiltonian Path,Kimi-K2.5,evox,0.2121,0,12,46,1963.92
+e3f3f750-df37-49dd-87bc-26196360fa13,Bounded 2D Knapsack,Kimi-K2.5,best_of_n,0.1823,99.6133,14,59,3452.29
+e3fb7fcb-b122-45f8-a8db-29c13f31773c,Palindrome Hamiltonian Path,eb1-frontier-preview,adaevolve,0.2607,0,17,60,1381.47
+e48b7734-2a78-45bc-8fcf-dda7ea4e0765,Polynomino Packing,eb1-frontier-preview,evox,0.1586,43.7043,16,60,558.375
+e4a1f661-7133-4da8-b8ba-d4e975dba13c,Palindrome Hamiltonian Path,Claude Opus 4.6,best_of_n,0.1925,0,32,92,1502.88
+e4c4922e-676a-4446-85b6-a1b44ff0ca08,Palindrome Hamiltonian Path,eb1,evox,0.3062,0,7,27,3969.57
+e538f52e-d02b-45d4-a8a3-89080a0b4e20,Bounded 2D Knapsack,eb1-delta-preview,adaevolve,0.2038,100,17,54,4980.29
+e56453f6-3930-45f9-826c-24294e8e7cff,Palindrome Hamiltonian Path,eb1-frontier-preview,adaevolve,0.2585,0,17,62,1618.12
+e5ec89c5-f633-4df9-a415-848c7fbd85cf,Palindrome Hamiltonian Path,GPT-OSS-20B,evox,0.2428,0,9,25,1117.33
+e600cbe1-72e7-43bf-8923-d8d069ac7e86,Polynomino Packing,eb1-frontier-preview,adaevolve,0.2616,70.7622,14,40,563.571
+e6481a5c-1ad8-49e1-b077-2cc7e9477551,Polynomino Packing,Qwen-3.5-9B,evox,0.1483,0,16,53,1907.44
+e6eacca7-3702-48d7-a90f-bdb8334f4995,Bounded 2D Knapsack,Kimi-K2.5,best_of_n,0.2338,100,30,94,2645.3
+e6f4fbfa-a916-4c9d-be6f-b9cc33d805a3,Bounded 2D Knapsack,GPT-5.4,best_of_n,0.1351,99.2533,16,61,2685.38
+e73d9433-c5a5-4f50-9715-2b07f7a91797,Polynomino Packing,Claude Opus 4.6,best_of_n,0.16,21.4678,16,61,1433.19
+e79b1f87-a329-4470-937c-affe0a86f4be,Palindrome Hamiltonian Path,eb1-preview,evox,0.1703,0,16,61,2083.62
+e802d97e-000f-4113-9e16-cd4afcf80547,Bounded 2D Knapsack,eb1,adaevolve,0.2053,100,17,52,6608.24
+e8dca4e2-4954-493a-b397-67165190152d,Bounded 2D Knapsack,Qwen-3.5-9B,evox,0.1516,0,13,47,888.077
+e9078505-0830-4e8a-b1a1-75cdf95d8ef8,Bounded 2D Knapsack,Kimi-K2.5,best_of_n,0.1404,100,15,59,4310
+e99f9657-4b73-4427-82b6-18886e8140ca,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.2179,0,16,60,2110.56
+e9c0d4f8-cb10-4dce-9913-82b845aff614,Polynomino Packing,Claude Opus 4.6,best_of_n,0.1823,9.9396,16,61,840.812
+e9c6edcb-87b5-4d21-9df8-f950417ea0e7,Palindrome Hamiltonian Path,eb1-preview,evox,0.1944,0,16,61,2341.81
+ea78593b-7f5c-42f4-afa1-325024c16072,Palindrome Hamiltonian Path,eb1-preview,evox,0.1666,0,16,61,1936.38
+eaa7b3b8-b285-4351-b790-327a2a39c4d8,Polynomino Packing,eb1-delta-preview,evox,0.1444,69.3206,15,53,1356.47
+eb3a54fe-f6cc-427c-a7aa-33cd897a0600,Palindrome Hamiltonian Path,GPT-5.4,adaevolve,0.5447,0,4,12,782
+eb51393c-f077-452e-ad6e-6f313c09534f,CUDA Layer Norm kernel optimization,unknown,evox,0.0429,581.621,22,81,
+ebad4c09-6ad6-45ab-8f95-931a52338ac7,Palindrome Hamiltonian Path,eb1-preview,evox,0.1538,0,16,61,3799.5
+ebc4c82b-9a52-48cc-b5e1-7d74817ba8df,Palindrome Hamiltonian Path,eb1-frontier-preview,best_of_n,0.204,0,16,61,1283.19
+ebdbd62d-24ee-47ac-9727-60c4aa91bb69,Palindrome Hamiltonian Path,GPT-5.4,adaevolve,0.2726,0,17,62,1958.88
+ec69f8aa-0fdf-4ae0-9f3d-554c1a3f45cf,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.2196,0,15,58,2082.87
+ec7a7f85-8754-4849-aec3-c81919adc77b,Polynomino Packing,eb1-frontier-preview,best_of_n,0.1305,71.4436,16,61,2747.81
+edb850d3-9216-4199-b409-5018296c8246,Bounded 2D Knapsack,eb1-delta-preview,adaevolve,0.2351,100,16,43,4012.12
+edef5ad5-10d4-4149-8974-2ff6663e209a,Bounded 2D Knapsack,Gemini-2.5-Flash,evox,0.144,36.2,16,51,3127.31
+ee1853ef-89a3-4f12-b466-94e4c6617908,Palindrome Hamiltonian Path,GPT-5.4,evox,0.3055,0,7,25,1505.71
+ee295475-9839-4a3b-af49-41eb29af9e5b,Bounded 2D Knapsack,eb1-delta-preview,adaevolve,0.2094,100,17,58,5927.47
+ee31ab45-b8cc-46c9-be20-c23fd2984f27,Palindrome Hamiltonian Path,GPT-5-mini,best_of_n,0.1257,0,16,61,1423.44
+eebe424c-e2c3-4197-84bd-f401ca314afb,Polynomino Packing,Kimi-K2.5,evox,0.149,16.6289,12,45,1514.67
+eee2d96d-e5a9-4809-8ef1-ecba6b92c92a,Polynomino Packing,eb1-preview,best_of_n,0.1268,44.7702,16,61,674.875
+ef67d1c2-ee5c-403c-8f58-8b7a2179b69a,Polynomino Packing,Kimi-K2.5,adaevolve,0.2417,25.3522,16,42,3384.56
+ef6f3fff-3c75-4d68-93ac-521b6c4d9723,Polynomino Packing,eb1-delta-preview,adaevolve,0.3787,74.0042,9,31,1537.11
+efae344f-b37a-4ece-9448-855748f5d8eb,Bounded 2D Knapsack,Gemini-2.5-Flash,best_of_n,0.1868,28.0767,31,116,3479.87
+f00a2703-18dd-4dcd-a138-29180acade29,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1593,0,16,61,3080.56
+f01b0d7a-7637-45d7-8213-26eefd4e9f62,Bounded 2D Knapsack,eb1,adaevolve,0.233,100,17,58,5913.12
+f0e5b988-f1e8-49c2-bce7-836c09bf22d1,Polynomino Packing,eb1-frontier-preview,evox,0.1331,59.3704,15,60,668.4
+f2613418-0451-4958-a5a2-b797fa9522df,Bounded 2D Knapsack,Gemini-2.5-Flash,best_of_n,0.1672,93.0167,14,59,3439.57
+f26d3638-7b81-43f6-b6e9-294d3e8f4b92,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.2159,0,15,60,2070
+f280602b-f0f5-4c76-b4b2-470835347c0f,Palindrome Hamiltonian Path,eb1-frontier-preview,best_of_n,0.1578,0,16,61,1292.94
+f293abec-6731-4681-84e3-5573b3160754,Palindrome Hamiltonian Path,eb1-preview,evox,0.1564,0,16,61,1200.38
+f36ea416-5519-409b-b1fe-79dfaed250b6,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1609,0,16,60,1169.44
+f444ae80-2cdb-4571-848a-d054491fccbd,Polynomino Packing,Kimi-K2.5,best_of_n,0.3326,60.8931,11,18,1791
+f45d52b1-7ae0-492f-9488-1cdc09ef2351,Bounded 2D Knapsack,GPT-OSS-20B,evox,0.1742,100,12,41,1392.33
+f4c880e0-d103-4f83-9bfc-473c28533e0b,Bounded 2D Knapsack,Gemini-2.5-Flash,best_of_n,0.1355,28.4367,16,61,3465.12
+f51a0e65-1d3a-45b3-b071-2216035b9f73,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1739,0,16,61,2455.81
+f5454331-1184-464f-8fb4-56b8d1be3558,Bounded 2D Knapsack,eb1-pro,best_of_n,0.3597,100,5,13,2211
+f56ba5c4-75ee-4cbc-9b41-45e69bdd7209,Dispatcher cold path: 4 drives → DRAM → GPU; maxim...,Claude Sonnet 4.6,openevolve,0.0003,0.3906,3,12,
+f62d5f5c-64c4-4b66-82cc-86e9cd513894,Palindrome Hamiltonian Path,eb1-preview,best_of_n,0.1555,0,16,61,2097.12
+f6952985-6bda-4d48-8f5b-71c0a9ee4d26,Palindrome Hamiltonian Path,eb1-preview,best_of_n,0.1438,0,16,61,1395.94
+f6abe896-c788-47af-8804-8d45eb0d0f7c,Bounded 2D Knapsack,eb1-pro,best_of_n,0.1547,100,16,61,1973.38
+f6e4222e-0e9b-40c5-9040-3a4f18579420,Polynomino Packing,eb1-delta-preview,adaevolve,0.2451,76.0868,17,61,1549.47
+f6e52985-a347-4a55-8251-5c128dc04f56,Bounded 2D Knapsack,eb1-pro,best_of_n,0.1511,100,16,61,2661.38
+f6ee09b5-345e-40e1-a38b-b0003ed62ce8,Bounded 2D Knapsack,GPT-OSS-20B,adaevolve,0.3056,96.8433,17,45,1676.65
+f72db4a7-d6e9-4492-9e07-88d38cbd2d7a,Palindrome Hamiltonian Path,eb1-preview,evox,0.1648,0,16,61,1932.62
+f7685003-07fd-40de-a767-90e09fd224fc,Polynomino Packing,eb1-delta-preview,best_of_n,0.127,0,16,61,465.688
+f7c8f332-3147-4036-948b-a9abfceb2423,Bounded 2D Knapsack,Kimi-K2.5,evox,0.201,33.3333,11,27,3802.36
+f834d644-eeb6-46a9-961c-eae3fd4763f8,Bounded 2D Knapsack,eb1-frontier-preview,best_of_n,0.1469,100,16,61,2856.88
+f8fda854-b792-4493-bbb2-f7b3306f106a,Bounded 2D Knapsack,eb1,adaevolve,0.2171,100,17,51,7401.47
+f973ece9-8701-4b81-bdc9-e8f6b0807bd3,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1841,0,15,60,2328.07
+f99e5b38-83cb-4564-af9e-bfe4d7fa78fa,Bounded 2D Knapsack,GPT-5-mini,best_of_n,0.1419,100,16,61,3887.38
+f9de13e2-13e2-419b-8ae3-2a782a501d3e,Polynomino Packing,eb1-delta-preview,evox,0.2138,67.1303,11,41,1835.18
+f9ea451e-f0c8-49fb-92ab-e2658ceb3629,Polynomino Packing,Kimi-K2.5,best_of_n,0.2353,14.5219,8,38,1678.5
+f9ed1053-66c8-45d7-ac89-2724c2deb8c5,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1654,0,16,61,3841.38
+fa0c47ac-9c6c-45dc-b13c-b27f64813760,Bounded 2D Knapsack,eb1-pro,best_of_n,0.1742,100,16,61,2407.69
+faa4e03e-fd89-4f04-bea8-c0ff63241504,Polynomino Packing,eb1-preview,adaevolve,0.2359,65.3287,16,44,2219.5
+facaf1a1-975d-4258-8968-dda5c6ae49c4,Bounded 2D Knapsack,eb1-delta-preview,adaevolve,0.2319,100,17,49,3349.88
+fb1c2171-49f9-4625-831d-62da20bacf89,Palindrome Hamiltonian Path,eb1-delta-preview,evox,0.1929,0,15,58,2359.8
+fb93b6f7-2900-4303-93a5-2c6fbccbf1cf,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1755,0,16,61,2212.88
+fc0e7572-8733-43bf-b189-0a1be98ea39f,Palindrome Hamiltonian Path,GPT-5-mini,adaevolve,0.2208,0,17,62,2659.71
+fd210daa-5675-4269-9a07-6cc1925e691d,Palindrome Hamiltonian Path,Kimi-K2.5,evox,0.2603,0,9,42,1485.11
+fd5b9d03-4c27-4cb0-ac18-d17fa720d24c,Polynomino Packing,eb1-delta-preview,best_of_n,0.1621,63.0297,16,61,768.562
+fdb1e5dd-313e-4e5f-91a2-f6dd51628da9,Palindrome Hamiltonian Path,eb1-frontier-preview,evox,0.1703,0,16,61,3630.88
+fe633901-382d-4df0-a847-890060a74c26,Polynomino Packing,GPT-OSS-20B,evox,0.2082,45.3967,10,48,1254.7
+fe956dd1-7863-4f56-9a29-c0d09c49fe67,Polynomino Packing,eb1-frontier-preview,evox,0.1404,43.5499,16,59,703.188
+fe977cff-e381-4118-87db-1dd7e95acb65,Polynomino Packing,Kimi-K2.5,adaevolve,0.3989,45.9252,8,19,1534.62
+fecce1bf-801b-47eb-b828-3931a34b374c,Palindrome Hamiltonian Path,Claude Opus 4.6,best_of_n,0.1902,0,16,61,2582.5
+feecf675-5188-44a8-a457-5c74430e32c5,Polynomino Packing,GPT-5.4,evox,0.1322,45.6825,16,61,2709.5
+ff40ffaa-b475-40d0-8657-e435d6f6118c,Polynomino Packing,eb1-preview,evox,0.1273,44.7702,16,61,679.875
+ffb99b36-ebfb-40fe-9e91-7aac43e5e200,Bounded 2D Knapsack,GPT-5.4,adaevolve,0.2151,99.7433,17,49,4686.47

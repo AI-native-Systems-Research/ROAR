@@ -1,0 +1,79 @@
+{
+ "table4_at_submission": {
+  "Ellis & Castro (2026)": {
+   "campaigns": 914,
+   "share_pct": 98.5
+  },
+  "Independent researchers": {
+   "campaigns": 14,
+   "share_pct": 1.5
+  },
+  "Total": 928
+ },
+ "table4_after_submission": {
+  "Ellis & Castro (2026)": {
+   "campaigns": 914,
+   "share_pct": 21.1
+  },
+  "Independent researchers": {
+   "campaigns": 14,
+   "share_pct": 0.3
+  },
+  "Cheng et al. (2025b)": {
+   "campaigns": 144,
+   "share_pct": 3.3
+  },
+  "Gupta et al. (2026)": {
+   "campaigns": 3269,
+   "share_pct": 75.3
+  },
+  "Total": 4341
+ },
+ "independent_researchers_by_anonymous_label": {
+  "contributor A": 6,
+  "contributor B": 1,
+  "contributor C": 7
+ },
+ "submitted_campaigns": 928,
+ "submitted_candidates": 48210,
+ "post_submission_campaigns": 144,
+ "mirror_campaigns": 1072,
+ "gupta_runs": 3269,
+ "per_problem_submitted": {
+  "2D Knapsack": {
+   "campaigns": 271,
+   "candidates": 13857,
+   "campaigns_with_final_score_zero": 34
+  },
+  "CUDA Attn": {
+   "campaigns": 3,
+   "candidates": 481,
+   "campaigns_with_final_score_zero": 0
+  },
+  "CUDA LN": {
+   "campaigns": 4,
+   "candidates": 269,
+   "campaigns_with_final_score_zero": 0
+  },
+  "Dispatcher": {
+   "campaigns": 6,
+   "candidates": 68,
+   "campaigns_with_final_score_zero": 0
+  },
+  "Optimize KV ...": {
+   "campaigns": 1,
+   "candidates": 61,
+   "campaigns_with_final_score_zero": 0
+  },
+  "Palindrome": {
+   "campaigns": 290,
+   "candidates": 17181,
+   "campaigns_with_final_score_zero": 290
+  },
+  "Polynomino": {
+   "campaigns": 353,
+   "candidates": 16293,
+   "campaigns_with_final_score_zero": 116
+  }
+ }
+}

@@ -1,0 +1,477 @@
+{
+ "backend": "parquet",
+ "n_campaigns": 928,
+ "n_observations": 7716,
+ "pooled": {
+  "paper_three": [
+   {
+    "k": 5,
+    "n_uncensored": 1068,
+    "n_escaped": 68,
+    "rate": 0.06367,
+    "ci_campaign": [
+     0.048685,
+     0.079092
+    ]
+   },
+   {
+    "k": 10,
+    "n_uncensored": 764,
+    "n_escaped": 81,
+    "rate": 0.106021,
+    "ci_campaign": [
+     0.084432,
+     0.127274
+    ]
+   },
+   {
+    "k": 15,
+    "n_uncensored": 602,
+    "n_escaped": 93,
+    "rate": 0.154485,
+    "ci_campaign": [
+     0.124573,
+     0.182724
+    ]
+   },
+   {
+    "k": 20,
+    "n_uncensored": 469,
+    "n_escaped": 47,
+    "rate": 0.100213,
+    "ci_campaign": [
+     0.075431,
+     0.127434
+    ]
+   },
+   {
+    "k": 25,
+    "n_uncensored": 381,
+    "n_escaped": 35,
+    "rate": 0.091864,
+    "ci_campaign": [
+     0.063158,
+     0.123037
+    ]
+   },
+   {
+    "k": 30,
+    "n_uncensored": 310,
+    "n_escaped": 27,
+    "rate": 0.087097,
+    "ci_campaign": [
+     0.057878,
+     0.120162
+    ]
+   },
+   {
+    "k": 35,
+    "n_uncensored": 242,
+    "n_escaped": 11,
+    "rate": 0.045455,
+    "ci_campaign": [
+     0.020661,
+     0.074689
+    ]
+   },
+   {
+    "k": 40,
+    "n_uncensored": 190,
+    "n_escaped": 4,
+    "rate": 0.021053,
+    "ci_campaign": [
+     0.005208,
+     0.042328
+    ]
+   },
+   {
+    "k": 45,
+    "n_uncensored": 90,
+    "n_escaped": 2,
+    "rate": 0.022222,
+    "ci_campaign": [
+     0.0,
+     0.05618
+    ]
+   },
+   {
+    "k": 50,
+    "n_uncensored": 2,
+    "n_escaped": 0,
+    "rate": 0.0,
+    "ci_campaign": [
+     null,
+     null
+    ]
+   }
+  ],
+  "all_problems": [
+   {
+    "k": 5,
+    "n_uncensored": 1366,
+    "n_escaped": 71,
+    "rate": 0.051977,
+    "ci_campaign": [
+     0.040519,
+     0.064607
+    ]
+   },
+   {
+    "k": 10,
+    "n_uncensored": 1058,
+    "n_escaped": 81,
+    "rate": 0.07656,
+    "ci_campaign": [
+     0.06087,
+     0.092541
+    ]
+   },
+   {
+    "k": 15,
+    "n_uncensored": 895,
+    "n_escaped": 96,
+    "rate": 0.107263,
+    "ci_campaign": [
+     0.085485,
+     0.129283
+    ]
+   },
+   {
+    "k": 20,
+    "n_uncensored": 756,
+    "n_escaped": 48,
+    "rate": 0.063492,
+    "ci_campaign": [
+     0.046356,
+     0.082557
+    ]
+   },
+   {
+    "k": 25,
+    "n_uncensored": 663,
+    "n_escaped": 36,
+    "rate": 0.054299,
+    "ci_campaign": [
+     0.038981,
+     0.071104
+    ]
+   },
+   {
+    "k": 30,
+    "n_uncensored": 588,
+    "n_escaped": 27,
+    "rate": 0.045918,
+    "ci_campaign": [
+     0.030321,
+     0.064516
+    ]
+   },
+   {
+    "k": 35,
+    "n_uncensored": 513,
+    "n_escaped": 11,
+    "rate": 0.021442,
+    "ci_campaign": [
+     0.009766,
+     0.035088
+    ]
+   },
+   {
+    "k": 40,
+    "n_uncensored": 449,
+    "n_escaped": 5,
+    "rate": 0.011136,
+    "ci_campaign": [
+     0.002227,
+     0.022272
+    ]
+   },
+   {
+    "k": 45,
+    "n_uncensored": 316,
+    "n_escaped": 3,
+    "rate": 0.009494,
+    "ci_campaign": [
+     0.0,
+     0.022152
+    ]
+   },
+   {
+    "k": 50,
+    "n_uncensored": 2,
+    "n_escaped": 0,
+    "rate": 0.0,
+    "ci_campaign": [
+     null,
+     null
+    ]
+   }
+  ],
+  "all_excl_palindrome": [
+   {
+    "k": 5,
+    "n_uncensored": 1080,
+    "n_escaped": 71,
+    "rate": 0.065741,
+    "ci_campaign": [
+     0.050876,
+     0.080904
+    ]
+   },
+   {
+    "k": 10,
+    "n_uncensored": 772,
+    "n_escaped": 81,
+    "rate": 0.104922,
+    "ci_campaign": [
+     0.083879,
+     0.125164
+    ]
+   },
+   {
+    "k": 15,
+    "n_uncensored": 609,
+    "n_escaped": 96,
+    "rate": 0.157635,
+    "ci_campaign": [
+     0.12755,
+     0.187502
+    ]
+   },
+   {
+    "k": 20,
+    "n_uncensored": 473,
+    "n_escaped": 48,
+    "rate": 0.10148,
+    "ci_campaign": [
+     0.076267,
+     0.130064
+    ]
+   },
+   {
+    "k": 25,
+    "n_uncensored": 384,
+    "n_escaped": 36,
+    "rate": 0.09375,
+    "ci_campaign": [
+     0.065445,
+     0.122715
+    ]
+   },
+   {
+    "k": 30,
+    "n_uncensored": 312,
+    "n_escaped": 27,
+    "rate": 0.086538,
+    "ci_campaign": [
+     0.057692,
+     0.119355
+    ]
+   },
+   {
+    "k": 35,
+    "n_uncensored": 244,
+    "n_escaped": 11,
+    "rate": 0.045082,
+    "ci_campaign": [
+     0.020492,
+     0.07377
+    ]
+   },
+   {
+    "k": 40,
+    "n_uncensored": 192,
+    "n_escaped": 5,
+    "rate": 0.026042,
+    "ci_campaign": [
+     0.005208,
+     0.052083
+    ]
+   },
+   {
+    "k": 45,
+    "n_uncensored": 91,
+    "n_escaped": 3,
+    "rate": 0.032967,
+    "ci_campaign": [
+     0.0,
+     0.076923
+    ]
+   },
+   {
+    "k": 50,
+    "n_uncensored": 2,
+    "n_escaped": 0,
+    "rate": 0.0,
+    "ci_campaign": [
+     null,
+     null
+    ]
+   }
+  ]
+ },
+ "trend": {
+  "paper_three": {
+   "odds_ratio_per_10k": 1.004,
+   "or_ci_lower": 0.949,
+   "or_ci_upper": 1.063,
+   "log_odds_per_unit_k": 0.0004,
+   "significant": false,
+   "direction": "increasing",
+   "n_observations": 4118,
+   "n_runs": 545,
+   "random_effect_sd": -0.342
+  },
+  "all_problems": {
+   "odds_ratio_per_10k": 0.896,
+   "or_ci_lower": 0.849,
+   "or_ci_upper": 0.946,
+   "log_odds_per_unit_k": -0.011,
+   "significant": true,
+   "direction": "decreasing",
+   "n_observations": 6606,
+   "n_runs": 836,
+   "random_effect_sd": 0.041
+  },
+  "all_excl_palindrome": {
+   "odds_ratio_per_10k": 1.022,
+   "or_ci_lower": 0.967,
+   "or_ci_upper": 1.081,
+   "log_odds_per_unit_k": 0.0022,
+   "significant": false,
+   "direction": "increasing",
+   "n_observations": 4159,
+   "n_runs": 550,
+   "random_effect_sd": -0.303
+  }
+ },
+ "per_problem": {
+  "Bounded 2D Knapsack": [
+   {
+    "k": 10,
+    "n_uncensored": 314,
+    "n_escaped": 27,
+    "rate": 0.085987,
+    "ci_campaign": [
+     0.05714,
+     0.115019
+    ]
+   },
+   {
+    "k": 20,
+    "n_uncensored": 231,
+    "n_escaped": 14,
+    "rate": 0.060606,
+    "ci_campaign": [
+     0.030973,
+     0.093617
+    ]
+   },
+   {
+    "k": 30,
+    "n_uncensored": 158,
+    "n_escaped": 6,
+    "rate": 0.037975,
+    "ci_campaign": [
+     0.012658,
+     0.06962
+    ]
+   },
+   {
+    "k": 40,
+    "n_uncensored": 101,
+    "n_escaped": 4,
+    "rate": 0.039604,
+    "ci_campaign": [
+     0.009901,
+     0.079208
+    ]
+   }
+  ],
+  "CUDA Attention kernel optimization": [
+   {
+    "k": 10,
+    "n_uncensored": 12,
+    "n_escaped": 0,
+    "rate": 0.0,
+    "ci_campaign": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "k": 20,
+    "n_uncensored": 5,
+    "n_escaped": 0,
+    "rate": 0.0,
+    "ci_campaign": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "k": 30,
+    "n_uncensored": 5,
+    "n_escaped": 2,
+    "rate": 0.4,
+    "ci_campaign": [
+     0.0,
+     1.0
+    ]
+   },
+   {
+    "k": 40,
+    "n_uncensored": 2,
+    "n_escaped": 0,
+    "rate": 0.0,
+    "ci_campaign": [
+     null,
+     null
+    ]
+   }
+  ],
+  "Polynomino Packing": [
+   {
+    "k": 10,
+    "n_uncensored": 438,
+    "n_escaped": 54,
+    "rate": 0.123288,
+    "ci_campaign": [
+     0.093231,
+     0.153132
+    ]
+   },
+   {
+    "k": 20,
+    "n_uncensored": 233,
+    "n_escaped": 33,
+    "rate": 0.141631,
+    "ci_campaign": [
+     0.099567,
+     0.186441
+    ]
+   },
+   {
+    "k": 30,
+    "n_uncensored": 147,
+    "n_escaped": 19,
+    "rate": 0.129252,
+    "ci_campaign": [
+     0.07483,
+     0.190476
+    ]
+   },
+   {
+    "k": 40,
+    "n_uncensored": 87,
+    "n_escaped": 0,
+    "rate": 0.0,
+    "ci_campaign": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ "runtime_seconds": 11.5
+}

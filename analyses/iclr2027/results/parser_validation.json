@@ -1,0 +1,15 @@
+{
+ "selection": "name matched to a run directory in the run database",
+ "campaigns": 911,
+ "candidates": 47168,
+ "score_exact": 47168,
+ "iter_exact": 47168,
+ "with_log": 41263,
+ "log_agree": 41263,
+ "id_sets_identical": 911,
+ "best_equal": 911,
+ "max_iter_equal": 911,
+ "no_single_problem_dir": 0,
+ "campaigns_with_any_disagreement": 0,
+ "disagreements": []
+}

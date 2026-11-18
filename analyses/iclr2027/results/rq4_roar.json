@@ -1,0 +1,1221 @@
+{
+ "corpus": "roar",
+ "protocol": {
+  "budget": 50,
+  "n_trials": 500,
+  "fit_seed": 42,
+  "split_seeds": "0..199",
+  "n_splits": 200,
+  "max_scored_per_split": null,
+  "relaunch_pool": "evaluation half minus the scored campaign (not capped)",
+  "rules": {
+   "2x25": {
+    "k_stop": null,
+    "n": 2
+   },
+   "5x10": {
+    "k_stop": null,
+    "n": 5
+   },
+   "Restart after 5": {
+    "k_stop": 6,
+    "n": 1
+   },
+   "Restart after 10": {
+    "k_stop": 11,
+    "n": 1
+   },
+   "Restart after 20": {
+    "k_stop": 21,
+    "n": 1
+   },
+   "k_stop=5": {
+    "k_stop": 5,
+    "n": 1
+   },
+   "k_stop=10": {
+    "k_stop": 10,
+    "n": 1
+   },
+   "k_stop=20": {
+    "k_stop": 20,
+    "n": 1
+   }
+  },
+  "replay_seed": "42 + index of the scored campaign in its configuration (sorted by campaign_id)"
+ },
+ "corpus_meta": null,
+ "problems": [
+  "Bounded 2D Knapsack",
+  "Polynomino Packing"
+ ],
+ "n_configurations_with_8": 17,
+ "n_tested": 12,
+ "table1": {
+  "2x25": {
+   "positive": 12,
+   "negative": 0,
+   "best": 2,
+   "mean": 9.24
+  },
+  "5x10": {
+   "positive": 11,
+   "negative": 1,
+   "best": 2,
+   "mean": 12.36
+  },
+  "Restart after 5": {
+   "positive": 10,
+   "negative": 2,
+   "best": 5,
+   "mean": 12.22
+  },
+  "Restart after 10": {
+   "positive": 11,
+   "negative": 1,
+   "best": 1,
+   "mean": 11.73
+  },
+  "Restart after 20": {
+   "positive": 12,
+   "negative": 0,
+   "best": 1,
+   "mean": 9.48
+  },
+  "Fitted (k_stop, n)": {
+   "positive": 10,
+   "negative": 2,
+   "best": 1,
+   "mean": 8.24
+  }
+ },
+ "counter_variants": {
+  "k_stop=5": {
+   "positive": 10,
+   "mean": 9.57
+  },
+  "k_stop=10": {
+   "positive": 11,
+   "mean": 12.32
+  },
+  "k_stop=20": {
+   "positive": 12,
+   "mean": 9.84
+  }
+ },
+ "median_sd_across_splits": {
+  "2x25": 2.55,
+  "5x10": 5.64,
+  "Restart after 5": 6.72,
+  "Restart after 10": 5.11,
+  "Restart after 20": 2.97,
+  "k_stop=5": 7.62,
+  "k_stop=10": 5.35,
+  "k_stop=20": 2.93,
+  "Fitted (k_stop, n)": 8.85
+ },
+ "per_configuration": [
+  {
+   "label": "Knapsack: Best-of-N / eb1-frontier-preview",
+   "problem": "Bounded 2D Knapsack",
+   "algorithm": "best_of_n",
+   "model": "eb1-frontier-preview",
+   "n_campaigns": 16,
+   "sd_final": 8.0677,
+   "min_final": 66.6667,
+   "max_final": 100.0,
+   "nA": 8,
+   "nB": 8,
+   "n_scored": 8,
+   "rules": {
+    "2x25": {
+     "mean": 2.1811,
+     "sd_across_splits": 2.0497,
+     "p2_5": -0.0128,
+     "p97_5": 4.6104,
+     "frac_splits_gt0": 0.775
+    },
+    "5x10": {
+     "mean": 2.2268,
+     "sd_across_splits": 2.0915,
+     "p2_5": -0.0013,
+     "p97_5": 4.7618,
+     "frac_splits_gt0": 0.775
+    },
+    "Restart after 5": {
+     "mean": 2.223,
+     "sd_across_splits": 2.087,
+     "p2_5": -0.001,
+     "p97_5": 4.7615,
+     "frac_splits_gt0": 0.775
+    },
+    "Restart after 10": {
+     "mean": 2.2103,
+     "sd_across_splits": 2.0755,
+     "p2_5": -0.0048,
+     "p97_5": 4.7559,
+     "frac_splits_gt0": 0.775
+    },
+    "Restart after 20": {
+     "mean": 1.945,
+     "sd_across_splits": 1.8599,
+     "p2_5": -0.0142,
+     "p97_5": 4.6017,
+     "frac_splits_gt0": 0.775
+    },
+    "k_stop=5": {
+     "mean": 2.2287,
+     "sd_across_splits": 2.0932,
+     "p2_5": -0.002,
+     "p97_5": 4.7625,
+     "frac_splits_gt0": 0.775
+    },
+    "k_stop=10": {
+     "mean": 2.2164,
+     "sd_across_splits": 2.0813,
+     "p2_5": -0.0043,
+     "p97_5": 4.7581,
+     "frac_splits_gt0": 0.775
+    },
+    "k_stop=20": {
+     "mean": 1.9642,
+     "sd_across_splits": 1.879,
+     "p2_5": -0.015,
+     "p97_5": 4.7091,
+     "frac_splits_gt0": 0.775
+    },
+    "Fitted (k_stop, n)": {
+     "mean": 2.2289,
+     "sd_across_splits": 2.0918,
+     "p2_5": -0.0001,
+     "p97_5": 4.7625,
+     "frac_splits_gt0": 0.775
+    }
+   },
+   "fitted_policy_counts": {
+    "(2, 1)": 179,
+    "(3, 1)": 18,
+    "(33, 1)": 3
+   },
+   "best_rule": "Fitted (k_stop, n)"
+  },
+  {
+   "label": "Knapsack: Best-of-N / GPT-OSS-20B",
+   "problem": "Bounded 2D Knapsack",
+   "algorithm": "best_of_n",
+   "model": "GPT-OSS-20B",
+   "n_campaigns": 11,
+   "sd_final": 44.3131,
+   "min_final": 0.0,
+   "max_final": 100.0,
+   "nA": 5,
+   "nB": 6,
+   "n_scored": 6,
+   "rules": {
+    "2x25": {
+     "mean": 18.2677,
+     "sd_across_splits": 8.2897,
+     "p2_5": 7.9407,
+     "p97_5": 30.0882,
+     "frac_splits_gt0": 0.99
+    },
+    "5x10": {
+     "mean": 9.7801,
+     "sd_across_splits": 18.5966,
+     "p2_5": -31.3671,
+     "p97_5": 39.5075,
+     "frac_splits_gt0": 0.75
+    },
+    "Restart after 5": {
+     "mean": 15.6921,
+     "sd_across_splits": 21.5042,
+     "p2_5": -48.5406,
+     "p97_5": 45.3392,
+     "frac_splits_gt0": 0.83
+    },
+    "Restart after 10": {
+     "mean": 17.8542,
+     "sd_across_splits": 15.9072,
+     "p2_5": -19.7828,
+     "p97_5": 45.3126,
+     "frac_splits_gt0": 0.875
+    },
+    "Restart after 20": {
+     "mean": 15.6714,
+     "sd_across_splits": 11.469,
+     "p2_5": -5.7002,
+     "p97_5": 36.8467,
+     "frac_splits_gt0": 0.9
+    },
+    "k_stop=5": {
+     "mean": 18.3218,
+     "sd_across_splits": 21.6831,
+     "p2_5": -48.5406,
+     "p97_5": 51.3854,
+     "frac_splits_gt0": 0.84
+    },
+    "k_stop=10": {
+     "mean": 18.8426,
+     "sd_across_splits": 15.9813,
+     "p2_5": -20.3844,
+     "p97_5": 46.543,
+     "frac_splits_gt0": 0.875
+    },
+    "k_stop=20": {
+     "mean": 16.3444,
+     "sd_across_splits": 11.4391,
+     "p2_5": -4.3234,
+     "p97_5": 37.9323,
+     "frac_splits_gt0": 0.93
+    },
+    "Fitted (k_stop, n)": {
+     "mean": 6.1614,
+     "sd_across_splits": 17.4858,
+     "p2_5": -48.5303,
+     "p97_5": 29.436,
+     "frac_splits_gt0": 0.74
+    }
+   },
+   "fitted_policy_counts": {
+    "(10, 1)": 23,
+    "(10, 2)": 8,
+    "(10, 3)": 12,
+    "(15, 1)": 9,
+    "(15, 2)": 7,
+    "(22, 1)": 5,
+    "(22, 2)": 8,
+    "(33, 1)": 25,
+    "(33, 2)": 40,
+    "(4, 1)": 4,
+    "(7, 1)": 15,
+    "(7, 4)": 7,
+    "(7, 5)": 36,
+    "(None, 1)": 1
+   },
+   "best_rule": "2x25"
+  },
+  {
+   "label": "Knapsack: Best-of-N / Gemini-2.5-Flash",
+   "problem": "Bounded 2D Knapsack",
+   "algorithm": "best_of_n",
+   "model": "Gemini-2.5-Flash",
+   "n_campaigns": 10,
+   "sd_final": 38.31,
+   "min_final": 0.0,
+   "max_final": 100.0,
+   "nA": 5,
+   "nB": 5,
+   "n_scored": 5,
+   "rules": {
+    "2x25": {
+     "mean": 11.2457,
+     "sd_across_splits": 12.0529,
+     "p2_5": -14.4716,
+     "p97_5": 27.3101,
+     "frac_splits_gt0": 0.82
+    },
+    "5x10": {
+     "mean": 30.2485,
+     "sd_across_splits": 13.9206,
+     "p2_5": -6.3954,
+     "p97_5": 49.1293,
+     "frac_splits_gt0": 0.955
+    },
+    "Restart after 5": {
+     "mean": 25.9865,
+     "sd_across_splits": 19.9339,
+     "p2_5": -25.2606,
+     "p97_5": 51.5491,
+     "frac_splits_gt0": 0.845
+    },
+    "Restart after 10": {
+     "mean": 27.0987,
+     "sd_across_splits": 13.4351,
+     "p2_5": -7.0699,
+     "p97_5": 46.4051,
+     "frac_splits_gt0": 0.94
+    },
+    "Restart after 20": {
+     "mean": 13.721,
+     "sd_across_splits": 10.9541,
+     "p2_5": -7.4657,
+     "p97_5": 35.9867,
+     "frac_splits_gt0": 0.9
+    },
+    "k_stop=5": {
+     "mean": 7.6774,
+     "sd_across_splits": 29.3591,
+     "p2_5": -50.3647,
+     "p97_5": 49.3005,
+     "frac_splits_gt0": 0.565
+    },
+    "k_stop=10": {
+     "mean": 28.4704,
+     "sd_across_splits": 13.5783,
+     "p2_5": -6.4845,
+     "p97_5": 48.6133,
+     "frac_splits_gt0": 0.955
+    },
+    "k_stop=20": {
+     "mean": 14.1896,
+     "sd_across_splits": 11.0994,
+     "p2_5": -7.1032,
+     "p97_5": 35.9867,
+     "frac_splits_gt0": 0.9
+    },
+    "Fitted (k_stop, n)": {
+     "mean": 8.775,
+     "sd_across_splits": 33.9493,
+     "p2_5": -60.8425,
+     "p97_5": 51.4405,
+     "frac_splits_gt0": 0.635
+    }
+   },
+   "fitted_policy_counts": {
+    "(10, 1)": 2,
+    "(10, 3)": 2,
+    "(10, 5)": 1,
+    "(15, 4)": 3,
+    "(3, 1)": 69,
+    "(49, 1)": 8,
+    "(7, 1)": 28,
+    "(7, 4)": 15,
+    "(7, 5)": 67,
+    "(None, 1)": 5
+   },
+   "best_rule": "5x10"
+  },
+  {
+   "label": "Polynomino: Best-of-N / eb1-preview",
+   "problem": "Polynomino Packing",
+   "algorithm": "best_of_n",
+   "model": "eb1-preview",
+   "n_campaigns": 33,
+   "sd_final": 30.3699,
+   "min_final": 0.0,
+   "max_final": 76.2198,
+   "nA": 16,
+   "nB": 17,
+   "n_scored": 17,
+   "rules": {
+    "2x25": {
+     "mean": 14.6677,
+     "sd_across_splits": 1.5324,
+     "p2_5": 12.0474,
+     "p97_5": 17.5116,
+     "frac_splits_gt0": 1.0
+    },
+    "5x10": {
+     "mean": 24.7241,
+     "sd_across_splits": 3.5622,
+     "p2_5": 17.2054,
+     "p97_5": 31.389,
+     "frac_splits_gt0": 1.0
+    },
+    "Restart after 5": {
+     "mean": 26.7614,
+     "sd_across_splits": 4.264,
+     "p2_5": 18.8487,
+     "p97_5": 34.8129,
+     "frac_splits_gt0": 1.0
+    },
+    "Restart after 10": {
+     "mean": 23.6551,
+     "sd_across_splits": 3.7416,
+     "p2_5": 16.1816,
+     "p97_5": 30.8704,
+     "frac_splits_gt0": 1.0
+    },
+    "Restart after 20": {
+     "mean": 18.6933,
+     "sd_across_splits": 2.7675,
+     "p2_5": 12.7223,
+     "p97_5": 23.5161,
+     "frac_splits_gt0": 1.0
+    },
+    "k_stop=5": {
+     "mean": 28.1498,
+     "sd_across_splits": 4.2591,
+     "p2_5": 19.6016,
+     "p97_5": 36.5484,
+     "frac_splits_gt0": 1.0
+    },
+    "k_stop=10": {
+     "mean": 24.3089,
+     "sd_across_splits": 3.8155,
+     "p2_5": 16.7201,
+     "p97_5": 31.57,
+     "frac_splits_gt0": 1.0
+    },
+    "k_stop=20": {
+     "mean": 18.9489,
+     "sd_across_splits": 2.7742,
+     "p2_5": 12.9425,
+     "p97_5": 23.6642,
+     "frac_splits_gt0": 1.0
+    },
+    "Fitted (k_stop, n)": {
+     "mean": 23.9332,
+     "sd_across_splits": 5.767,
+     "p2_5": 10.9661,
+     "p97_5": 33.2827,
+     "frac_splits_gt0": 0.995
+    }
+   },
+   "fitted_policy_counts": {
+    "(10, 1)": 1,
+    "(2, 1)": 97,
+    "(3, 1)": 2,
+    "(4, 1)": 9,
+    "(7, 1)": 4,
+    "(7, 3)": 15,
+    "(7, 4)": 11,
+    "(7, 5)": 61
+   },
+   "best_rule": "Restart after 5"
+  },
+  {
+   "label": "Polynomino: Best-of-N / eb1-delta-preview",
+   "problem": "Polynomino Packing",
+   "algorithm": "best_of_n",
+   "model": "eb1-delta-preview",
+   "n_campaigns": 14,
+   "sd_final": 22.9193,
+   "min_final": 0.0,
+   "max_final": 63.5118,
+   "nA": 7,
+   "nB": 7,
+   "n_scored": 7,
+   "rules": {
+    "2x25": {
+     "mean": 12.9509,
+     "sd_across_splits": 2.5211,
+     "p2_5": 6.5783,
+     "p97_5": 16.937,
+     "frac_splits_gt0": 1.0
+    },
+    "5x10": {
+     "mean": 20.3604,
+     "sd_across_splits": 5.8115,
+     "p2_5": 9.591,
+     "p97_5": 31.6692,
+     "frac_splits_gt0": 1.0
+    },
+    "Restart after 5": {
+     "mean": 16.6637,
+     "sd_across_splits": 7.4935,
+     "p2_5": 3.1739,
+     "p97_5": 29.8316,
+     "frac_splits_gt0": 0.995
+    },
+    "Restart after 10": {
+     "mean": 18.6297,
+     "sd_across_splits": 5.3383,
+     "p2_5": 8.7333,
+     "p97_5": 29.1133,
+     "frac_splits_gt0": 1.0
+    },
+    "Restart after 20": {
+     "mean": 13.6264,
+     "sd_across_splits": 4.0822,
+     "p2_5": 6.1389,
+     "p97_5": 21.8491,
+     "frac_splits_gt0": 1.0
+    },
+    "k_stop=5": {
+     "mean": 17.8255,
+     "sd_across_splits": 8.3287,
+     "p2_5": 3.2736,
+     "p97_5": 32.4841,
+     "frac_splits_gt0": 0.995
+    },
+    "k_stop=10": {
+     "mean": 19.3547,
+     "sd_across_splits": 5.5419,
+     "p2_5": 9.1864,
+     "p97_5": 30.1333,
+     "frac_splits_gt0": 1.0
+    },
+    "k_stop=20": {
+     "mean": 14.5917,
+     "sd_across_splits": 4.2164,
+     "p2_5": 6.6199,
+     "p97_5": 22.9529,
+     "frac_splits_gt0": 1.0
+    },
+    "Fitted (k_stop, n)": {
+     "mean": 15.3728,
+     "sd_across_splits": 11.2085,
+     "p2_5": -23.7647,
+     "p97_5": 29.0413,
+     "frac_splits_gt0": 0.96
+    }
+   },
+   "fitted_policy_counts": {
+    "(10, 1)": 1,
+    "(10, 3)": 5,
+    "(10, 5)": 45,
+    "(2, 1)": 1,
+    "(22, 1)": 2,
+    "(22, 2)": 1,
+    "(3, 1)": 99,
+    "(4, 1)": 46
+   },
+   "best_rule": "5x10"
+  },
+  {
+   "label": "Polynomino: Best-of-N / Claude Opus 4.6",
+   "problem": "Polynomino Packing",
+   "algorithm": "best_of_n",
+   "model": "Claude Opus 4.6",
+   "n_campaigns": 13,
+   "sd_final": 26.3476,
+   "min_final": 0.0,
+   "max_final": 77.3761,
+   "nA": 6,
+   "nB": 7,
+   "n_scored": 7,
+   "rules": {
+    "2x25": {
+     "mean": 14.5043,
+     "sd_across_splits": 2.3386,
+     "p2_5": 9.5601,
+     "p97_5": 17.7948,
+     "frac_splits_gt0": 1.0
+    },
+    "5x10": {
+     "mean": 12.1884,
+     "sd_across_splits": 11.3945,
+     "p2_5": -13.376,
+     "p97_5": 29.9406,
+     "frac_splits_gt0": 0.83
+    },
+    "Restart after 5": {
+     "mean": 17.0815,
+     "sd_across_splits": 13.2458,
+     "p2_5": -16.2541,
+     "p97_5": 34.4394,
+     "frac_splits_gt0": 0.86
+    },
+    "Restart after 10": {
+     "mean": 9.2257,
+     "sd_across_splits": 10.2952,
+     "p2_5": -13.8186,
+     "p97_5": 25.4842,
+     "frac_splits_gt0": 0.82
+    },
+    "Restart after 20": {
+     "mean": 15.6854,
+     "sd_across_splits": 3.0888,
+     "p2_5": 9.6334,
+     "p97_5": 20.4378,
+     "frac_splits_gt0": 1.0
+    },
+    "k_stop=5": {
+     "mean": 3.6544,
+     "sd_across_splits": 17.1724,
+     "p2_5": -24.6326,
+     "p97_5": 28.4674,
+     "frac_splits_gt0": 0.585
+    },
+    "k_stop=10": {
+     "mean": 10.3248,
+     "sd_across_splits": 10.6187,
+     "p2_5": -13.743,
+     "p97_5": 27.1011,
+     "frac_splits_gt0": 0.825
+    },
+    "k_stop=20": {
+     "mean": 16.1161,
+     "sd_across_splits": 3.0071,
+     "p2_5": 10.3791,
+     "p97_5": 20.7126,
+     "frac_splits_gt0": 1.0
+    },
+    "Fitted (k_stop, n)": {
+     "mean": 4.4202,
+     "sd_across_splits": 16.3581,
+     "p2_5": -29.5053,
+     "p97_5": 21.9229,
+     "frac_splits_gt0": 0.66
+    }
+   },
+   "fitted_policy_counts": {
+    "(10, 5)": 1,
+    "(15, 1)": 70,
+    "(15, 2)": 8,
+    "(15, 3)": 5,
+    "(2, 1)": 44,
+    "(22, 1)": 6,
+    "(22, 2)": 22,
+    "(33, 2)": 4,
+    "(7, 1)": 20,
+    "(7, 5)": 20
+   },
+   "best_rule": "Restart after 5"
+  },
+  {
+   "label": "Polynomino: Best-of-N / eb1-frontier-preview",
+   "problem": "Polynomino Packing",
+   "algorithm": "best_of_n",
+   "model": "eb1-frontier-preview",
+   "n_campaigns": 12,
+   "sd_final": 27.0677,
+   "min_final": 0.0,
+   "max_final": 77.2251,
+   "nA": 6,
+   "nB": 6,
+   "n_scored": 6,
+   "rules": {
+    "2x25": {
+     "mean": 13.0969,
+     "sd_across_splits": 4.5119,
+     "p2_5": 3.7566,
+     "p97_5": 19.8121,
+     "frac_splits_gt0": 1.0
+    },
+    "5x10": {
+     "mean": 22.3569,
+     "sd_across_splits": 7.1285,
+     "p2_5": 9.0747,
+     "p97_5": 34.4345,
+     "frac_splits_gt0": 1.0
+    },
+    "Restart after 5": {
+     "mean": 23.7308,
+     "sd_across_splits": 7.7819,
+     "p2_5": 9.1898,
+     "p97_5": 37.8191,
+     "frac_splits_gt0": 1.0
+    },
+    "Restart after 10": {
+     "mean": 18.3079,
+     "sd_across_splits": 7.1736,
+     "p2_5": 5.9193,
+     "p97_5": 31.693,
+     "frac_splits_gt0": 1.0
+    },
+    "Restart after 20": {
+     "mean": 15.3901,
+     "sd_across_splits": 5.3375,
+     "p2_5": 4.7171,
+     "p97_5": 24.6178,
+     "frac_splits_gt0": 1.0
+    },
+    "k_stop=5": {
+     "mean": 24.9773,
+     "sd_across_splits": 7.9209,
+     "p2_5": 9.0883,
+     "p97_5": 39.718,
+     "frac_splits_gt0": 1.0
+    },
+    "k_stop=10": {
+     "mean": 18.8659,
+     "sd_across_splits": 7.2791,
+     "p2_5": 6.0489,
+     "p97_5": 32.9372,
+     "frac_splits_gt0": 1.0
+    },
+    "k_stop=20": {
+     "mean": 15.6981,
+     "sd_across_splits": 5.4753,
+     "p2_5": 4.7844,
+     "p97_5": 24.6792,
+     "frac_splits_gt0": 1.0
+    },
+    "Fitted (k_stop, n)": {
+     "mean": 18.0152,
+     "sd_across_splits": 10.1065,
+     "p2_5": 1.4632,
+     "p97_5": 36.2631,
+     "frac_splits_gt0": 0.975
+    }
+   },
+   "fitted_policy_counts": {
+    "(10, 1)": 4,
+    "(10, 5)": 2,
+    "(2, 1)": 66,
+    "(22, 1)": 1,
+    "(3, 1)": 39,
+    "(7, 1)": 6,
+    "(7, 4)": 4,
+    "(7, 5)": 78
+   },
+   "best_rule": "Restart after 5"
+  },
+  {
+   "label": "Polynomino: EvoX / eb1-frontier-preview",
+   "problem": "Polynomino Packing",
+   "algorithm": "evox",
+   "model": "eb1-frontier-preview",
+   "n_campaigns": 9,
+   "sd_final": 10.8074,
+   "min_final": 42.862,
+   "max_final": 72.097,
+   "nA": 4,
+   "nB": 5,
+   "n_scored": 5,
+   "rules": {
+    "2x25": {
+     "mean": 1.5803,
+     "sd_across_splits": 3.3647,
+     "p2_5": -4.547,
+     "p97_5": 6.8597,
+     "frac_splits_gt0": 0.72
+    },
+    "5x10": {
+     "mean": 2.5897,
+     "sd_across_splits": 7.9535,
+     "p2_5": -8.4861,
+     "p97_5": 14.1039,
+     "frac_splits_gt0": 0.505
+    },
+    "Restart after 5": {
+     "mean": -8.8038,
+     "sd_across_splits": 7.4609,
+     "p2_5": -27.0866,
+     "p97_5": -0.5542,
+     "frac_splits_gt0": 0.0
+    },
+    "Restart after 10": {
+     "mean": 3.298,
+     "sd_across_splits": 5.5172,
+     "p2_5": -9.3266,
+     "p97_5": 10.8692,
+     "frac_splits_gt0": 0.69
+    },
+    "Restart after 20": {
+     "mean": 1.231,
+     "sd_across_splits": 1.1919,
+     "p2_5": -0.2522,
+     "p97_5": 3.8784,
+     "frac_splits_gt0": 0.955
+    },
+    "k_stop=5": {
+     "mean": -8.3804,
+     "sd_across_splits": 7.3135,
+     "p2_5": -25.9887,
+     "p97_5": -0.4773,
+     "frac_splits_gt0": 0.0
+    },
+    "k_stop=10": {
+     "mean": 3.7847,
+     "sd_across_splits": 5.6174,
+     "p2_5": -8.2548,
+     "p97_5": 11.5985,
+     "frac_splits_gt0": 0.735
+    },
+    "k_stop=20": {
+     "mean": 1.5311,
+     "sd_across_splits": 1.3592,
+     "p2_5": 0.0037,
+     "p97_5": 4.1189,
+     "frac_splits_gt0": 0.985
+    },
+    "Fitted (k_stop, n)": {
+     "mean": -1.3905,
+     "sd_across_splits": 4.2215,
+     "p2_5": -8.4861,
+     "p97_5": 5.5615,
+     "frac_splits_gt0": 0.46
+    }
+   },
+   "fitted_policy_counts": {
+    "(10, 1)": 40,
+    "(10, 5)": 82,
+    "(22, 1)": 32,
+    "(22, 2)": 14,
+    "(33, 1)": 21,
+    "(49, 1)": 11
+   },
+   "best_rule": "Restart after 10"
+  },
+  {
+   "label": "Polynomino: Best-of-N / GPT-5-mini",
+   "problem": "Polynomino Packing",
+   "algorithm": "best_of_n",
+   "model": "GPT-5-mini",
+   "n_campaigns": 9,
+   "sd_final": 11.0438,
+   "min_final": 35.088,
+   "max_final": 74.091,
+   "nA": 4,
+   "nB": 5,
+   "n_scored": 5,
+   "rules": {
+    "2x25": {
+     "mean": 5.4446,
+     "sd_across_splits": 2.5778,
+     "p2_5": -0.6432,
+     "p97_5": 9.4492,
+     "frac_splits_gt0": 0.97
+    },
+    "5x10": {
+     "mean": 12.2513,
+     "sd_across_splits": 5.465,
+     "p2_5": -1.121,
+     "p97_5": 17.6754,
+     "frac_splits_gt0": 0.97
+    },
+    "Restart after 5": {
+     "mean": 13.5776,
+     "sd_across_splits": 5.9885,
+     "p2_5": -1.0978,
+     "p97_5": 19.8416,
+     "frac_splits_gt0": 0.97
+    },
+    "Restart after 10": {
+     "mean": 10.6483,
+     "sd_across_splits": 4.8759,
+     "p2_5": -1.145,
+     "p97_5": 16.0419,
+     "frac_splits_gt0": 0.97
+    },
+    "Restart after 20": {
+     "mean": 5.1848,
+     "sd_across_splits": 2.852,
+     "p2_5": -0.0712,
+     "p97_5": 11.1618,
+     "frac_splits_gt0": 0.97
+    },
+    "k_stop=5": {
+     "mean": 14.0503,
+     "sd_across_splits": 6.1387,
+     "p2_5": -1.0904,
+     "p97_5": 20.5701,
+     "frac_splits_gt0": 0.97
+    },
+    "k_stop=10": {
+     "mean": 11.2878,
+     "sd_across_splits": 5.1591,
+     "p2_5": -1.1484,
+     "p97_5": 17.1377,
+     "frac_splits_gt0": 0.97
+    },
+    "k_stop=20": {
+     "mean": 5.2026,
+     "sd_across_splits": 2.8606,
+     "p2_5": -0.0712,
+     "p97_5": 11.0852,
+     "frac_splits_gt0": 0.97
+    },
+    "Fitted (k_stop, n)": {
+     "mean": 12.7933,
+     "sd_across_splits": 8.3543,
+     "p2_5": -1.0734,
+     "p97_5": 23.832,
+     "frac_splits_gt0": 0.92
+    }
+   },
+   "fitted_policy_counts": {
+    "(2, 1)": 156,
+    "(22, 1)": 17,
+    "(22, 2)": 1,
+    "(33, 1)": 7,
+    "(33, 2)": 1,
+    "(49, 1)": 18
+   },
+   "best_rule": "Restart after 5"
+  },
+  {
+   "label": "Polynomino: AdaEvolve / GPT-5.4",
+   "problem": "Polynomino Packing",
+   "algorithm": "adaevolve",
+   "model": "GPT-5.4",
+   "n_campaigns": 9,
+   "sd_final": 17.6373,
+   "min_final": 0.0,
+   "max_final": 56.1215,
+   "nA": 4,
+   "nB": 5,
+   "n_scored": 5,
+   "rules": {
+    "2x25": {
+     "mean": 4.1354,
+     "sd_across_splits": 3.353,
+     "p2_5": 0.0,
+     "p97_5": 7.1814,
+     "frac_splits_gt0": 0.605
+    },
+    "5x10": {
+     "mean": -4.1298,
+     "sd_across_splits": 3.3453,
+     "p2_5": -6.8261,
+     "p97_5": 0.0,
+     "frac_splits_gt0": 0.0
+    },
+    "Restart after 5": {
+     "mean": -4.1298,
+     "sd_across_splits": 3.3453,
+     "p2_5": -6.8261,
+     "p97_5": 0.0,
+     "frac_splits_gt0": 0.0
+    },
+    "Restart after 10": {
+     "mean": -4.1298,
+     "sd_across_splits": 3.3453,
+     "p2_5": -6.8261,
+     "p97_5": 0.0,
+     "frac_splits_gt0": 0.0
+    },
+    "Restart after 20": {
+     "mean": 4.1724,
+     "sd_across_splits": 3.3872,
+     "p2_5": 0.0,
+     "p97_5": 7.5087,
+     "frac_splits_gt0": 0.605
+    },
+    "k_stop=5": {
+     "mean": -4.1298,
+     "sd_across_splits": 3.3453,
+     "p2_5": -6.8261,
+     "p97_5": 0.0,
+     "frac_splits_gt0": 0.0
+    },
+    "k_stop=10": {
+     "mean": -4.1298,
+     "sd_across_splits": 3.3453,
+     "p2_5": -6.8261,
+     "p97_5": 0.0,
+     "frac_splits_gt0": 0.0
+    },
+    "k_stop=20": {
+     "mean": 4.1724,
+     "sd_across_splits": 3.3872,
+     "p2_5": 0.0,
+     "p97_5": 7.5087,
+     "frac_splits_gt0": 0.605
+    },
+    "Fitted (k_stop, n)": {
+     "mean": -4.1298,
+     "sd_across_splits": 3.3453,
+     "p2_5": -6.8261,
+     "p97_5": 0.0,
+     "frac_splits_gt0": 0.0
+    }
+   },
+   "fitted_policy_counts": {
+    "(2, 1)": 121,
+    "(22, 1)": 44,
+    "(22, 2)": 35
+   },
+   "best_rule": "Restart after 20"
+  },
+  {
+   "label": "Polynomino: Best-of-N / eb1",
+   "problem": "Polynomino Packing",
+   "algorithm": "best_of_n",
+   "model": "eb1",
+   "n_campaigns": 8,
+   "sd_final": 9.545,
+   "min_final": 49.2957,
+   "max_final": 82.3129,
+   "nA": 4,
+   "nB": 4,
+   "n_scored": 4,
+   "rules": {
+    "2x25": {
+     "mean": 5.0892,
+     "sd_across_splits": 2.3172,
+     "p2_5": 0.7316,
+     "p97_5": 8.4785,
+     "frac_splits_gt0": 1.0
+    },
+    "5x10": {
+     "mean": 3.0906,
+     "sd_across_splits": 3.1518,
+     "p2_5": -3.2619,
+     "p97_5": 8.5658,
+     "frac_splits_gt0": 0.795
+    },
+    "Restart after 5": {
+     "mean": 4.4777,
+     "sd_across_splits": 2.7398,
+     "p2_5": -0.5367,
+     "p97_5": 9.5142,
+     "frac_splits_gt0": 0.92
+    },
+    "Restart after 10": {
+     "mean": 3.7348,
+     "sd_across_splits": 2.4128,
+     "p2_5": -0.7369,
+     "p97_5": 8.6405,
+     "frac_splits_gt0": 0.9
+    },
+    "Restart after 20": {
+     "mean": 3.2206,
+     "sd_across_splits": 2.1752,
+     "p2_5": 0.0462,
+     "p97_5": 6.8,
+     "frac_splits_gt0": 0.985
+    },
+    "k_stop=5": {
+     "mean": 3.4267,
+     "sd_across_splits": 3.1716,
+     "p2_5": -2.7277,
+     "p97_5": 8.7606,
+     "frac_splits_gt0": 0.855
+    },
+    "k_stop=10": {
+     "mean": 3.883,
+     "sd_across_splits": 2.4526,
+     "p2_5": -0.7369,
+     "p97_5": 8.7461,
+     "frac_splits_gt0": 0.9
+    },
+    "k_stop=20": {
+     "mean": 3.9611,
+     "sd_across_splits": 2.1451,
+     "p2_5": 0.1237,
+     "p97_5": 7.6963,
+     "frac_splits_gt0": 0.995
+    },
+    "Fitted (k_stop, n)": {
+     "mean": 0.4667,
+     "sd_across_splits": 9.3488,
+     "p2_5": -26.7542,
+     "p97_5": 8.6248,
+     "frac_splits_gt0": 0.695
+    }
+   },
+   "fitted_policy_counts": {
+    "(10, 3)": 3,
+    "(15, 2)": 30,
+    "(2, 1)": 34,
+    "(22, 2)": 59,
+    "(4, 1)": 16,
+    "(7, 1)": 35,
+    "(7, 3)": 16,
+    "(7, 5)": 7
+   },
+   "best_rule": "2x25"
+  },
+  {
+   "label": "Polynomino: EvoX / eb1-delta-preview",
+   "problem": "Polynomino Packing",
+   "algorithm": "evox",
+   "model": "eb1-delta-preview",
+   "n_campaigns": 8,
+   "sd_final": 13.4173,
+   "min_final": 43.6015,
+   "max_final": 77.3728,
+   "nA": 4,
+   "nB": 4,
+   "n_scored": 4,
+   "rules": {
+    "2x25": {
+     "mean": 7.7083,
+     "sd_across_splits": 1.8666,
+     "p2_5": 2.5656,
+     "p97_5": 10.2228,
+     "frac_splits_gt0": 1.0
+    },
+    "5x10": {
+     "mean": 12.622,
+     "sd_across_splits": 3.6179,
+     "p2_5": 5.0895,
+     "p97_5": 18.6957,
+     "frac_splits_gt0": 0.985
+    },
+    "Restart after 5": {
+     "mean": 13.3803,
+     "sd_across_splits": 4.1675,
+     "p2_5": 4.5934,
+     "p97_5": 21.8488,
+     "frac_splits_gt0": 0.985
+    },
+    "Restart after 10": {
+     "mean": 10.2441,
+     "sd_across_splits": 3.0287,
+     "p2_5": 3.8319,
+     "p97_5": 15.218,
+     "frac_splits_gt0": 0.99
+    },
+    "Restart after 20": {
+     "mean": 5.2543,
+     "sd_across_splits": 2.4713,
+     "p2_5": -0.0,
+     "p97_5": 10.1351,
+     "frac_splits_gt0": 0.97
+    },
+    "k_stop=5": {
+     "mean": 6.9821,
+     "sd_across_splits": 15.0278,
+     "p2_5": -36.3893,
+     "p97_5": 22.5901,
+     "frac_splits_gt0": 0.79
+    },
+    "k_stop=10": {
+     "mean": 10.6597,
+     "sd_across_splits": 3.0958,
+     "p2_5": 3.8774,
+     "p97_5": 16.3295,
+     "frac_splits_gt0": 1.0
+    },
+    "k_stop=20": {
+     "mean": 5.308,
+     "sd_across_splits": 2.4711,
+     "p2_5": 0.195,
+     "p97_5": 10.1377,
+     "frac_splits_gt0": 1.0
+    },
+    "Fitted (k_stop, n)": {
+     "mean": 12.1845,
+     "sd_across_splits": 3.8882,
+     "p2_5": 2.5656,
+     "p97_5": 20.1584,
+     "frac_splits_gt0": 0.985
+    }
+   },
+   "fitted_policy_counts": {
+    "(10, 5)": 2,
+    "(22, 2)": 4,
+    "(3, 1)": 57,
+    "(7, 1)": 1,
+    "(7, 3)": 8,
+    "(7, 4)": 3,
+    "(7, 5)": 125
+   },
+   "best_rule": "Restart after 5"
+  }
+ ],
+ "excluded_configurations": [
+  {
+   "label": "Knapsack: AdaEvolve / eb1",
+   "n_campaigns": 15,
+   "sd_final": 0.0,
+   "min_final": 100.0,
+   "max_final": 100.0
+  },
+  {
+   "label": "Knapsack: Best-of-N / eb1-pro",
+   "n_campaigns": 12,
+   "sd_final": 0.0,
+   "min_final": 100.0,
+   "max_final": 100.0
+  },
+  {
+   "label": "Knapsack: Best-of-N / Kimi-K2.5",
+   "n_campaigns": 9,
+   "sd_final": 0.1614,
+   "min_final": 99.6133,
+   "max_final": 100.0
+  },
+  {
+   "label": "Knapsack: AdaEvolve / eb1-delta-preview",
+   "n_campaigns": 8,
+   "sd_final": 0.1279,
+   "min_final": 99.6133,
+   "max_final": 100.0
+  },
+  {
+   "label": "Polynomino: EvoX / eb1-preview",
+   "n_campaigns": 8,
+   "sd_final": 1.2791,
+   "min_final": 42.862,
+   "max_final": 47.6765
+  }
+ ],
+ "runtime_seconds": 157.1,
+ "quick": false
+}
