@@ -10,8 +10,8 @@ maximum iteration index. Evaluator-log lines ("Evaluated program <id> ...: combi
 printed to 4 decimals) are a second check where present.
 
 Campaign set: the submitted campaigns on the three combinatorial problems whose name equals
-a run directory name in the run database GAMBLE_RUNS_DB (sqlite, table runs, column
-dir_name; opened read-only) -- 911 campaigns. Without GAMBLE_RUNS_DB, every submitted
+a run directory name in the run database RUNS_DB (sqlite, table runs, column
+dir_name; opened read-only) -- 911 campaigns. Without RUNS_DB, every submitted
 campaign with a raw directory is used and the result is labelled accordingly.
 Needs ROAR_RAW_DIR. Deterministic; no random numbers.
 """
@@ -76,8 +76,8 @@ def main():
     t = pb.tables()
     camp = t["campaigns"]
     camp = camp[camp.research_question.isin(PROBLEMS)]
-    if paths.GAMBLE_RUNS_DB:
-        con = sqlite3.connect(f"file:{paths.GAMBLE_RUNS_DB}?mode=ro", uri=True)
+    if paths.RUNS_DB:
+        con = sqlite3.connect(f"file:{paths.RUNS_DB}?mode=ro", uri=True)
         names = set(pd.read_sql("select dir_name from runs", con).dir_name)
         con.close()
         camp = camp[camp.name.isin(names)]

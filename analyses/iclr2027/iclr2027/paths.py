@@ -8,7 +8,7 @@ All locations come from environment variables, with repo-relative defaults:
                     (contains metadata/runs.parquet and data/...); RQ4 external corpus
   ROAR_RAW_DIR      raw run directories of the submitted SkyDiscover campaigns
                     (only for the two scripts that re-read raw files)
-  GAMBLE_RUNS_DB    SQLite run database used to match campaigns to raw directories
+  RUNS_DB    SQLite run database used to match campaigns to raw directories
                     (only for the parser validation)
   ICLR_RESULTS_DIR, ICLR_FIGURES_DIR  output directories (default: results/, figures/ here)
   ROAR_BACKEND      "parquet" (default): ROAR's DB query functions are replaced by
@@ -30,7 +30,7 @@ DERIVED = os.path.join(ANALYSIS_DIR, "data")
 ROAR_DATA = os.environ.get("ROAR_DATA", os.path.join(REPO_ROOT, "data", "roar_hf", "data"))
 HARNESS_GEN_DATA = os.environ.get("HARNESS_GEN_DATA", os.path.join(REPO_ROOT, "data", "harness_gen"))
 ROAR_RAW_DIR = os.environ.get("ROAR_RAW_DIR", "")
-GAMBLE_RUNS_DB = os.environ.get("GAMBLE_RUNS_DB", "")
+RUNS_DB = os.environ.get("RUNS_DB", "")
 QUICK = os.environ.get("QUICK", "0") == "1"
 
 # SHA-256 of the Hugging Face mirror tables the paper's numbers were computed on.

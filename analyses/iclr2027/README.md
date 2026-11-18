@@ -22,7 +22,7 @@ bash tests/quick_test.sh              # about 1 min: quick re-run compared with 
 Optional inputs, not part of the public mirror:
 - `ROAR_RAW_DIR` holds the raw SkyDiscover run directories. With it, `run_all.sh` also
   re-extracts `data/code_tokens.csv.gz` and runs the App. D validation.
-- `GAMBLE_RUNS_DB` is the run database used to select App. D's 911 campaigns.
+- `RUNS_DB` is the run database used to select App. D's 911 campaigns.
 - `TIKTOKEN_CACHE_DIR` must point at a cached `o200k_base` file for an offline token extraction.
 
 Environment: the ROAR `src/pyproject.toml` / `uv.lock` environment, plus `tiktoken`, which is
@@ -144,7 +144,7 @@ The paper is not edited here. Each item lists what the code gives.
 - the hazard / Kaplan-Meier / GEE analyses of RQ2;
 - cross-problem heterogeneity tests;
 - dip / mixture checks of RQ1;
-- the GAMBLe-database overlap counts;
+- the run-database overlap counts;
 - exploratory restart-ranking analyses.
 
 None of them is printed in the revision.

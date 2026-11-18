@@ -170,7 +170,7 @@ if r:
           (r["id_sets_identical"], r["best_equal"], r["max_iter_equal"]),
           (v["campaigns_id_sets_identical"], v["roar_best_eq_raw_best"], v["roar_maxiter_eq_raw_maxiter"]))
 else:
-    print("SKIP       parser_validation.json absent (needs ROAR_RAW_DIR and GAMBLE_RUNS_DB)")
+    print("SKIP       parser_validation.json absent (needs ROAR_RAW_DIR and RUNS_DB)")
 
 print(f"\n{len(fails)} failure(s)" + (": " + ", ".join(fails) if fails else ""))
 sys.exit(1 if fails else 0)

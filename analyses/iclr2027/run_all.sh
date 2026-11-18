@@ -1,7 +1,7 @@
 #!/bin/bash
 # Regenerate every result and figure of the ICLR 2027 revision that this folder covers.
 #   ROAR_DATA=<dir with the mirror's *.parquet> HARNESS_GEN_DATA=<Gupta et al. runs> bash run_all.sh
-# Optional: ROAR_RAW_DIR (+ GAMBLE_RUNS_DB) re-reads raw run directories (code tokens, App. D);
+# Optional: ROAR_RAW_DIR (+ RUNS_DB) re-reads raw run directories (code tokens, App. D);
 #           PYTHON (default: python3), WORKERS (default 8), QUICK=1 (4 RQ4 splits; smoke test only).
 # Seeds are fixed inside the scripts (see README). Writes results/ and figures/.
 set -e
