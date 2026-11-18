@@ -183,6 +183,54 @@ def export_artifacts(cur):
     """)
 
 
+def export_provenance(cur, output_dir: Path) -> list[Path]:
+    """Export sources.parquet and campaign_sources.parquet to output_dir.
+
+    owner and submitted_by are never exported; the six v1 parquet files are not touched.
+    """
+    tables = {
+        "sources": (
+            pa.schema([
+                ("slug", pa.string()),
+                ("title", pa.string()),
+                ("version", pa.string()),
+                ("year", pa.int32()),
+                ("url", pa.string()),
+                ("license_spdx", pa.string()),
+                ("redistribution", pa.string()),
+                ("attribution", pa.string()),
+                ("authors", pa.string()),
+                ("bibtex", pa.string()),
+                ("consent_recorded_at", pa.string()),
+            ]),
+            """
+            SELECT slug, title, version, year, url, license_spdx, redistribution,
+                   attribution, authors, bibtex, consent_recorded_at::text
+            FROM source_datasets ORDER BY slug
+            """,
+        ),
+        "campaign_sources": (
+            pa.schema([
+                ("campaign_id", pa.string()),
+                ("source_slug", pa.string()),
+            ]),
+            "SELECT campaign_id::text, source_slug FROM campaign_sources ORDER BY campaign_id",
+        ),
+    }
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    paths = []
+    for name, (schema, query) in tables.items():
+        cur.execute(query)
+        rows = cur.fetchall()
+        arrays = {f.name: pa.array([r[i] for r in rows], type=f.type) for i, f in enumerate(schema)}
+        path = output_dir / f"{name}.parquet"
+        pq.write_table(pa.table(arrays, schema=schema), path)
+        print(f"  {name}: {len(rows)} rows -> {path.name}")
+        paths.append(path)
+    return paths
+
+
 def main():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     print(f"Exporting ADRS database to {OUTPUT_DIR}/\n")

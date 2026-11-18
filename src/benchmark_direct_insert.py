@@ -14,7 +14,12 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-from insert_adrs_campaign import CampaignInserter, _parse_single_campaign
+from insert_adrs_campaign import (
+    CampaignInserter,
+    _parse_single_campaign,
+    attach_provenance,
+    resolve_provenance_input,
+)
 from system_detection import detect_system_type
 
 
@@ -140,7 +145,11 @@ def benchmark_insert(campaigns_dir: Path, max_workers: int = 8) -> dict:
     for i, (path, parsed, _parse_time) in enumerate(parsed_campaigns):
         campaign_insert_start = time.time()
         try:
-            if inserter.insert(parsed):
+            # Resolved provenance is passed through; no anonymous slug is allocated here,
+            # so anonymous first uploads are rejected by the inserter.
+            prov = resolve_provenance_input(path, campaigns_dir)
+            attach_provenance(parsed, prov)
+            if inserter.insert(parsed, submitted_by=prov.get("author")):
                 insert_time = time.time() - campaign_insert_start
                 results['insert_times'].append(insert_time)
                 success_count += 1
