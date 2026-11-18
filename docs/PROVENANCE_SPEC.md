@@ -169,3 +169,16 @@ All four seed sources are `attribution: named`, `redistribution: full` and `lice
 - Changing any analytics reader.
 - Exporting `evaluations.parquet`.
 - Scrubbing v1 identifiers.
+
+## Appendix: exact Gupta et al. bibtex (normative; seed must equal this after whitespace normalization)
+```
+@misc{gupta2026automateddiscoveryuniversallysuperior,
+      title={Automated Discovery Has No Universally Superior Harness}, 
+      author={Akshat Gupta and Jermaine Lei and Alexander Lu and Gopala Anumanchipalli and Leshem Choshen},
+      year={2026},
+      eprint={2607.18235},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2607.18235}, 
+}
+```
