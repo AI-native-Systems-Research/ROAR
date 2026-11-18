@@ -4,8 +4,7 @@ idempotency, create_tables.main() and drop_tables.py drop order."""
 
 from __future__ import annotations
 
-import ast
-import subprocess
+import hashlib
 import uuid
 
 import psycopg
@@ -14,7 +13,6 @@ from psycopg import errors, sql
 
 from conftest import (
     ADMIN_URL,
-    REPO_ROOT,
     apply_provenance_schema,
     db_url,
     drop_database,
@@ -29,25 +27,14 @@ from conftest import (
 PROV_TABLES = {"source_datasets", "campaign_sources", "evaluations"}
 
 
-def _schema_at(rev: str) -> str:
-    src = subprocess.run(
-        ["git", "show", f"{rev}:src/create_tables.py"],
-        cwd=REPO_ROOT, capture_output=True, text=True, check=True,
-    ).stdout
-    tree = ast.parse(src)
-    for node in tree.body:
-        if isinstance(node, ast.Assign) and any(
-            isinstance(t, ast.Name) and t.id == "SCHEMA" for t in node.targets
-        ):
-            return ast.literal_eval(node.value)
-    raise AssertionError("SCHEMA not found at e594ccc")
+# sha256 of the original (pre-feature) create_tables.SCHEMA string, UTF-8 encoded.
+ORIGINAL_SCHEMA_SHA256 = "4835f823fe80fc200ef0a4cd6f1ff1505ada7c6911f145470d393d899312635e"
 
 
-def test_schema_constant_is_byte_identical_to_e594ccc():
+def test_schema_constant_is_byte_identical_to_original():
     import create_tables
 
-    assert create_tables.SCHEMA == _schema_at("e594ccc")
-    assert create_tables.SCHEMA.encode() == _schema_at("e594ccc").encode()
+    assert hashlib.sha256(create_tables.SCHEMA.encode("utf-8")).hexdigest() == ORIGINAL_SCHEMA_SHA256
 
 
 def test_provenance_schema_is_separate_constant():
@@ -295,3 +282,30 @@ def test_drop_tables_drops_provenance_objects(fresh_db, monkeypatch):
         conn.execute(create_tables.PROVENANCE_SCHEMA)
         conn.commit()
     assert PROV_TABLES <= _public_tables(url)
+
+
+def test_regrade_representable_and_generation_time_predicate(db):
+    """Spec: the schema can represent a regrade; a measurement is generation-time iff
+    evaluation_id IS NULL OR evaluations.kind = 'generation_time'."""
+    cid = insert_sql_campaign(db, unique("regrade-"), n_candidates=3)
+    with psycopg.connect(db) as conn:
+        mids = [r[0] for r in conn.execute(
+            "SELECT m.id FROM measurements m JOIN candidates c ON c.id=m.candidate_id "
+            "WHERE c.campaign_id=%s ORDER BY c.iteration_index", (cid,)).fetchall()]
+        assert len(mids) == 3
+        gen = conn.execute("INSERT INTO evaluations (assessor_name, assessor_version, platform, code_ref, kind) "
+                           "VALUES ('ev', '1', 'unknown', NULL, 'generation_time') RETURNING id").fetchone()[0]
+        reg = conn.execute("INSERT INTO evaluations (assessor_name, assessor_version, platform, code_ref, kind) "
+                           "VALUES ('ev', '2', 'linux', 'git:abc', 'regrade') RETURNING id").fetchone()[0]
+        conn.execute("UPDATE measurements SET evaluation_id=%s WHERE id=%s", (gen, mids[1]))
+        # A regrade: a new score for an existing candidate from a different assessor.
+        cand = conn.execute("SELECT candidate_id FROM measurements WHERE id=%s", (mids[2],)).fetchone()[0]
+        regraded = conn.execute("INSERT INTO measurements (candidate_id, name, value, evaluation_id) "
+                                "VALUES (%s, 'combined_score', '0.99', %s) RETURNING id", (cand, reg)).fetchone()[0]
+        conn.commit()
+        gen_time = {r[0] for r in conn.execute(
+            "SELECT m.id FROM measurements m LEFT JOIN evaluations e ON e.id=m.evaluation_id "
+            "JOIN candidates c ON c.id=m.candidate_id WHERE c.campaign_id=%s "
+            "AND (m.evaluation_id IS NULL OR e.kind='generation_time')", (cid,)).fetchall()}
+    assert gen_time == set(mids)  # v1 (NULL) and generation_time rows included
+    assert regraded not in gen_time  # the regrade excluded

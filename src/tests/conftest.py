@@ -1,6 +1,6 @@
 """Shared fixtures for the provenance / assessor-versioning test suite.
 
-Spec: ``docs/PROVENANCE_SPEC.md`` (normative).
+Spec: ``docs/PROVENANCE_SPEC.md`` (normative). See ``tests/README.md`` for how to run.
 
 Design notes
 ------------
@@ -8,10 +8,10 @@ Design notes
   ``backfill_provenance`` ...) are imported lazily, inside fixtures or tests, so a
   missing implementation fails each test individually instead of breaking collection.
 * Every database a test writes to is a throwaway database named ``roar_provtest_*``
-  (or ``roar_v1_provcopy_*`` / ``roar_full_provcopy_*`` for the golden tests). The
-  frozen shared databases ``roar_v1`` and ``roar_full`` are only ever *read*, and only
-  by the golden and name-leak tests. ``guard_not_frozen`` enforces this for every URL
-  this suite creates, drops or writes to.
+  (or ``<src>_provcopy_*`` for the golden tests). Databases named ``roar_v1`` or
+  ``roar_full`` (the spec's frozen names) are never written; ``guard_not_frozen``
+  enforces this for every URL this suite creates, drops or writes to.
+* Golden and name-leak tests are opt-in via environment variables and skip otherwise.
 * Synthetic names only (``alice-test`` ...). No contributor personal names.
 """
 
@@ -22,6 +22,7 @@ import json
 import os
 import sys
 import tarfile
+import tempfile
 import uuid
 from pathlib import Path
 from typing import Any, Callable, Iterator
@@ -35,12 +36,15 @@ if str(SRC_DIR) not in sys.path:
 
 import psycopg  # noqa: E402
 from psycopg import sql  # noqa: E402
+from psycopg.conninfo import conninfo_to_dict  # noqa: E402
 
-PG_HOST = os.environ.get("ROAR_TEST_PG_HOST", "localhost")
-PG_PORT = int(os.environ.get("ROAR_TEST_PG_PORT", "55432"))
-PG_USER = os.environ.get("ROAR_TEST_PG_USER", "postgres")
-PG_PASSWORD = os.environ.get("ROAR_TEST_PG_PASSWORD", "postgres")
-DOCKER_CONTAINER = os.environ.get("ROAR_TEST_PG_CONTAINER", "roar-pg")
+ADMIN_URL = os.environ.get("ROAR_PG_ADMIN_URL", "postgresql://postgres:postgres@localhost:55432/postgres")
+_ADMIN = conninfo_to_dict(ADMIN_URL)
+PG_HOST = _ADMIN.get("host", "localhost")
+PG_PORT = _ADMIN.get("port", "5432")
+PG_USER = _ADMIN.get("user", "postgres")
+# Docker container running the server (for pg_dump | psql copies); golden tests skip if unset.
+DOCKER_CONTAINER = os.environ.get("ROAR_TEST_PG_CONTAINER") or None
 
 FROZEN_DBS = frozenset({"roar_v1", "roar_full"})
 
@@ -61,21 +65,35 @@ DEFAULT_ASSESSOR = {
     "code_ref": "https://example.com/assessor/commit/abc123",
 }
 
+THROWAWAY_PATTERNS = ("roar_provtest_%", "%\\_provcopy\\_%")
+
+
+def env_list(name: str) -> list[str]:
+    return [x.strip() for x in os.environ.get(name, "").split(",") if x.strip()]
+
 
 # ---------------------------------------------------------------------------
 # Database URL helpers
 # ---------------------------------------------------------------------------
 
 def db_url(dbname: str) -> str:
-    return f"postgresql://{PG_USER}:{PG_PASSWORD}@{PG_HOST}:{PG_PORT}/{dbname}"
+    """ROAR_PG_ADMIN_URL (a postgresql:// URL) with the database name replaced."""
+    from urllib.parse import urlsplit, urlunsplit
+
+    parts = urlsplit(ADMIN_URL)
+    return urlunsplit((parts.scheme, parts.netloc, "/" + dbname, parts.query, parts.fragment))
 
 
-ADMIN_URL = db_url("postgres")
+def url_dbname(url: str) -> str:
+    try:
+        return conninfo_to_dict(url).get("dbname", "")
+    except Exception:
+        return url.rsplit("/", 1)[-1].split("?", 1)[0]
 
 
 def guard_not_frozen(name_or_url: str) -> None:
     """Refuse (hard error) to touch a frozen shared database."""
-    name = name_or_url.rsplit("/", 1)[-1].split("?", 1)[0]
+    name = url_dbname(name_or_url) if ("=" in name_or_url or "/" in name_or_url) else name_or_url
     if name in FROZEN_DBS:
         raise RuntimeError(f"test suite refused to write to frozen database {name!r}")
 
@@ -98,8 +116,8 @@ def require_pg() -> None:
         _PG_OK = pg_available()
     if not _PG_OK:
         pytest.skip(
-            f"Postgres+pgvector (container {DOCKER_CONTAINER!r}) is unreachable at "
-            f"{PG_HOST}:{PG_PORT}; DB-backed provenance tests need it"
+            f"Postgres+pgvector is unreachable at {PG_HOST}:{PG_PORT} (set ROAR_PG_ADMIN_URL); "
+            "DB-backed provenance tests need it"
         )
 
 
@@ -390,13 +408,39 @@ def make_targz(src_dir: Path, members: list[str] | None = None) -> bytes:
 def pytest_configure(config):
     config.addinivalue_line(
         "markers",
-        "golden: slow end-to-end checks against copies of the frozen roar_v1/roar_full DBs",
+        "golden: slow, opt-in end-to-end checks against copies of ROAR_GOLDEN_DBS source databases",
     )
 
 
 @pytest.fixture(scope="session")
 def pg() -> None:
     require_pg()
+    sweep_stale_databases()
+
+
+def sweep_stale_databases() -> None:
+    """Drop throwaway DBs (roar_provtest_*, *_provcopy_*) left by an interrupted run."""
+    with psycopg.connect(ADMIN_URL, autocommit=True) as conn:
+        names = [r[0] for r in conn.execute(
+            "SELECT datname FROM pg_database WHERE datname LIKE %s OR datname LIKE %s",
+            THROWAWAY_PATTERNS,
+        ).fetchall()]
+    for n in names:
+        if n not in FROZEN_DBS:
+            drop_database(n)
+
+
+def import_api():
+    """Import api with cwd set to a temp dir: api creates ./data at import time."""
+    if "api" in sys.modules:
+        return sys.modules["api"]
+    old = os.getcwd()
+    os.chdir(tempfile.mkdtemp(prefix="roar_provtest_api_"))
+    try:
+        import api
+    finally:
+        os.chdir(old)
+    return api
 
 
 @pytest.fixture(scope="session")
@@ -446,16 +490,20 @@ def fresh_db(pg) -> Iterator[Callable[..., str]]:
 
 @pytest.fixture(scope="session")
 def golden_copies(pg):
-    """Factory: golden_copies("roar_v1") -> GoldenCopy (created once per session, dropped
-    at session end). Skips if the frozen source DB does not exist."""
+    """Factory: golden_copies(src) -> GoldenCopy of a source DB listed in ROAR_GOLDEN_DBS
+    (created once per session by pg_dump | psql in ROAR_TEST_PG_CONTAINER, dropped at
+    session end). Skips unless both env vars are set and the source DB exists."""
     from golden_support import GoldenCopy, database_exists
 
     cache: dict[str, GoldenCopy] = {}
 
     def _get(src: str):
+        require_golden_source(src)
+        if not DOCKER_CONTAINER:
+            pytest.skip("set ROAR_TEST_PG_CONTAINER (docker container for pg_dump | psql) to run golden tests")
         if src not in cache:
             if not database_exists(src):
-                pytest.skip(f"frozen source database {src!r} not present on {PG_HOST}:{PG_PORT}")
+                pytest.skip(f"golden source database {src!r} not present on {PG_HOST}:{PG_PORT}")
             cache[src] = GoldenCopy(src)
         return cache[src]
 
@@ -464,6 +512,20 @@ def golden_copies(pg):
     finally:
         for gc in cache.values():
             gc.drop()
+
+
+GOLDEN_UNSET = "<ROAR_GOLDEN_DBS unset>"
+
+
+def golden_dbs() -> list[str]:
+    """Source DBs for golden tests (ROAR_GOLDEN_DBS, comma-separated); a placeholder
+    param that skips when unset."""
+    return env_list("ROAR_GOLDEN_DBS") or [GOLDEN_UNSET]
+
+
+def require_golden_source(src: str) -> None:
+    if src == GOLDEN_UNSET or src not in env_list("ROAR_GOLDEN_DBS"):
+        pytest.skip("set ROAR_GOLDEN_DBS (comma-separated source DB names) to run golden tests")
 
 
 @pytest.fixture

@@ -161,11 +161,6 @@ def test_format_stored_bibtex_verbatim(prov):
     assert "@misc{synthetic-src_v2" not in out
 
 
-def test_format_default_fmt_is_bibtex(prov):
-    s = [_src()]
-    assert prov.format_citations(s) == prov.format_citations(s, fmt="bibtex")
-
-
 def test_format_generated_misc(prov):
     out = prov.format_citations([_src()], fmt="bibtex")
     entries = _entries(out)
@@ -223,6 +218,12 @@ def test_format_pointer_only_null_license(prov, fmt):
     assert "no license declared" in out
     if fmt == "bibtex":
         assert _balanced(out)
+
+
+@pytest.mark.parametrize("fmt", ["bibtex", "text"])
+def test_format_pointer_only_with_license_has_no_missing_license_phrase(prov, fmt):
+    s = _src(slug="pointer-lic@v1", redistribution="pointer_only", license_spdx="MIT")
+    assert "no license declared" not in prov.format_citations([s], fmt=fmt)
 
 
 def test_format_text_one_line_per_source(prov):

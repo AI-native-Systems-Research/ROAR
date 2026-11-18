@@ -56,7 +56,9 @@ def _shim_bsdtar(tmp_path, monkeypatch):
 
 @pytest.fixture
 def client(db, tmp_path, monkeypatch):
-    import api
+    from conftest import import_api
+
+    api = import_api()
 
     _shim_bsdtar(tmp_path, monkeypatch)
 
@@ -101,7 +103,9 @@ def _assessor_of(url, name):
 
 
 def test_job_status_model_exposes_anon_slug():
-    import api
+    from conftest import import_api
+
+    api = import_api()
 
     assert "anon_slug" in api.JobStatus.model_fields
     js = api.JobStatus(job_id="x", status="complete")
@@ -256,3 +260,43 @@ def test_parsed_cannot_hijack_existing_anonymous_slug(client, db, tmp_path):
     st2 = _run_job(client, "/upload/parsed", _parsed_archive(tmp_path, [line], None), {"author": BOB})
     assert st2["status"] == "error" or (st2.get("result") or {}).get("campaign_count", 0) == 0
     assert _by_name(db, line["campaign"]["name"]) is None
+
+
+def test_upload_submitter_is_form_author_not_campaign_file_author(client, db, tmp_path):
+    """submitted_by (and owner) come from the form author, even when a campaign-level
+    author_input.json names someone else."""
+    top = tmp_path / unique("up-")
+    root = top / "batch"
+    name = unique("camp-")
+    write_skydiscover_campaign(root / name, {"author": "carol-test@example.com"})
+    write_author_input(root, {"assessor": DEFAULT_ASSESSOR, "source": anon_source_block()})
+    st = _run_job(client, "/upload", make_targz(top), {"author": " Alice-Test@Example.com ", "system_type": "skydiscover"})
+    assert st["status"] == "complete", st
+    slug = st["anon_slug"]
+    assert slug and SLUG_RE.match(slug)
+    assert _by_name(db, name)[1:] == (slug, ALICE)
+    assert fetchone(db, "SELECT owner FROM source_datasets WHERE slug=%s", (slug,))[0] == ALICE
+
+
+def test_upload_differing_anonymous_blocks_job_error_nothing_persisted(client, db, tmp_path):
+    top = tmp_path / unique("up-")
+    root = top / "batch"
+    names = [unique("camp-") for _ in range(2)]
+    write_skydiscover_campaign(root / names[0])
+    write_skydiscover_campaign(root / names[1], {"source": anon_source_block(license_spdx="MIT")})
+    write_author_input(root, {"assessor": DEFAULT_ASSESSOR, "source": anon_source_block()})
+    before = table_counts(db)
+    st = _run_job(client, "/upload", make_targz(top), {"author": ALICE, "system_type": "skydiscover"})
+    assert st["status"] == "error"
+    assert table_counts(db) == before
+    assert all(_by_name(db, n) is None for n in names)
+
+
+def test_parsed_differing_anonymous_blocks_job_error_nothing_persisted(client, db, tmp_path):
+    lines = [build_parsed_dict(author=ALICE, source=anon_source_block()),
+             build_parsed_dict(author=ALICE, source=anon_source_block(license_spdx="MIT"))]
+    before = table_counts(db)
+    st = _run_job(client, "/upload/parsed", _parsed_archive(tmp_path, lines, None), {"author": ALICE})
+    assert st["status"] == "error"
+    assert table_counts(db) == before
+    assert all(_by_name(db, l["campaign"]["name"]) is None for l in lines)

@@ -136,6 +136,8 @@ def test_named_missing_required_field_rejected(db, ProvenanceError, field):
         ("authors", "Carol Test"),
         ("year", 2020),
         ("bibtex", "@misc{other, title={Other}}"),
+        ("attribution", "anonymous"),
+        ("redistribution", "pointer_only"),
     ],
 )
 def test_named_existing_slug_with_differing_supplied_field_rejected(db, ProvenanceError, field, new):
@@ -223,9 +225,38 @@ def test_anonymous_reference_with_null_owner_rejected(db, ProvenanceError):
     _expect_reject(db, build_parsed(source={"slug": slug, "consent": True}), ProvenanceError, submitted_by=ALICE)
 
 
+@pytest.mark.parametrize("consent", [False, None])
+def test_slug_only_reference_requires_consent(db, ProvenanceError, consent):
+    block, _ = _new_named(db, ALICE)
+    ref = {"slug": block["slug"]} if consent is None else {"slug": block["slug"], "consent": consent}
+    _expect_reject(db, build_parsed(source=ref), ProvenanceError, submitted_by=ALICE)
+    slug, _, _ = _anon_first(db, ALICE)
+    ref = {"slug": slug} if consent is None else {"slug": slug, "consent": consent}
+    _expect_reject(db, build_parsed(source=ref), ProvenanceError, submitted_by=ALICE)
+
+
 # =============================================================================
 # Success effects
 # =============================================================================
+
+def _consent_age_seconds(url, slug) -> float:
+    return fetchone(url, "SELECT abs(extract(epoch FROM now() - consent_recorded_at)) "
+                         "FROM source_datasets WHERE slug=%s", (slug,))[0]
+
+
+def test_consent_recorded_now_on_first_insert_named_and_anonymous(db):
+    block, _ = _new_named(db, ALICE)
+    assert _consent_age_seconds(db, block["slug"]) < 30
+    slug, _, _ = _anon_first(db, ALICE)
+    assert _consent_age_seconds(db, slug) < 30
+
+
+def test_named_insert_omitting_bibtex_stores_null(db):
+    block = named_source_block()
+    assert "bibtex" not in block
+    assert insert(db, build_parsed(source=block), submitted_by=ALICE) is True
+    assert fetchone(db, "SELECT bibtex IS NULL FROM source_datasets WHERE slug=%s", (block["slug"],))[0] is True
+
 
 def test_named_first_insert_effects(db):
     block = named_source_block(bibtex="@misc{synthkey, title={Synthetic}}")

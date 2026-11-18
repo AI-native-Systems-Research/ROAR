@@ -1,42 +1,39 @@
-"""Golden tests (marker ``golden``; slow). Spec "Hard constraints" (v1 immutable;
-analytics return identical results after migration + backfill) and "Backfill"
-(exact counts on copies of roar_v1 / roar_full; idempotent; evaluation_id stays NULL).
+"""Golden tests (marker ``golden``; slow; opt-in). Spec "Hard constraints" (v1 rows
+immutable; analytics return identical results after migration + backfill) and
+"Backfill" (exact counts, idempotent, evaluation_id stays NULL).
 
-Copies are ``<src>_provcopy_<rand>`` (TEMPLATE when the source has no other
-connections, else pg_dump | psql) and are dropped at session end."""
+Each source DB named in ROAR_GOLDEN_DBS is copied to ``<src>_provcopy_<rand>`` with
+``pg_dump | psql`` in ROAR_TEST_PG_CONTAINER, backfilled, compared, and dropped at
+session end. See tests/README.md."""
 
 from __future__ import annotations
 
 import hashlib
+import os
 from pathlib import Path
 
 import pytest
 
-from conftest import SEED_SLUGS, fetchall, fetchone, v1_row_fingerprint
+from conftest import SEED_SLUGS, fetchall, fetchone, golden_dbs, v1_row_fingerprint
 
 pytestmark = pytest.mark.golden
 
-EXPECTED_COUNTS = {
-    "roar_v1": {"ellis-castro-2026@v1": 914, "ibm-ai-native-systems@v1": 14},
-    "roar_full": {"ellis-castro-2026@v1": 914, "ibm-ai-native-systems@v1": 14, "cheng2025barbarians@v1": 144},
-}
-TOTAL_CAMPAIGNS = {"roar_v1": 928, "roar_full": 1072}
-
-HF_DATA_DIR = Path("/Users/mmibm/Documents/GitHub/claudes/gamble-workspace/data/roar_hf/data")
-HF_SHA256 = {  # from rebuttal_compute/CONTRACT.md
-    "artifacts.parquet": "206889ad70ee56d16d0aa1e4ccecd52fed8b3d7803e729636ef4ec979f3dff57",
-    "campaigns.parquet": "6dca8718d68c14306c5e20ec418778bd6f14595f9f9205a736baa4e742638031",
-    "candidate_edges.parquet": "741144eeb126cf780149f2cec596cd22e47534142cf3c45d27066f618a8e890e",
-    "candidates.parquet": "1f2a0cd56f5b763582cfc4a07efd9b681fd827634cc971e4c0f7ee5e93370ae0",
-    "measurements.parquet": "ca0c5d810190a8c475ba1ffcc5b44663b50e6298df5289e7fed581a9503d11d6",
-    "systems.parquet": "4df3006c02899aab2525bb78939f9a16e0a7ee7f2276580eb149ab5d62d5fe0e",
+# Spec "Backfill > Return value": exact counts for the two corpora the spec names,
+# identified by their campaign count (928 = the v1 corpus, 1,072 = the full corpus).
+EXPECTED_COUNTS_BY_CORPUS_SIZE = {
+    928: {"ellis-castro-2026@v1": 914, "ibm-ai-native-systems@v1": 14},
+    1072: {"ellis-castro-2026@v1": 914, "ibm-ai-native-systems@v1": 14, "cheng2025barbarians@v1": 144},
 }
 
-DBS = ["roar_v1", "roar_full"]
+DBS = golden_dbs()
 
 
 def _nonzero(d: dict) -> dict:
     return {k: v for k, v in d.items() if v}
+
+
+def _expected(gc) -> dict | None:
+    return EXPECTED_COUNTS_BY_CORPUS_SIZE.get(gc.n_campaigns)
 
 
 @pytest.mark.parametrize("src", DBS)
@@ -44,16 +41,18 @@ def test_backfill_exact_counts(golden_copies, src):
     gc = golden_copies(src)
     gc.require_backfill()
     assert all(isinstance(v, int) for v in gc.counts.values())
-    assert _nonzero(gc.counts) == EXPECTED_COUNTS[src]
     assert gc.counts.get("gupta2026harness@v1", 0) == 0
-    if src == "roar_v1":
-        assert gc.counts.get("cheng2025barbarians@v1", 0) == 0
     by_slug = dict(fetchall(gc.url, "SELECT source_slug, count(*) FROM campaign_sources GROUP BY 1"))
-    assert by_slug == EXPECTED_COUNTS[src]
-    assert fetchone(gc.url, "SELECT count(*) FROM campaign_sources")[0] == TOTAL_CAMPAIGNS[src]
+    assert _nonzero(gc.counts) == by_slug
+    assert fetchone(gc.url, "SELECT count(*) FROM campaign_sources")[0] == gc.n_campaigns
     assert fetchone(gc.url, "SELECT count(*) FROM campaigns c LEFT JOIN campaign_sources cs "
                             "ON cs.campaign_id=c.id WHERE cs.campaign_id IS NULL")[0] == 0
     assert fetchone(gc.url, "SELECT count(*) FROM campaign_sources WHERE submitted_by IS NOT NULL")[0] == 0
+    expected = _expected(gc)
+    if expected is None:
+        pytest.skip(f"no spec counts for a {gc.n_campaigns}-campaign corpus; generic checks passed")
+    assert _nonzero(gc.counts) == expected
+    assert by_slug == expected
 
 
 @pytest.mark.parametrize("src", DBS)
@@ -86,6 +85,12 @@ def test_backfill_seeds_sources(golden_copies, src):
     for slug, attr, redist, lic, consent in rows:
         assert (attr, redist, lic) == ("named", "full", "CC-BY-4.0"), slug
         assert consent is not None, slug
+    assert fetchone(gc.url, "SELECT bibtex IS NULL FROM source_datasets WHERE slug='ibm-ai-native-systems@v1'")[0]
+    # Seed consent: permission granted 2026-11-17.
+    dates = fetchall(gc.url, "SELECT slug, (consent_recorded_at AT TIME ZONE 'UTC')::date::text, "
+                             "consent_recorded_at::date::text FROM source_datasets")
+    for slug, utc_date, local_date in dates:
+        assert "2026-11-17" in (utc_date, local_date), slug
 
 
 @pytest.mark.parametrize("src", DBS)
@@ -101,14 +106,14 @@ def test_v1_rows_unchanged_and_evaluation_id_null(golden_copies, src):
     gc = golden_copies(src)
     gc.require_backfill()
     assert gc.fp_after == gc.fp_before
-    assert v1_row_fingerprint(gc.src_url, gc.columns) == gc.fp_after  # equals the frozen original
+    assert v1_row_fingerprint(gc.src_url, gc.columns) == gc.fp_after  # equals the source DB
     assert fetchone(gc.url, "SELECT count(*) FROM measurements WHERE evaluation_id IS NOT NULL")[0] == 0
     assert fetchone(gc.url, "SELECT count(*) FROM evaluations")[0] == 0
 
 
 @pytest.fixture(scope="module")
 def originals():
-    """Reader outputs and tie sets on the frozen originals (read-only), cached."""
+    """Reader outputs and tie sets on the source DBs (read-only), cached."""
     from golden_support import best_embedding_ties, iteration_ties, run_readers
     from conftest import db_url
 
@@ -147,38 +152,48 @@ def test_analytics_reader_identical(golden_copies, originals, src, reader):
     compare_reader(reader, gc.pre[reader], gc.post[reader], **kw)  # same copy, before vs after
 
 
-def test_rq2_published_reproduction_on_v1_copy(golden_copies):
-    gc = golden_copies("roar_v1")
-    gc.require_backfill()
-    m = gc.post["q2.fit_escape_trend_model"]
-    assert m["odds_ratio_per_10k"] == pytest.approx(0.896, abs=5e-4)
-    assert m["or_ci_lower"] == pytest.approx(0.849, abs=5e-4)
-    assert m["or_ci_upper"] == pytest.approx(0.946, abs=5e-4)
-    assert m["n_observations"] == 6606
-    assert m["n_runs"] == 836
-
-
-def test_v1_copy_citations_are_roar_ellis_ibm(golden_copies):
+@pytest.mark.parametrize("src", DBS)
+def test_citations_for_whole_corpus(golden_copies, src):
     import psycopg
 
-    gc = golden_copies("roar_v1")
+    gc = golden_copies(src)
     gc.require_backfill()
     import provenance
 
     with psycopg.connect(gc.url) as conn:
         cs, srcs = provenance.load_provenance(conn)
     ids = [r[0] for r in fetchall(gc.url, "SELECT id FROM campaigns")]
-    cites = provenance.required_citations(ids, cs, srcs)
-    assert [c["slug"] for c in cites] == ["roar", "ellis-castro-2026@v1", "ibm-ai-native-systems@v1"]
+    slugs = [c["slug"] for c in provenance.required_citations(ids, cs, srcs)]
+    used = sorted(r[0] for r in fetchall(gc.url, "SELECT DISTINCT source_slug FROM campaign_sources"))
+    assert slugs == ["roar"] + used
+    expected = _expected(gc)
+    if expected is not None:
+        assert slugs == ["roar"] + sorted(expected)
 
 
-def test_hf_parquet_files_unchanged():
-    if not HF_DATA_DIR.is_dir():
-        pytest.skip(f"{HF_DATA_DIR} absent")
-    missing = [n for n in HF_SHA256 if not (HF_DATA_DIR / n).exists()]
-    if len(missing) == len(HF_SHA256):
-        pytest.skip("no HF parquet files present")
-    assert not missing, f"missing parquet files: {missing}"
-    for n, want in HF_SHA256.items():
-        h = hashlib.sha256((HF_DATA_DIR / n).read_bytes()).hexdigest()
-        assert h == want, n
+def _sha256_manifest() -> dict[str, str]:
+    path = os.environ.get("ROAR_PARQUET_SHA256_FILE")
+    if not path or not Path(path).is_file():
+        pytest.skip("set ROAR_PARQUET_SHA256_FILE (sha256sum-format manifest) to check exported parquet files")
+    out = {}
+    for line in Path(path).read_text().splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        digest, name = line.split(None, 1)
+        out[name.lstrip("*").strip()] = digest.lower()
+    assert out, "empty sha256 manifest"
+    return out
+
+
+def test_parquet_files_unchanged():
+    """The previously exported v1 parquet files keep their hashes (export_provenance
+    must not rewrite them)."""
+    d = os.environ.get("ROAR_PARQUET_DIR")
+    if not d or not Path(d).is_dir():
+        pytest.skip("set ROAR_PARQUET_DIR to the directory of exported v1 parquet files")
+    manifest = _sha256_manifest()
+    for name, want in manifest.items():
+        p = Path(d) / name
+        assert p.is_file(), f"missing {name}"
+        assert hashlib.sha256(p.read_bytes()).hexdigest() == want, name

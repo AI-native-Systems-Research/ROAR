@@ -107,6 +107,12 @@ def test_backfill_applies_schema_and_seeds_sources(v1_like):
     slugs = [r[0] for r in fetchall(url, "SELECT slug FROM source_datasets ORDER BY slug")]
     assert slugs == sorted(SEED_SLUGS)
     assert fetchone(url, "SELECT count(*) FROM source_datasets WHERE consent_recorded_at IS NULL")[0] == 0
+    assert fetchone(url, "SELECT bibtex IS NULL FROM source_datasets WHERE slug=%s", (IBM,))[0] is True
+    # Seed consent: permission granted 2026-11-17.
+    for slug, utc_date, local_date in fetchall(
+        url, "SELECT slug, (consent_recorded_at AT TIME ZONE 'UTC')::date::text, "
+             "consent_recorded_at::date::text FROM source_datasets"):
+        assert "2026-11-17" in (utc_date, local_date), slug
     assert fetchone(url, "SELECT count(*) FROM information_schema.columns WHERE table_name='measurements' "
                          "AND column_name='evaluation_id'")[0] == 1
 

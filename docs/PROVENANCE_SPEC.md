@@ -87,6 +87,7 @@ The existing behaviour is unchanged otherwise. All work happens in one transacti
 - **existing-source reference** (a block whose only meaningful field is `slug`, or any block with a `slug` that is not a new named source):
   - the slug doesn't exist;
   - or the row is anonymous and the normalized `submitted_by` ≠ `owner`, or `owner` is NULL.
+  - or any field the block supplies other than `slug` and `consent` (e.g. `attribution`, `redistribution`, `title`) differs from the stored row.
 
 **Otherwise it:**
 - creates the source row if needed, setting `consent_recorded_at=now()` and `owner=normalize_submitter(submitted_by)` on first insert only. An anonymous row gets `slug=assigned_anon_slug`, the title from `allocate_anon_slug`, and `authors` and `bibtex` NULL.

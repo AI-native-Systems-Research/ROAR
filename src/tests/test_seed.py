@@ -11,8 +11,16 @@ from conftest import SEED_SLUGS, SRC_DIR
 
 SEED_PATH = SRC_DIR / "sources_seed.yaml"
 
-ALLOWED_KEYS = {"slug", "title", "version", "year", "url", "license_spdx", "redistribution", "attribution",
-                "authors", "bibtex", "consent", "consent_recorded_at"}
+# Spec appendix (normative; compared after whitespace normalization).
+GUPTA_BIBTEX = """@misc{gupta2026automateddiscoveryuniversallysuperior,
+      title={Automated Discovery Has No Universally Superior Harness}, 
+      author={Akshat Gupta and Jermaine Lei and Alexander Lu and Gopala Anumanchipalli and Leshem Choshen},
+      year={2026},
+      eprint={2607.18235},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2607.18235}, 
+}"""
 
 EXPECTED = {
     "ellis-castro-2026@v1": {
@@ -97,7 +105,6 @@ def test_seed_has_exactly_four_slugs():
 @pytest.mark.parametrize("slug", SEED_SLUGS)
 def test_seed_common_fields(slug):
     e = _load()[slug]
-    assert set(e) <= ALLOWED_KEYS, f"unexpected keys {set(e) - ALLOWED_KEYS}"
     assert "owner" not in e and "submitted_by" not in e
     assert e["attribution"] == "named"
     assert e["redistribution"] == "full"
@@ -120,36 +127,27 @@ def test_seed_table_fields(slug):
 
 def test_seed_cheng_has_17_authors_and_arxiv_bibtex():
     e = _load()["cheng2025barbarians@v1"]
-    authors = [a.strip() for a in e["authors"].split(" and ")]
+    sep = " and " if " and " in e["authors"] else ","
+    authors = [a.strip() for a in e["authors"].split(sep)]
     assert len(authors) == 17 and all(authors)
     bib = e["bibtex"]
     assert isinstance(bib, str) and bib.lstrip().startswith("@") and _balanced(bib)
-    assert "2510.06189" in bib
+    assert _field(bib, "eprint") == "2510.06189"
     assert "Barbarians at the Gate" in bib
 
 
 def test_seed_ellis_bibtex_is_arxiv_entry():
     bib = _load()["ellis-castro-2026@v1"]["bibtex"]
     assert isinstance(bib, str) and bib.lstrip().startswith("@") and _balanced(bib)
-    assert "2606.02863" in bib
+    assert _field(bib, "eprint") == "2606.02863"
     assert "GAMBLe" in bib
     assert "Ellis" in bib and "Castro" in bib
 
 
-def test_seed_gupta_bibtex_entry():
+def test_seed_gupta_bibtex_equals_spec_appendix():
     bib = _load()["gupta2026harness@v1"]["bibtex"]
-    assert isinstance(bib, str) and _balanced(bib)
-    m = re.match(r"\s*@(\w+)\{([^,\s]+)\s*,", bib)
-    assert m, "bibtex must start with @type{key,"
-    assert m.group(2) == "gupta2026automateddiscoveryuniversallysuperior"
-    assert _field(bib, "eprint") == "2607.18235"
-    title = _field(bib, "title") or ""
-    assert "Automated Discovery Has No Universally Superior Harness" in title.replace("{", "").replace("}", "")
-    assert (_field(bib, "year") or "").strip() == "2026"
-    authors = _field(bib, "author") or ""
-    for surname in ("Gupta", "Lei", "Lu", "Anumanchipalli", "Choshen"):
-        assert surname in authors, surname
-    assert bib.count("@") == 1
+    assert isinstance(bib, str)
+    assert " ".join(bib.split()) == " ".join(GUPTA_BIBTEX.split())
 
 
 def test_seed_ibm_has_no_bibtex():

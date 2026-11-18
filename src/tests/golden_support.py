@@ -1,8 +1,8 @@
-"""Support code for the golden tests: copying the frozen DBs, running the unchanged
-analytics readers, and comparing their outputs.
+"""Support code for the golden tests: copying source DBs (ROAR_GOLDEN_DBS), running
+the unchanged analytics readers, and comparing their outputs.
 
-The frozen DBs ``roar_v1`` / ``roar_full`` are only *read* here (as copy sources and
-by the analytics readers). Copies are named ``<src>_provcopy_<rand>``.
+Source DBs are only *read* here (by pg_dump and by the analytics readers). Copies are
+named ``<src>_provcopy_<rand>``.
 """
 
 from __future__ import annotations
@@ -10,18 +10,18 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import shlex
 import subprocess
 import uuid
 from decimal import Decimal
 from typing import Any, Callable
 
 import psycopg
-from psycopg import errors, sql
+from psycopg import sql
 
 from conftest import (
     ADMIN_URL,
     DOCKER_CONTAINER,
-    FROZEN_DBS,
     PG_USER,
     db_url,
     drop_database,
@@ -30,20 +30,12 @@ from conftest import (
     v1_row_fingerprint,
 )
 
-FLOAT_TOL = 1e-12
+FLOAT_TOL = 1e-9  # absolute floor and relative tolerance (PG aggregation order: a few ulp)
 
 
 # ---------------------------------------------------------------------------
 # Copying
 # ---------------------------------------------------------------------------
-
-def other_connections(dbname: str) -> int:
-    with psycopg.connect(ADMIN_URL) as conn:
-        return conn.execute(
-            "SELECT count(*) FROM pg_stat_activity WHERE datname=%s AND pid <> pg_backend_pid()",
-            (dbname,),
-        ).fetchone()[0]
-
 
 def database_exists(dbname: str) -> bool:
     with psycopg.connect(ADMIN_URL) as conn:
@@ -51,32 +43,26 @@ def database_exists(dbname: str) -> bool:
 
 
 def copy_database(src: str) -> tuple[str, str]:
-    """Copy a frozen DB. Returns (copy_name, method). Never writes to ``src``."""
-    assert src in FROZEN_DBS
+    """Copy a source DB with ``pg_dump | psql`` inside ROAR_TEST_PG_CONTAINER.
+
+    Never ``CREATE DATABASE ... TEMPLATE``: that requires (and briefly enforces) zero
+    other connections to a shared source. ``src`` is only read. Returns (copy_name, method).
+    """
     name = f"{src}_provcopy_{uuid.uuid4().hex[:8]}"
     guard_not_frozen(name)
-    method = None
-    if other_connections(src) == 0:
-        try:
-            with psycopg.connect(ADMIN_URL, autocommit=True) as conn:
-                conn.execute(
-                    sql.SQL("CREATE DATABASE {} TEMPLATE {}").format(sql.Identifier(name), sql.Identifier(src))
-                )
-            method = "template"
-        except errors.ObjectInUse:
-            method = None  # someone connected meanwhile: fall back to pg_dump
-    if method is None:
-        with psycopg.connect(ADMIN_URL, autocommit=True) as conn:
-            conn.execute(sql.SQL("CREATE DATABASE {}").format(sql.Identifier(name)))
-        cmd = (
-            f"docker exec {DOCKER_CONTAINER} pg_dump -U {PG_USER} {src} | "
-            f"docker exec -i {DOCKER_CONTAINER} psql -q -v ON_ERROR_STOP=1 -U {PG_USER} {name}"
-        )
-        p = subprocess.run(cmd, shell=True, capture_output=True, text=True)
-        if p.returncode != 0:
-            drop_database(name)
-            raise RuntimeError(f"pg_dump copy of {src} failed: {p.stderr[-2000:]}")
-        method = "pg_dump"
+    assert DOCKER_CONTAINER, "ROAR_TEST_PG_CONTAINER must be set"
+    with psycopg.connect(ADMIN_URL, autocommit=True) as conn:
+        conn.execute(sql.SQL("CREATE DATABASE {}").format(sql.Identifier(name)))
+    cmd = (
+        f"docker exec {shlex.quote(DOCKER_CONTAINER)} pg_dump -U {shlex.quote(PG_USER)} {shlex.quote(src)} | "
+        f"docker exec -i {shlex.quote(DOCKER_CONTAINER)} psql -q -v ON_ERROR_STOP=1 -U {shlex.quote(PG_USER)} "
+        f"{shlex.quote(name)}"
+    )
+    p = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+    if p.returncode != 0:
+        drop_database(name)
+        raise RuntimeError(f"pg_dump copy of {src} failed (exit {p.returncode})")
+    method = "pg_dump"
     # Fresh planner statistics (a restored DB has none; the analytics queries need them).
     with psycopg.connect(db_url(name), autocommit=True) as conn:
         conn.execute("ANALYZE")
@@ -203,33 +189,53 @@ def canon(x: Any) -> Any:
     return x
 
 
+class Mismatch(AssertionError):
+    pass
+
+
+def _fail(path: str, what: str) -> None:
+    # Values are deliberately not echoed: reader rows contain campaign names.
+    raise Mismatch(f"{path}: {what}")
+
+
 def assert_close(a: Any, b: Any, path: str = "$") -> None:
     if isinstance(a, bool) or isinstance(b, bool):
-        assert a == b, f"{path}: {a!r} != {b!r}"
+        if a != b:
+            _fail(path, "bool differs")
         return
     if isinstance(a, (int, float)) and isinstance(b, (int, float)):
         if isinstance(a, float) or isinstance(b, float):
             fa, fb = float(a), float(b)
             if math.isnan(fa) or math.isnan(fb):
-                assert math.isnan(fa) and math.isnan(fb), f"{path}: {a!r} != {b!r}"
+                if not (math.isnan(fa) and math.isnan(fb)):
+                    _fail(path, "NaN vs number")
             else:
-                assert abs(fa - fb) <= FLOAT_TOL, f"{path}: {a!r} != {b!r}"
-        else:
-            assert a == b, f"{path}: {a!r} != {b!r}"
+                tol = max(FLOAT_TOL, FLOAT_TOL * max(abs(fa), abs(fb)))
+                if abs(fa - fb) > tol:
+                    _fail(path, f"numbers differ by {abs(fa - fb):.3g} (tol {tol:.3g})")
+        elif a != b:
+            _fail(path, "integers differ")
         return
     if isinstance(a, dict):
-        assert isinstance(b, dict), f"{path}: type {type(b).__name__} != dict"
-        assert set(a) == set(b), f"{path}: keys differ"
+        if not isinstance(b, dict):
+            _fail(path, f"type {type(b).__name__} != dict")
+        if set(a) != set(b):
+            _fail(path, f"keys differ ({len(set(a) ^ set(b))} keys)")
         for k in a:
             assert_close(a[k], b[k], f"{path}.{k}")
         return
     if isinstance(a, list):
-        assert isinstance(b, list), f"{path}: type {type(b).__name__} != list"
-        assert len(a) == len(b), f"{path}: len {len(a)} != {len(b)}"
+        if not isinstance(b, list):
+            _fail(path, f"type {type(b).__name__} != list")
+        if len(a) != len(b):
+            _fail(path, f"len {len(a)} != {len(b)}")
         for i, (x, y) in enumerate(zip(a, b)):
             assert_close(x, y, f"{path}[{i}]")
         return
-    assert type(a) is type(b) and a == b, f"{path}: {a!r} != {b!r}"
+    if type(a) is not type(b):
+        _fail(path, f"type {type(a).__name__} != {type(b).__name__}")
+    if a != b:
+        _fail(path, "values differ")
 
 
 def _row_key(r: Any) -> str:
@@ -256,9 +262,8 @@ def compare_reader(name: str, a: Any, b: Any, *, emb_ties=None, iter_ties=None) 
         assert emb_ties is not None
         for rows in (a, b):
             for r in rows:
-                assert embedding_md5(r["best_embedding"]) in emb_ties[r["campaign_id"]], (
-                    f"{name}: best_embedding of {r['campaign_id']} is not a max-score candidate's"
-                )
+                if embedding_md5(r["best_embedding"]) not in emb_ties.get(r["campaign_id"], set()):
+                    _fail(name, "best_embedding is not a max-score candidate's")
         strip = lambda rows: sorted(({k: v for k, v in r.items() if k != "best_embedding"} for r in rows),
                                     key=lambda r: r["campaign_id"])
         assert_close(strip(a), strip(b), name)
@@ -301,6 +306,7 @@ class GoldenCopy:
 
     def _build(self):
         with psycopg.connect(self.url) as conn:
+            self.n_campaigns = conn.execute("SELECT count(*) FROM campaigns").fetchone()[0]
             self.columns = v1_columns(conn)
         self.fp_before = v1_row_fingerprint(self.url, self.columns)
         self.backfill_error: BaseException | None = None
@@ -331,7 +337,8 @@ class GoldenCopy:
         import pytest
 
         if self.backfill_error is not None:
-            pytest.fail(f"backfill on {self.name} failed: {self.backfill_error!r}")
+            # Type only: a message could quote campaign names (contributor prefixes).
+            pytest.fail(f"backfill on {self.name} failed with {type(self.backfill_error).__name__}")
 
     def drop(self):
         drop_database(self.name)

@@ -26,7 +26,9 @@ def _norm(s: str) -> str:
 def _docs() -> dict[str, str]:
     from fastapi.testclient import TestClient
 
-    import api
+    from conftest import import_api
+
+    api = import_api()
 
     client = TestClient(api.app)  # no lifespan: instruction endpoints need no DB/model
     out = {"upload_instructions.md": (SRC_DIR / "upload_instructions.md").read_text()}

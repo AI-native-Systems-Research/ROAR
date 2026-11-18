@@ -115,7 +115,33 @@ def test_insert_all_named_with_per_campaign_author(db, tmp_path):
     assert m0[:2] == (src["slug"], ALICE)
     assert m1[:2] == (src["slug"], BOB)
     assert m1[2] == BOB  # named: campaigns.author is not substituted
-    assert fetchone(db, "SELECT owner FROM source_datasets WHERE slug=%s", (src["slug"],))[0] == ALICE
+    # Insert order is not specified (parsing completes in any order): first inserter owns it.
+    assert fetchone(db, "SELECT owner FROM source_datasets WHERE slug=%s", (src["slug"],))[0] in {ALICE, BOB}
+
+
+def test_insert_all_mixed_named_and_anonymous_batch(db, tmp_path):
+    """Anonymous first-upload campaigns share one allocated slug; a campaign with its own
+    named block maps to the named source."""
+    from insert_adrs_campaign import insert_all_campaigns
+
+    src = named_source_block()
+    root, names = _batch(
+        tmp_path, 3, {"author": ALICE, "assessor": DEFAULT_ASSESSOR, "source": anon_source_block()},
+        per_campaign={1: {"source": src}},
+    )
+    before = table_counts(db)
+    assert insert_all_campaigns(root) == (3, 0)
+    after = table_counts(db)
+    assert after["source_datasets"] == before["source_datasets"] + 2
+    assert after["campaign_sources"] == before["campaign_sources"] + 3
+    m0, m1, m2 = (_mapping_by_name(db, n) for n in names)
+    assert m0[0] == m2[0] and re.match(r"^contributor-[A-Z]+@v1$", m0[0])
+    assert m1[0] == src["slug"]
+    assert {m0[1], m1[1], m2[1]} == {ALICE}
+    title = "Independent contributor " + m0[0][len("contributor-"):-len("@v1")]
+    assert m0[2] == m2[2] == title
+    assert m1[2] != title
+    assert fetchone(db, "SELECT owner FROM source_datasets WHERE slug=%s", (m0[0],))[0] == ALICE
 
 
 def test_insert_all_campaign_level_assessor_override(db, tmp_path):
