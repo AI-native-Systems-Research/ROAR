@@ -1,0 +1,358 @@
+{
+ "_source": "values copied from the original, independently verified analysis outputs (items i03, i05, i11, i13, i14 and verifiers)",
+ "rq2": {
+  "or": {
+   "paper_three": [
+    1.004,
+    0.949,
+    1.063
+   ],
+   "all_problems": [
+    0.896,
+    0.849,
+    0.946
+   ],
+   "all_excl_palindrome": [
+    1.022,
+    0.967,
+    1.081
+   ]
+  },
+  "n_obs_paper_three": 4118
+ },
+ "rq1_v1_cells": [
+  {
+   "problem": "Knapsack",
+   "models": "GPT-OSS-20B",
+   "algorithm": "adaevolve",
+   "n": 11,
+   "bc": 0.997,
+   "bc_lo": 0.853,
+   "bc_hi": 1.0,
+   "class": "confirmed_bimodal"
+  },
+  {
+   "problem": "Knapsack",
+   "models": "GPT-OSS-20B",
+   "algorithm": "best_of_n",
+   "n": 13,
+   "bc": 0.947,
+   "bc_lo": 0.848,
+   "bc_hi": 0.998,
+   "class": "confirmed_bimodal"
+  },
+  {
+   "problem": "Knapsack",
+   "models": "GPT-OSS-20B",
+   "algorithm": "evox",
+   "n": 12,
+   "bc": 0.894,
+   "bc_lo": 0.751,
+   "bc_hi": 0.998,
+   "class": "confirmed_bimodal"
+  },
+  {
+   "problem": "Knapsack",
+   "models": "Gemini-2.5-Flash",
+   "algorithm": "best_of_n",
+   "n": 10,
+   "bc": 0.685,
+   "bc_lo": 0.523,
+   "bc_hi": 0.953,
+   "class": "underpowered"
+  },
+  {
+   "problem": "Knapsack",
+   "models": "Kimi-K2.5",
+   "algorithm": "best_of_n",
+   "n": 11,
+   "bc": 1.0,
+   "bc_lo": 0.821,
+   "bc_hi": 1.0,
+   "class": "confirmed_bimodal"
+  },
+  {
+   "problem": "Knapsack",
+   "models": "eb1",
+   "algorithm": "adaevolve",
+   "n": 18,
+   "bc": null,
+   "bc_lo": null,
+   "bc_hi": null,
+   "class": "deterministic"
+  },
+  {
+   "problem": "Knapsack",
+   "models": "eb1-delta-preview",
+   "algorithm": "adaevolve",
+   "n": 18,
+   "bc": 0.961,
+   "bc_lo": 0.836,
+   "bc_hi": 1.0,
+   "class": "confirmed_bimodal"
+  },
+  {
+   "problem": "Knapsack",
+   "models": "eb1-frontier-preview",
+   "algorithm": "best_of_n",
+   "n": 17,
+   "bc": 0.99,
+   "bc_lo": 0.0,
+   "bc_hi": 1.0,
+   "class": "underpowered"
+  },
+  {
+   "problem": "Knapsack",
+   "models": "eb1-preview",
+   "algorithm": "adaevolve",
+   "n": 10,
+   "bc": 1.0,
+   "bc_lo": 0.0,
+   "bc_hi": 1.0,
+   "class": "underpowered"
+  },
+  {
+   "problem": "Knapsack",
+   "models": "eb1-pro",
+   "algorithm": "best_of_n",
+   "n": 13,
+   "bc": null,
+   "bc_lo": null,
+   "bc_hi": null,
+   "class": "deterministic"
+  },
+  {
+   "problem": "Polynomino",
+   "models": "Claude Opus 4.6",
+   "algorithm": "best_of_n",
+   "n": 13,
+   "bc": 0.704,
+   "bc_lo": 0.552,
+   "bc_hi": 0.882,
+   "class": "underpowered"
+  },
+  {
+   "problem": "Polynomino",
+   "models": "GPT-5-mini",
+   "algorithm": "best_of_n",
+   "n": 10,
+   "bc": 0.703,
+   "bc_lo": 0.463,
+   "bc_hi": 0.983,
+   "class": "underpowered"
+  },
+  {
+   "problem": "Polynomino",
+   "models": "GPT-5.4",
+   "algorithm": "adaevolve",
+   "n": 11,
+   "bc": 0.842,
+   "bc_lo": 0.551,
+   "bc_hi": 1.0,
+   "class": "underpowered"
+  },
+  {
+   "problem": "Polynomino",
+   "models": "Kimi-K2.5",
+   "algorithm": "adaevolve",
+   "n": 11,
+   "bc": 0.63,
+   "bc_lo": 0.484,
+   "bc_hi": 0.865,
+   "class": "underpowered"
+  },
+  {
+   "problem": "Polynomino",
+   "models": "Kimi-K2.5",
+   "algorithm": "best_of_n",
+   "n": 10,
+   "bc": 0.747,
+   "bc_lo": 0.564,
+   "bc_hi": 0.95,
+   "class": "confirmed_bimodal"
+  },
+  {
+   "problem": "Polynomino",
+   "models": "Kimi-K2.5",
+   "algorithm": "evox",
+   "n": 17,
+   "bc": 0.465,
+   "bc_lo": 0.354,
+   "bc_hi": 0.706,
+   "class": "unimodal"
+  },
+  {
+   "problem": "Polynomino",
+   "models": "eb1-delta-preview",
+   "algorithm": "adaevolve",
+   "n": 37,
+   "bc": 0.857,
+   "bc_lo": 0.784,
+   "bc_hi": 0.933,
+   "class": "confirmed_bimodal"
+  },
+  {
+   "problem": "Polynomino",
+   "models": "eb1-delta-preview",
+   "algorithm": "best_of_n",
+   "n": 15,
+   "bc": 0.702,
+   "bc_lo": 0.555,
+   "bc_hi": 0.998,
+   "class": "underpowered"
+  },
+  {
+   "problem": "Polynomino",
+   "models": "eb1-frontier-preview",
+   "algorithm": "adaevolve",
+   "n": 11,
+   "bc": 0.973,
+   "bc_lo": 0.957,
+   "bc_hi": 1.0,
+   "class": "confirmed_bimodal"
+  },
+  {
+   "problem": "Polynomino",
+   "models": "eb1-frontier-preview",
+   "algorithm": "best_of_n",
+   "n": 17,
+   "bc": 0.755,
+   "bc_lo": 0.631,
+   "bc_hi": 0.927,
+   "class": "confirmed_bimodal"
+  },
+  {
+   "problem": "Polynomino",
+   "models": "eb1-frontier-preview",
+   "algorithm": "evox",
+   "n": 22,
+   "bc": 0.679,
+   "bc_lo": 0.52,
+   "bc_hi": 0.835,
+   "class": "underpowered"
+  },
+  {
+   "problem": "Polynomino",
+   "models": "eb1-preview",
+   "algorithm": "adaevolve",
+   "n": 21,
+   "bc": 0.822,
+   "bc_lo": 0.69,
+   "bc_hi": 0.932,
+   "class": "confirmed_bimodal"
+  },
+  {
+   "problem": "Polynomino",
+   "models": "eb1-preview",
+   "algorithm": "best_of_n",
+   "n": 53,
+   "bc": 0.885,
+   "bc_lo": 0.82,
+   "bc_hi": 0.946,
+   "class": "confirmed_bimodal"
+  },
+  {
+   "problem": "Polynomino",
+   "models": "eb1-preview",
+   "algorithm": "evox",
+   "n": 13,
+   "bc": 0.992,
+   "bc_lo": 0.985,
+   "bc_hi": 1.0,
+   "class": "confirmed_bimodal"
+  }
+ ],
+ "rq3_glmm_with_context_length_postgres": {
+  "Knapsack": {
+   "coef": {
+    "score_diversity": -0.1172,
+    "context_diversity": 0.1327,
+    "better_ratio": 0.0161,
+    "worse_ratio": 0.1285,
+    "log_ctx_len": -0.4114
+   },
+   "p": {
+    "score_diversity": 0.012317925350919579,
+    "context_diversity": 0.00030086601865830787,
+    "better_ratio": 0.714701529374953,
+    "worse_ratio": 0.002282354433414069,
+    "log_ctx_len": 0.0
+   }
+  },
+  "Polynomino": {
+   "coef": {
+    "score_diversity": 0.0985,
+    "context_diversity": -0.0397,
+    "better_ratio": 0.1025,
+    "worse_ratio": 0.1655,
+    "log_ctx_len": -0.2008
+   },
+   "p": {
+    "score_diversity": 0.0017819091516459995,
+    "context_diversity": 0.2743799118045416,
+    "better_ratio": 0.00046265189109817584,
+    "worse_ratio": 5.418984387439707e-06,
+    "log_ctx_len": 1.43633993587855e-11
+   }
+  },
+  "CUDA Attention": {
+   "coef": {
+    "score_diversity": -0.1812,
+    "context_diversity": 0.389,
+    "better_ratio": -0.5289,
+    "worse_ratio": -0.0234,
+    "log_ctx_len": -0.116
+   },
+   "p": {
+    "score_diversity": 0.3419572440349492,
+    "context_diversity": 0.018904732847629058,
+    "better_ratio": 0.0021052478849490353,
+    "worse_ratio": 0.8984608743407558,
+    "log_ctx_len": 0.3510115550372057
+   }
+  }
+ },
+ "rq3_early_partial": {
+  "Knapsack": {
+   "rho": 0.0412,
+   "p": 0.513324595814176,
+   "ci": [
+    -0.0805,
+    0.1616
+   ]
+  },
+  "Polynomino": {
+   "rho": 0.1647,
+   "p": 0.004160549284460749,
+   "ci": [
+    0.0338,
+    0.2813
+   ]
+  }
+ },
+ "rq4_roar_fitted_v1_mean_by_configuration": {
+  "Knapsack: Best-of-N / eb1-frontier-preview": 2.229,
+  "Knapsack: Best-of-N / GPT-OSS-20B": 6.161,
+  "Knapsack: Best-of-N / Gemini-2.5-Flash": 8.775,
+  "Polynomino: Best-of-N / eb1-preview": 23.933,
+  "Polynomino: Best-of-N / eb1-delta-preview": 15.373,
+  "Polynomino: Best-of-N / Claude Opus 4.6": 4.42,
+  "Polynomino: Best-of-N / eb1-frontier-preview": 18.015,
+  "Polynomino: EvoX / eb1-frontier-preview": -1.391,
+  "Polynomino: Best-of-N / GPT-5-mini": 12.793,
+  "Polynomino: AdaEvolve / GPT-5.4": -4.13,
+  "Polynomino: Best-of-N / eb1": 0.467,
+  "Polynomino: EvoX / eb1-delta-preview": 12.184
+ },
+ "parser_validation": {
+  "n": 911,
+  "candidates_compared": 47168,
+  "cand_score_exact": 47168,
+  "cand_iter_exact": 47168,
+  "cand_with_log_line": 41263,
+  "cand_log_agree_4dp": 41263,
+  "campaigns_id_sets_identical": 911,
+  "roar_best_eq_raw_best": 911,
+  "roar_maxiter_eq_raw_maxiter": 911
+ }
+}
