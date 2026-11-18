@@ -419,15 +419,26 @@ def pg() -> None:
 
 
 def sweep_stale_databases() -> None:
-    """Drop throwaway DBs (roar_provtest_*, *_provcopy_*) left by an interrupted run."""
+    """Opt-in (ROAR_TEST_SWEEP=1): drop throwaway DBs left by an interrupted run.
+
+    Only databases with no open connections are dropped (never WITH FORCE), so a
+    concurrently running suite's live databases are left alone.
+    """
+    if os.environ.get("ROAR_TEST_SWEEP") != "1":
+        return
     with psycopg.connect(ADMIN_URL, autocommit=True) as conn:
         names = [r[0] for r in conn.execute(
-            "SELECT datname FROM pg_database WHERE datname LIKE %s OR datname LIKE %s",
+            "SELECT d.datname FROM pg_database d WHERE (d.datname LIKE %s OR d.datname LIKE %s) "
+            "AND NOT EXISTS (SELECT 1 FROM pg_stat_activity a WHERE a.datname = d.datname)",
             THROWAWAY_PATTERNS,
         ).fetchall()]
-    for n in names:
-        if n not in FROZEN_DBS:
-            drop_database(n)
+        for n in names:
+            if n in FROZEN_DBS:
+                continue
+            try:
+                conn.execute(psycopg.sql.SQL("DROP DATABASE IF EXISTS {}").format(psycopg.sql.Identifier(n)))
+            except psycopg.Error:
+                pass  # a session connected meanwhile; leave it
 
 
 def import_api():

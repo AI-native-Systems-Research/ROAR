@@ -22,3 +22,6 @@ session start. Databases named `roar_v1` or `roar_full` are never written.
 | `ROAR_BASE_REV` | name-leak, analytics-unchanged | Pre-feature git revision to diff against |
 
 Tests whose variables are unset are skipped.
+
+## Cleaning up after an interrupted run
+Set `ROAR_TEST_SWEEP=1` to drop leftover `roar_provtest_*` / `*_provcopy_*` databases at session start. Only databases with no open connections are dropped, so a concurrently running suite is unaffected. Off by default.

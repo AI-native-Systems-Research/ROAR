@@ -30,7 +30,8 @@ from conftest import (
     v1_row_fingerprint,
 )
 
-FLOAT_TOL = 1e-9  # absolute floor and relative tolerance (PG aggregation order: a few ulp)
+FLOAT_ABS_TOL = 1e-9  # absolute floor
+FLOAT_REL_TOL = 1e-6  # relative: PG float aggregation order can cancel large intermediate sums
 
 
 # ---------------------------------------------------------------------------
@@ -210,7 +211,7 @@ def assert_close(a: Any, b: Any, path: str = "$") -> None:
                 if not (math.isnan(fa) and math.isnan(fb)):
                     _fail(path, "NaN vs number")
             else:
-                tol = max(FLOAT_TOL, FLOAT_TOL * max(abs(fa), abs(fb)))
+                tol = max(FLOAT_ABS_TOL, FLOAT_REL_TOL * max(abs(fa), abs(fb)))
                 if abs(fa - fb) > tol:
                     _fail(path, f"numbers differ by {abs(fa - fb):.3g} (tol {tol:.3g})")
         elif a != b:
