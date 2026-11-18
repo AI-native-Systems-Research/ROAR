@@ -26,7 +26,7 @@ ROAR_SOURCE = {
     "version": None,
     "year": 2026,
     "url": None,
-    "license_spdx": None,
+    "license_spdx": "CC-BY-4.0",
     "redistribution": "full",
     "attribution": "named",
     "authors": "Lin, Leo Y. and Ramani, Vishakha and Celik, Z. Berkay and Castro, Paul and Ellis, Marquita",
@@ -122,7 +122,8 @@ def _source_record(row: dict) -> dict:
 def required_citations(campaign_ids, campaign_sources: pd.DataFrame, sources: pd.DataFrame,
                        extra_sources=()) -> list[dict]:
     """ROAR first, then every distinct source used by campaign_ids plus extra_sources,
-    deduplicated and sorted by slug.
+    deduplicated and sorted by slug. ROAR appears exactly once, even when campaigns map
+    to the `roar` source or extra_sources contains it.
 
     Raises ProvenanceError for a campaign without a campaign_sources row or an unknown
     extra slug. Accepts campaign ids as str or UUID.
@@ -140,13 +141,14 @@ def required_citations(campaign_ids, campaign_sources: pd.DataFrame, sources: pd
             raise ProvenanceError(f"campaign {key} has no campaign_sources row")
         slugs.add(mapping[key])
     for slug in extra_sources:
-        if slug not in by_slug:
+        if slug not in by_slug and slug != ROAR_SOURCE["slug"]:
             raise ProvenanceError(f"unknown source slug {slug!r}")
         slugs.add(slug)
     for slug in slugs:
         if slug not in by_slug:
             raise ProvenanceError(f"campaign_sources references unknown source {slug!r}")
 
+    slugs.discard(ROAR_SOURCE["slug"])
     return [dict(ROAR_SOURCE)] + [by_slug[s] for s in sorted(slugs)]
 
 
